@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#ffffff" />
+  <title>Villa Dubois — Welcome Guide</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+<div class="page">
+
+  <header class="header">
+    <span class="header-name">Villa Dubois</span>
+    <div class="lang-switch">
+      <a href="./index.html"    class="lang-btn">FR</a>
+      <a href="./index-en.html" class="lang-btn active">EN</a>
+    </div>
+  </header>
+
+  <div class="hero">
+    <div class="hero-gradient" style="background-image:url(./images/hero.webp);background-size:cover;background-position:center"></div>
+    <div class="hero-overlay"></div>
+    <span class="hero-badge">Pont-Audemer, Normandy</span>
+  </div>
+
+  <section class="welcome">
+    <h1 class="welcome-title">Welcome to Villa Dubois</h1>
+    <p class="welcome-text">We're delighted to have you here. Everything you need for a great stay is in this guide.</p>
+  </section>
+
+  <p class="section-label">Guide</p>
+  <nav class="nav-grid" aria-label="Guide sections">
+    <a href="./info-en.html" class="nav-card">
+      <span class="nav-card-icon">💡</span>
+      <span class="nav-card-label">Essential Info</span>
+    </a>
+    <a href="./checkin-en.html" class="nav-card">
+      <span class="nav-card-icon">🗝️</span>
+      <span class="nav-card-label">Check-in &amp; Out</span>
+    </a>
+    <a href="./wifi-en.html" class="nav-card">
+      <span class="nav-card-icon">📶</span>
+      <span class="nav-card-label">Wi-Fi</span>
+    </a>
+    <a href="./rules-en.html" class="nav-card">
+      <span class="nav-card-icon">📋</span>
+      <span class="nav-card-label">House Rules</span>
+    </a>
+    <a href="./equipment-en.html" class="nav-card">
+      <span class="nav-card-icon">🛋️</span>
+      <span class="nav-card-label">Equipment</span>
+    </a>
+    <a href="./contact-en.html" class="nav-card">
+      <span class="nav-card-icon">📞</span>
+      <span class="nav-card-label">Contact &amp; Emergency</span>
+    </a>
+    <a href="./recommendations-en.html" class="nav-card">
+      <span class="nav-card-icon">📍</span>
+      <span class="nav-card-label">Recommendations</span>
+    </a>
+  </nav>
+
+  <p class="section-label">Quick access</p>
+  <div class="quick-grid">
+    <div class="quick-card">
+      <div class="quick-card-tag">📶 Wi-Fi</div>
+      <div class="quick-card-main">1234567</div>
+      <div class="quick-card-sub">Livebox-234</div>
+      <button class="copy-btn" onclick="copyWifi(this)"><span>Copy</span></button>
+    </div>
+    <div class="quick-card">
+      <div class="quick-card-tag">👤 Host</div>
+      <div class="quick-card-main">Thomas</div>
+      <div class="quick-card-sub">Available 8am – 9pm</div>
+      <a class="call-btn" href="tel:+33633445566"><span>📞</span> Call</a>
+    </div>
+  </div>
+
+</div>
+<script>
+function copyWifi(btn){
+  navigator.clipboard.writeText("1234567").then(()=>{
+    btn.classList.add("copied");btn.querySelector("span").textContent="Copied ✓";
+    setTimeout(()=>{btn.classList.remove("copied");btn.querySelector("span").textContent="Copy"},2000);
+  }).catch(()=>{btn.querySelector("span").textContent="1234567"});
+}
+</script>
+</body>
+</html>

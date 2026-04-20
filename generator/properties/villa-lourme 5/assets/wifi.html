@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#ffffff" />
+  <title>Wi-Fi — Villa Lourme</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+<div class="page">
+
+  <header class="header">
+    <span class="header-name">Villa Lourme</span>
+    <div class="lang-switch">
+      <a href="./wifi.html"    class="lang-btn active">FR</a>
+      <a href="./wifi-en.html" class="lang-btn">EN</a>
+    </div>
+  </header>
+
+  <a href="./index.html" class="back-link">← Retour</a>
+  <h1 class="page-title"><span class="page-title-icon">📶</span> Wi-Fi</h1>
+
+  <div class="content">
+    <div class="sub-section">
+      <div class="wifi-display">
+        <p class="wifi-network">Réseau : Livebox-2323</p>
+        <p class="wifi-password">hbcefhdc3344FCD4</p>
+        <button class="wifi-copy-btn" onclick="copyWifi(this)"><span>Copier le mot de passe</span></button>
+      </div>
+    </div>
+
+    <div class="sub-section">
+      <p class="sub-title">Bon à savoir</p>
+      <div class="info-block">
+        <div class="info-block-header">
+          <span class="info-block-icon">📡</span>
+          <span class="info-block-title">Couverture &amp; débit</span>
+        </div>
+        <p class="info-block-text">Connexion fibre (~500 Mb/s). Le signal est optimal dans le salon et la cuisine.</p>
+        <p class="info-block-text">Le signal est plus faible dans la chambre 3 — rapprochez-vous du couloir si nécessaire.</p>
+      </div>
+      <div class="info-block">
+        <div class="info-block-header">
+          <span class="info-block-icon">🔄</span>
+          <span class="info-block-title">Problème de connexion ?</span>
+        </div>
+        <p class="info-block-text">Redémarrez la Livebox : bouton à l'arrière, maintenez 10 secondes. Attendez 2 minutes.</p>
+        <p class="info-block-text">Si le problème persiste, contactez Thomas.</p>
+      </div>
+    </div>
+  </div>
+
+</div>
+<script>
+function copyWifi(btn){
+  navigator.clipboard.writeText("hbcefhdc3344FCD4").then(()=>{
+    btn.classList.add("copied");btn.querySelector("span").textContent="Copié ✓";
+    setTimeout(()=>{btn.classList.remove("copied");btn.querySelector("span").textContent="Copier le mot de passe"},2000);
+  }).catch(()=>{});
+}
+</script>
+</body>
+</html>

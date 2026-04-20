@@ -1,0 +1,1441 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Générateur de guide — Hostly</title>
+<meta name="description" content="Créez votre guide Hostly personnalisé étape par étape.">
+<meta name="robots" content="noindex, nofollow">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+
+<style>
+/* =========================================================
+   GÉNÉRATEUR — repris du template original + identité Hostly
+   ========================================================= */
+:root {
+  --navy:        #0B1B3B;
+  --navy-deep:   #08152F;
+  --blue:        #3B5BDB;
+  --blue-hint:   #EFF4FF;
+  --blue-hint-2: #F5F8FF;
+  --text-1:      #0B1B3B;
+  --text-2:      #5A6B8C;
+  --text-3:      #8A96B1;
+  --bg:          #F8FAFD;
+  --surface:     #FFFFFF;
+  --line:        #E6EBF5;
+  --line-soft:   #F0F3FA;
+  --danger:      #DC2626;
+  --danger-bg:   #FEF2F2;
+  --success:     #E8F3EE;
+  --success-ink: #2E7D5B;
+
+  --r:    12px;
+  --r-sm: 8px;
+  --font: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font);
+  background: var(--bg);
+  color: var(--text-1);
+  font-size: 15px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  padding-bottom: 120px;
+}
+
+a { color: inherit; text-decoration: none; }
+button { font: inherit; cursor: pointer; border: none; background: none; color: inherit; }
+::selection { background: var(--navy); color: #fff; }
+
+.shell {
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 1.25rem 1rem 3rem;
+}
+
+/* ============ HEADER ============ */
+.back-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 0 1.25rem;
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 1.5rem;
+}
+.back-bar__logo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 800;
+  font-size: 1rem;
+  letter-spacing: -0.02em;
+  color: var(--navy);
+}
+.back-bar__mark {
+  width: 28px; height: 28px;
+  border-radius: 7px;
+  background: var(--navy);
+  color: #fff;
+  display: grid; place-items: center;
+  font-weight: 800;
+  font-size: 0.85rem;
+}
+.back-bar__link {
+  font-size: 0.85rem;
+  color: var(--text-2);
+  transition: color 0.2s var(--ease);
+}
+.back-bar__link:hover { color: var(--navy); }
+
+.topbar {
+  text-align: center;
+  padding: 1.5rem 0 1rem;
+}
+.topbar h1 {
+  font-size: 1.75rem;
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  color: var(--navy);
+  margin-bottom: 0.5rem;
+}
+.topbar p {
+  font-size: 0.95rem;
+  color: var(--text-2);
+  max-width: 50ch;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+.info-banner {
+  background: var(--blue-hint);
+  border: 1px solid var(--blue);
+  border-radius: var(--r);
+  padding: 1rem 1.25rem;
+  margin: 1.5rem 0;
+  display: flex;
+  gap: 0.75rem;
+  font-size: 0.9rem;
+  color: var(--navy);
+}
+.info-banner__icon {
+  width: 22px; height: 22px;
+  flex-shrink: 0;
+  color: var(--blue);
+}
+.info-banner__icon svg { width: 100%; height: 100%; }
+.info-banner strong { font-weight: 700; }
+
+/* ============ SECTION ACCORDION ============ */
+.section {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--r);
+  margin-top: 0.75rem;
+  overflow: hidden;
+  transition: border-color 0.2s var(--ease), box-shadow 0.2s var(--ease);
+}
+.section:hover { border-color: var(--text-3); }
+.section.open {
+  border-color: var(--navy);
+  box-shadow: 0 4px 12px rgba(11, 27, 59, 0.06);
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem 1.1rem;
+  cursor: pointer;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  transition: background 0.2s var(--ease);
+}
+.section-header:hover { background: var(--blue-hint-2); }
+.section.open .section-header { background: var(--blue-hint-2); }
+
+.section-num {
+  width: 30px; height: 30px;
+  border-radius: 50%;
+  background: var(--blue);
+  color: #fff;
+  font-size: 0.8rem;
+  font-weight: 700;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+}
+
+.section-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  flex: 1;
+  color: var(--navy);
+  letter-spacing: -0.01em;
+}
+
+.section-chevron {
+  font-size: 1rem;
+  color: var(--text-3);
+  transition: transform 0.2s var(--ease), color 0.2s var(--ease);
+  flex-shrink: 0;
+}
+.section.open .section-chevron {
+  transform: rotate(180deg);
+  color: var(--navy);
+}
+.section-chevron svg { width: 16px; height: 16px; display: block; }
+
+.section-body {
+  display: none;
+  padding: 0 1.1rem 1.25rem;
+  border-top: 1px solid var(--line);
+}
+.section.open .section-body { display: block; }
+
+/* ============ FIELDS ============ */
+.field { margin-top: 1rem; }
+.field:first-child { margin-top: 0; }
+
+.field-label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  margin-bottom: 0.35rem;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.field-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.6rem;
+}
+
+@media (max-width: 560px) {
+  .field-row { grid-template-columns: 1fr; }
+}
+
+input[type="text"],
+input[type="tel"],
+input[type="email"],
+input[type="number"],
+input[type="url"],
+textarea,
+select {
+  width: 100%;
+  padding: 0.6rem 0.8rem;
+  border: 1px solid var(--line);
+  border-radius: var(--r-sm);
+  font-family: var(--font);
+  font-size: 0.9rem;
+  color: var(--text-1);
+  background: var(--surface);
+  transition: border-color 0.15s var(--ease), box-shadow 0.15s var(--ease);
+  outline: none;
+}
+input:focus, textarea:focus, select:focus {
+  border-color: var(--blue);
+  box-shadow: 0 0 0 3px rgba(59, 91, 219, 0.1);
+}
+textarea {
+  resize: vertical;
+  min-height: 70px;
+  line-height: 1.55;
+}
+
+.field-hint {
+  font-size: 0.75rem;
+  color: var(--text-3);
+  margin-top: 0.25rem;
+  line-height: 1.5;
+}
+
+/* ============ DYNAMIC LIST ============ */
+.dyn-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  margin-top: 0.65rem;
+}
+
+.dyn-item {
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 0.95rem;
+  position: relative;
+  transition: border-color 0.2s var(--ease);
+}
+.dyn-item:hover { border-color: var(--text-3); }
+
+.remove-btn {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  background: var(--danger-bg);
+  border: none;
+  border-radius: 6px;
+  padding: 0.2rem 0.6rem;
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--danger);
+  cursor: pointer;
+  transition: background 0.15s var(--ease);
+  z-index: 2;
+}
+.remove-btn:hover { background: #FCE2E2; }
+
+.add-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  background: var(--blue-hint);
+  border: none;
+  border-radius: var(--r-sm);
+  padding: 0.55rem 1rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--blue);
+  cursor: pointer;
+  margin-top: 0.4rem;
+  transition: background 0.15s var(--ease), transform 0.15s var(--ease);
+}
+.add-btn:hover {
+  background: #DDE7FF;
+  transform: translateY(-1px);
+}
+.add-btn:active { transform: translateY(0); }
+
+.dyn-label {
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: var(--text-3);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-bottom: 0.2rem;
+  margin-top: 0.6rem;
+  display: block;
+}
+.dyn-label:first-child { margin-top: 0; }
+
+.sub-header {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--navy);
+  letter-spacing: 0.02em;
+  margin-top: 1.25rem;
+  margin-bottom: 0.5rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 1px solid var(--line);
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+.sub-header:first-child { margin-top: 0.25rem; }
+
+/* ============ GENERATE BAR ============ */
+.generate-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(255, 255, 255, 0.96);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-top: 1px solid var(--line);
+  padding: 0.9rem 1rem;
+  z-index: 100;
+  display: flex;
+  justify-content: center;
+  box-shadow: 0 -4px 20px rgba(11, 27, 59, 0.04);
+}
+
+.generate-btn {
+  background: var(--navy);
+  color: #fff;
+  border: none;
+  border-radius: var(--r);
+  padding: 1rem 2rem;
+  font-size: 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.15s var(--ease), transform 0.15s var(--ease), box-shadow 0.15s var(--ease);
+  min-width: 280px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+.generate-btn:hover {
+  background: var(--navy-deep);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(11, 27, 59, 0.2);
+}
+.generate-btn:active { transform: translateY(0); }
+.generate-btn svg { width: 16px; height: 16px; }
+.generate-btn.loading { opacity: 0.7; pointer-events: none; }
+
+/* ============ GROUP BLOCK (equip / reco) ============ */
+.group-block {
+  background: var(--surface);
+  border: 1.5px solid var(--line);
+  border-radius: 10px;
+  padding: 0.95rem;
+  margin-bottom: 0.65rem;
+  position: relative;
+}
+.group-block > .dyn-label:first-child {
+  color: var(--navy);
+  font-weight: 700;
+  font-size: 0.75rem;
+}
+.group-remove-btn {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  background: var(--danger-bg);
+  border: none;
+  border-radius: 6px;
+  padding: 0.2rem 0.55rem;
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--danger);
+  cursor: pointer;
+}
+.group-remove-btn:hover { background: #FCE2E2; }
+
+/* ============ UPLOAD ============ */
+.upload-zone {
+  border: 2px dashed var(--line);
+  border-radius: 10px;
+  padding: 1.75rem;
+  text-align: center;
+  margin-top: 0.65rem;
+  transition: border-color 0.15s var(--ease), background 0.15s var(--ease);
+}
+.upload-zone.dragover {
+  border-color: var(--blue);
+  background: var(--blue-hint);
+}
+.upload-zone p {
+  color: var(--text-3);
+  font-size: 0.85rem;
+  margin-bottom: 0.6rem;
+}
+
+.upload-file {
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 0.65rem 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  position: relative;
+}
+.upload-file img {
+  width: 44px;
+  height: 44px;
+  object-fit: cover;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+.upload-file .file-icon {
+  font-size: 1.6rem;
+  flex-shrink: 0;
+  width: 44px;
+  text-align: center;
+}
+.upload-file .file-info {
+  flex: 1;
+  font-size: 0.85rem;
+  color: var(--text-2);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.upload-file .remove-btn {
+  position: static;
+}
+
+/* ============ SUCCESS / ERROR ============ */
+.toast {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  background: var(--success);
+  color: var(--success-ink);
+  padding: 0.9rem 1.25rem;
+  border-radius: 10px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  z-index: 200;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  transform: translateX(calc(100% + 2rem));
+  transition: transform 0.4s var(--ease);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  max-width: 340px;
+}
+.toast.show { transform: translateX(0); }
+.toast--error {
+  background: var(--danger-bg);
+  color: var(--danger);
+}
+.toast svg { width: 18px; height: 18px; flex-shrink: 0; }
+</style>
+</head>
+<body>
+
+<div class="shell">
+
+  <div class="back-bar">
+    <a href="index.html" class="back-bar__logo">
+      <span class="back-bar__mark">H</span>
+      Hostly
+    </a>
+    <a href="contact.html" class="back-bar__link">Besoin d'aide ?</a>
+  </div>
+
+  <div class="topbar">
+    <h1>Générateur de guide</h1>
+    <p>Remplissez le formulaire ci-dessous. Tous les champs sont personnalisables et vous pouvez ajouter autant d'éléments que vous voulez. Une fois terminé, téléchargez l'ensemble en un clic.</p>
+  </div>
+
+  <div class="info-banner">
+    <div class="info-banner__icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01" stroke-linecap="round"/></svg>
+    </div>
+    <div>
+      Cette page est destinée aux clients après achat. Elle génère un dossier ZIP avec tous les fichiers HTML prêts à être hébergés. Si vous n'avez pas encore commandé, <strong><a href="offres.html" style="color:var(--blue);text-decoration:underline;">voir les offres</a></strong>.
+    </div>
+  </div>
+
+  <!-- 1. PROPRIÉTÉ -->
+  <div class="section open" id="s-property">
+    <div class="section-header" onclick="toggleSection(this)">
+      <span class="section-num">1</span>
+      <span class="section-title">Propriété</span>
+      <span class="section-chevron">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </span>
+    </div>
+    <div class="section-body">
+      <div class="field">
+        <div class="field-label">Nom de la propriété</div>
+        <input type="text" id="prop-name" value="Villa Dubois">
+      </div>
+      <div class="field">
+        <div class="field-label">Localisation</div>
+        <input type="text" id="prop-location" value="Pont-Audemer, Normandie">
+      </div>
+      <div class="field">
+        <div class="field-label">Titre d'accueil</div>
+        <input type="text" id="welcome-title" value="Bienvenue chez les Dubois">
+      </div>
+      <div class="field">
+        <div class="field-label">Texte d'accueil</div>
+        <textarea id="welcome-text" rows="2">Nous sommes ravis de vous accueillir. Tout ce dont vous avez besoin pour profiter de votre séjour se trouve dans ce guide.</textarea>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. WI-FI -->
+  <div class="section" id="s-wifi">
+    <div class="section-header" onclick="toggleSection(this)">
+      <span class="section-num">2</span>
+      <span class="section-title">Wi-Fi</span>
+      <span class="section-chevron">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </span>
+    </div>
+    <div class="section-body">
+      <div class="field">
+        <div class="field-row">
+          <div>
+            <div class="field-label">Nom du réseau</div>
+            <input type="text" id="wifi-network" value="Livebox-234">
+          </div>
+          <div>
+            <div class="field-label">Mot de passe</div>
+            <input type="text" id="wifi-password" value="1234567">
+          </div>
+        </div>
+      </div>
+      <div class="field">
+        <div class="field-label">Infos couverture</div>
+        <textarea id="wifi-coverage" rows="2">Connexion fibre (~500 Mb/s). Le signal est optimal dans le salon et la cuisine.</textarea>
+      </div>
+      <div class="field">
+        <div class="field-label">En cas de problème</div>
+        <textarea id="wifi-trouble" rows="2">Redémarrez la Livebox : bouton à l'arrière, maintenez 10 secondes. Si le problème persiste, contactez-nous.</textarea>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. CONTACTS -->
+  <div class="section" id="s-contacts">
+    <div class="section-header" onclick="toggleSection(this)">
+      <span class="section-num">3</span>
+      <span class="section-title">Contacts & Urgences</span>
+      <span class="section-chevron">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </span>
+    </div>
+    <div class="section-body">
+      <div class="sub-header">Contacts hôtes</div>
+      <div class="dyn-list" id="contacts-list">
+        <div class="dyn-item">
+          <button class="remove-btn" onclick="removeItem(this)">✕</button>
+          <div class="field-row">
+            <div><div class="dyn-label">Nom</div><input type="text" class="ct-name" value="Thomas Dubois"></div>
+            <div><div class="dyn-label">Téléphone</div><input type="tel" class="ct-phone" value="+33633445566"></div>
+          </div>
+          <div class="field-row" style="margin-top:0.5rem">
+            <div><div class="dyn-label">Rôle</div><input type="text" class="ct-role" value="Hôte principal"></div>
+            <div><div class="dyn-label">Note</div><input type="text" class="ct-note" value="Disponible 8h – 21h"></div>
+          </div>
+        </div>
+      </div>
+      <button class="add-btn" onclick="addContact()">+ Ajouter un contact</button>
+
+      <div class="sub-header" style="margin-top:1.5rem">Numéros d'urgence</div>
+      <div class="dyn-list" id="emergency-list">
+        <div class="dyn-item"><button class="remove-btn" onclick="removeItem(this)">✕</button><div class="field-row"><div><div class="dyn-label">Numéro</div><input type="text" class="em-num" value="15"></div><div><div class="dyn-label">Label</div><input type="text" class="em-label" value="SAMU"></div></div></div>
+        <div class="dyn-item"><button class="remove-btn" onclick="removeItem(this)">✕</button><div class="field-row"><div><div class="dyn-label">Numéro</div><input type="text" class="em-num" value="18"></div><div><div class="dyn-label">Label</div><input type="text" class="em-label" value="Pompiers"></div></div></div>
+        <div class="dyn-item"><button class="remove-btn" onclick="removeItem(this)">✕</button><div class="field-row"><div><div class="dyn-label">Numéro</div><input type="text" class="em-num" value="17"></div><div><div class="dyn-label">Label</div><input type="text" class="em-label" value="Police"></div></div></div>
+        <div class="dyn-item"><button class="remove-btn" onclick="removeItem(this)">✕</button><div class="field-row"><div><div class="dyn-label">Numéro</div><input type="text" class="em-num" value="112"></div><div><div class="dyn-label">Label</div><input type="text" class="em-label" value="Urgences EU"></div></div></div>
+      </div>
+      <button class="add-btn" onclick="addEmergency()">+ Ajouter un numéro</button>
+    </div>
+  </div>
+
+  <!-- 4. ARRIVÉE / DÉPART -->
+  <div class="section" id="s-checkin">
+    <div class="section-header" onclick="toggleSection(this)">
+      <span class="section-num">4</span>
+      <span class="section-title">Arrivée & Départ</span>
+      <span class="section-chevron">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </span>
+    </div>
+    <div class="section-body">
+      <div class="field">
+        <div class="field-row">
+          <div>
+            <div class="field-label">Heure check-in</div>
+            <input type="text" id="checkin-time" value="16h00">
+          </div>
+          <div>
+            <div class="field-label">Heure check-out</div>
+            <input type="text" id="checkout-time" value="11h00">
+          </div>
+        </div>
+      </div>
+
+      <div class="sub-header">Étapes d'arrivée</div>
+      <div class="dyn-list" id="arrival-list">
+        <div class="dyn-item">
+          <button class="remove-btn" onclick="removeItem(this)">✕</button>
+          <div class="dyn-label">Titre</div><input type="text" class="ar-title" value="Récupérer les clés">
+          <div class="dyn-label">Détails</div><textarea class="ar-text" rows="2">La boîte à clés sécurisée est fixée au portail gauche. Code : 4821.</textarea>
+        </div>
+        <div class="dyn-item">
+          <button class="remove-btn" onclick="removeItem(this)">✕</button>
+          <div class="dyn-label">Titre</div><input type="text" class="ar-title" value="Entrer dans la maison">
+          <div class="dyn-label">Détails</div><textarea class="ar-text" rows="2">La clé ronde ouvre la porte principale.</textarea>
+        </div>
+      </div>
+      <button class="add-btn" onclick="addStep('arrival')">+ Ajouter une étape</button>
+
+      <div class="sub-header" style="margin-top:1.5rem">Étapes de départ</div>
+      <div class="dyn-list" id="departure-list">
+        <div class="dyn-item">
+          <button class="remove-btn" onclick="removeItem(this)">✕</button>
+          <div class="dyn-label">Titre</div><input type="text" class="dp-title" value="Vaisselle & ménage">
+          <div class="dyn-label">Détails</div><textarea class="dp-text" rows="2">Faites la vaisselle ou lancez le lave-vaisselle. Sortez les poubelles.</textarea>
+        </div>
+        <div class="dyn-item">
+          <button class="remove-btn" onclick="removeItem(this)">✕</button>
+          <div class="dyn-label">Titre</div><input type="text" class="dp-title" value="Fermer et rendre les clés">
+          <div class="dyn-label">Détails</div><textarea class="dp-text" rows="2">Éteignez les lumières, fermez les fenêtres, remettez les clés dans la boîte.</textarea>
+        </div>
+      </div>
+      <button class="add-btn" onclick="addStep('departure')">+ Ajouter une étape</button>
+    </div>
+  </div>
+
+  <!-- 5. INFOS ESSENTIELLES -->
+  <div class="section" id="s-info">
+    <div class="section-header" onclick="toggleSection(this)">
+      <span class="section-num">5</span>
+      <span class="section-title">Infos essentielles</span>
+      <span class="section-chevron">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </span>
+    </div>
+    <div class="section-body">
+      <p class="field-hint" style="margin-bottom:0.75rem">Chaque bloc = une carte dans le guide. Les blocs avec la même catégorie sont regroupés.</p>
+
+      <div class="dyn-list" id="info-blocks-list">
+        <div class="dyn-item">
+          <button class="remove-btn" onclick="removeItem(this)">✕</button>
+          <div class="field-row"><div><div class="dyn-label">Catégorie</div><input type="text" class="ib-cat" value="Déchets & recyclage"></div><div><div class="dyn-label">Icône</div><input type="text" class="ib-icon" value="🗑️" style="width:70px"></div></div>
+          <div class="dyn-label">Titre</div><input type="text" class="ib-title" value="Poubelles & tri sélectif">
+          <div class="dyn-label">Contenu</div>
+          <textarea class="ib-text" rows="3">Les poubelles se trouvent devant le portail. Collecte lundi et jeudi pour les ordures ménagères.</textarea>
+        </div>
+        <div class="dyn-item">
+          <button class="remove-btn" onclick="removeItem(this)">✕</button>
+          <div class="field-row"><div><div class="dyn-label">Catégorie</div><input type="text" class="ib-cat" value="Chauffage"></div><div><div class="dyn-label">Icône</div><input type="text" class="ib-icon" value="🌡️" style="width:70px"></div></div>
+          <div class="dyn-label">Titre</div><input type="text" class="ib-title" value="Thermostat">
+          <div class="dyn-label">Contenu</div>
+          <textarea class="ib-text" rows="2">Le thermostat est dans l'entrée. Température recommandée : 20°C.</textarea>
+        </div>
+      </div>
+      <button class="add-btn" onclick="addInfoBlock()">+ Ajouter un bloc</button>
+    </div>
+  </div>
+
+  <!-- 6. RÈGLEMENT -->
+  <div class="section" id="s-rules">
+    <div class="section-header" onclick="toggleSection(this)">
+      <span class="section-num">6</span>
+      <span class="section-title">Règlement</span>
+      <span class="section-chevron">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </span>
+    </div>
+    <div class="section-body">
+      <div class="dyn-list" id="rules-list">
+        <div class="dyn-item"><button class="remove-btn" onclick="removeItem(this)">✕</button><div class="field-row"><div><div class="dyn-label">Icône</div><input type="text" class="ru-icon" value="🔇" style="width:70px"></div><div><div class="dyn-label">Règle</div><input type="text" class="ru-text" value="Silence après 22h"></div></div></div>
+        <div class="dyn-item"><button class="remove-btn" onclick="removeItem(this)">✕</button><div class="field-row"><div><div class="dyn-label">Icône</div><input type="text" class="ru-icon" value="🚭" style="width:70px"></div><div><div class="dyn-label">Règle</div><input type="text" class="ru-text" value="Non-fumeur à l'intérieur"></div></div></div>
+        <div class="dyn-item"><button class="remove-btn" onclick="removeItem(this)">✕</button><div class="field-row"><div><div class="dyn-label">Icône</div><input type="text" class="ru-icon" value="🎉" style="width:70px"></div><div><div class="dyn-label">Règle</div><input type="text" class="ru-text" value="Pas de fête ni rassemblement"></div></div></div>
+        <div class="dyn-item"><button class="remove-btn" onclick="removeItem(this)">✕</button><div class="field-row"><div><div class="dyn-label">Icône</div><input type="text" class="ru-icon" value="🧹" style="width:70px"></div><div><div class="dyn-label">Règle</div><input type="text" class="ru-text" value="Laisser le logement propre au départ"></div></div></div>
+      </div>
+      <button class="add-btn" onclick="addRule()">+ Ajouter une règle</button>
+    </div>
+  </div>
+
+  <!-- 7. ÉQUIPEMENTS -->
+  <div class="section" id="s-equipment">
+    <div class="section-header" onclick="toggleSection(this)">
+      <span class="section-num">7</span>
+      <span class="section-title">Équipements</span>
+      <span class="section-chevron">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </span>
+    </div>
+    <div class="section-body">
+      <div id="equip-groups">
+        <div class="group-block" data-group="equip">
+          <button class="group-remove-btn" onclick="removeGroup(this)">Supprimer catégorie</button>
+          <div class="dyn-label">Catégorie</div>
+          <input type="text" class="eq-cat" value="Cuisine">
+          <div class="dyn-list eq-items">
+            <div class="dyn-item"><button class="remove-btn" onclick="removeItem(this)">✕</button><div class="field-row"><div><div class="dyn-label">Icône</div><input type="text" class="ei-icon" value="☕" style="width:70px"></div><div><div class="dyn-label">Nom</div><input type="text" class="ei-name" value="Machine Nespresso"></div></div><div style="margin-top:0.4rem"><div class="dyn-label">Note</div><input type="text" class="ei-note" value="Capsules fournies"></div></div>
+            <div class="dyn-item"><button class="remove-btn" onclick="removeItem(this)">✕</button><div class="field-row"><div><div class="dyn-label">Icône</div><input type="text" class="ei-icon" value="🍳" style="width:70px"></div><div><div class="dyn-label">Nom</div><input type="text" class="ei-name" value="Plaques à induction"></div></div><div style="margin-top:0.4rem"><div class="dyn-label">Note</div><input type="text" class="ei-note" value="Fond plat uniquement"></div></div>
+          </div>
+          <button class="add-btn" onclick="addEquipItem(this)">+ Ajouter un équipement</button>
+        </div>
+
+        <div class="group-block" data-group="equip">
+          <button class="group-remove-btn" onclick="removeGroup(this)">Supprimer catégorie</button>
+          <div class="dyn-label">Catégorie</div>
+          <input type="text" class="eq-cat" value="Salon">
+          <div class="dyn-list eq-items">
+            <div class="dyn-item"><button class="remove-btn" onclick="removeItem(this)">✕</button><div class="field-row"><div><div class="dyn-label">Icône</div><input type="text" class="ei-icon" value="📺" style="width:70px"></div><div><div class="dyn-label">Nom</div><input type="text" class="ei-name" value="TV 55&quot; — Netflix"></div></div><div style="margin-top:0.4rem"><div class="dyn-label">Note</div><input type="text" class="ei-note" value="Compte invité"></div></div>
+          </div>
+          <button class="add-btn" onclick="addEquipItem(this)">+ Ajouter un équipement</button>
+        </div>
+      </div>
+      <button class="add-btn" style="margin-top:0.5rem" onclick="addEquipGroup()">+ Ajouter une catégorie</button>
+    </div>
+  </div>
+
+  <!-- 8. RECOMMANDATIONS -->
+  <div class="section" id="s-reco">
+    <div class="section-header" onclick="toggleSection(this)">
+      <span class="section-num">8</span>
+      <span class="section-title">Recommandations</span>
+      <span class="section-chevron">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </span>
+    </div>
+    <div class="section-body">
+      <div id="reco-groups">
+        <div class="group-block" data-group="reco">
+          <button class="group-remove-btn" onclick="removeGroup(this)">Supprimer catégorie</button>
+          <div class="dyn-label">Catégorie</div>
+          <input type="text" class="rc-cat" value="Alimentation">
+          <div class="dyn-list rc-items">
+            <div class="dyn-item"><button class="remove-btn" onclick="removeItem(this)">✕</button><div class="dyn-label">Nom</div><input type="text" class="ri-name" value="Intermarché"><div class="dyn-label">Tag</div><input type="text" class="ri-tag" value="Supermarché"><div class="dyn-label">Note</div><textarea class="ri-note" rows="2">Route de Lisieux — Lun-Sam 8h-20h. À 3 min en voiture.</textarea></div>
+            <div class="dyn-item"><button class="remove-btn" onclick="removeItem(this)">✕</button><div class="dyn-label">Nom</div><input type="text" class="ri-name" value="Boulangerie Lecomte"><div class="dyn-label">Tag</div><input type="text" class="ri-tag" value="Boulangerie"><div class="dyn-label">Note</div><textarea class="ri-note" rows="2">12 Rue de la République — 7h-13h, fermé le lundi.</textarea></div>
+          </div>
+          <button class="add-btn" onclick="addRecoItem(this)">+ Ajouter un lieu</button>
+        </div>
+
+        <div class="group-block" data-group="reco">
+          <button class="group-remove-btn" onclick="removeGroup(this)">Supprimer catégorie</button>
+          <div class="dyn-label">Catégorie</div>
+          <input type="text" class="rc-cat" value="Restaurants">
+          <div class="dyn-list rc-items">
+            <div class="dyn-item"><button class="remove-btn" onclick="removeItem(this)">✕</button><div class="dyn-label">Nom</div><input type="text" class="ri-name" value="Les Deux Tonnelles"><div class="dyn-label">Tag</div><input type="text" class="ri-tag" value="Cuisine normande"><div class="dyn-label">Note</div><textarea class="ri-note" rows="2">À 8 min. Réservation conseillée le week-end.</textarea></div>
+          </div>
+          <button class="add-btn" onclick="addRecoItem(this)">+ Ajouter un lieu</button>
+        </div>
+      </div>
+      <button class="add-btn" style="margin-top:0.5rem" onclick="addRecoGroup()">+ Ajouter une catégorie</button>
+    </div>
+  </div>
+
+  <!-- 9. DOCUMENTS -->
+  <div class="section" id="s-upload">
+    <div class="section-header" onclick="toggleSection(this)">
+      <span class="section-num">9</span>
+      <span class="section-title">Documents existants</span>
+      <span class="section-chevron">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </span>
+    </div>
+    <div class="section-body">
+      <p class="field-hint" style="margin-bottom:0.75rem">Si vous avez déjà un livret d'accueil, des photos du logement, ou d'autres documents utiles, ajoutez-les ici. Ils seront inclus dans le dossier <code>documents/</code> du ZIP.</p>
+      <div class="upload-zone" id="upload-zone">
+        <p>Glissez vos fichiers ici ou</p>
+        <input type="file" id="file-input" multiple accept="image/*,.pdf,.doc,.docx,.txt" style="display:none">
+        <button class="add-btn" onclick="document.getElementById('file-input').click()">+ Ajouter des fichiers</button>
+      </div>
+      <div class="dyn-list" id="upload-preview"></div>
+    </div>
+  </div>
+
+</div>
+
+<div class="generate-bar">
+  <button class="generate-btn" id="generateBtn" onclick="generate()">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <span id="generateBtnText">Générer & Télécharger le guide (.zip)</span>
+  </button>
+</div>
+
+<div class="toast" id="toast">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  <span id="toastText">Guide téléchargé !</span>
+</div>
+
+<script>
+/* ================================================================
+   DOM HELPERS
+   ================================================================ */
+function toggleSection(hdr){ hdr.closest('.section').classList.toggle('open'); }
+function removeItem(btn){ btn.closest('.dyn-item').remove(); }
+function removeGroup(btn){
+  if (confirm('Supprimer cette catégorie et tout son contenu ?')) btn.closest('.group-block').remove();
+}
+function V(id){ const el = document.getElementById(id); return el ? el.value : ''; }
+
+function showToast(msg, isError) {
+  const t = document.getElementById('toast');
+  document.getElementById('toastText').textContent = msg;
+  t.classList.toggle('toast--error', !!isError);
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3500);
+}
+
+function addContact(){
+  document.getElementById('contacts-list').insertAdjacentHTML('beforeend',`<div class="dyn-item"><button class="remove-btn" onclick="removeItem(this)">✕</button><div class="field-row"><div><div class="dyn-label">Nom</div><input type="text" class="ct-name"></div><div><div class="dyn-label">Téléphone</div><input type="tel" class="ct-phone"></div></div><div class="field-row" style="margin-top:0.5rem"><div><div class="dyn-label">Rôle</div><input type="text" class="ct-role"></div><div><div class="dyn-label">Note</div><input type="text" class="ct-note"></div></div></div>`);
+}
+function addEmergency(){
+  document.getElementById('emergency-list').insertAdjacentHTML('beforeend',`<div class="dyn-item"><button class="remove-btn" onclick="removeItem(this)">✕</button><div class="field-row"><div><div class="dyn-label">Numéro</div><input type="text" class="em-num"></div><div><div class="dyn-label">Label</div><input type="text" class="em-label"></div></div></div>`);
+}
+function addStep(type){
+  const pre = type==='arrival' ? 'ar' : 'dp';
+  const id = type==='arrival' ? 'arrival-list' : 'departure-list';
+  document.getElementById(id).insertAdjacentHTML('beforeend',`<div class="dyn-item"><button class="remove-btn" onclick="removeItem(this)">✕</button><div class="dyn-label">Titre</div><input type="text" class="${pre}-title"><div class="dyn-label">Détails</div><textarea class="${pre}-text" rows="2"></textarea></div>`);
+}
+function addInfoBlock(){
+  document.getElementById('info-blocks-list').insertAdjacentHTML('beforeend',`<div class="dyn-item"><button class="remove-btn" onclick="removeItem(this)">✕</button><div class="field-row"><div><div class="dyn-label">Catégorie</div><input type="text" class="ib-cat"></div><div><div class="dyn-label">Icône</div><input type="text" class="ib-icon" value="📌" style="width:70px"></div></div><div class="dyn-label">Titre</div><input type="text" class="ib-title"><div class="dyn-label">Contenu</div><textarea class="ib-text" rows="3"></textarea></div>`);
+}
+function addRule(){
+  document.getElementById('rules-list').insertAdjacentHTML('beforeend',`<div class="dyn-item"><button class="remove-btn" onclick="removeItem(this)">✕</button><div class="field-row"><div><div class="dyn-label">Icône</div><input type="text" class="ru-icon" value="✓" style="width:70px"></div><div><div class="dyn-label">Règle</div><input type="text" class="ru-text"></div></div></div>`);
+}
+function addEquipItem(btn){
+  btn.previousElementSibling.insertAdjacentHTML('beforeend',`<div class="dyn-item"><button class="remove-btn" onclick="removeItem(this)">✕</button><div class="field-row"><div><div class="dyn-label">Icône</div><input type="text" class="ei-icon" value="📦" style="width:70px"></div><div><div class="dyn-label">Nom</div><input type="text" class="ei-name"></div></div><div style="margin-top:0.4rem"><div class="dyn-label">Note</div><input type="text" class="ei-note"></div></div>`);
+}
+function addEquipGroup(){
+  document.getElementById('equip-groups').insertAdjacentHTML('beforeend',`<div class="group-block" data-group="equip"><button class="group-remove-btn" onclick="removeGroup(this)">Supprimer catégorie</button><div class="dyn-label">Catégorie</div><input type="text" class="eq-cat" placeholder="Ex: Chambre, Extérieur…"><div class="dyn-list eq-items"></div><button class="add-btn" onclick="addEquipItem(this)">+ Ajouter un équipement</button></div>`);
+}
+function addRecoItem(btn){
+  btn.previousElementSibling.insertAdjacentHTML('beforeend',`<div class="dyn-item"><button class="remove-btn" onclick="removeItem(this)">✕</button><div class="dyn-label">Nom</div><input type="text" class="ri-name"><div class="dyn-label">Tag</div><input type="text" class="ri-tag"><div class="dyn-label">Note</div><textarea class="ri-note" rows="2"></textarea></div>`);
+}
+function addRecoGroup(){
+  document.getElementById('reco-groups').insertAdjacentHTML('beforeend',`<div class="group-block" data-group="reco"><button class="group-remove-btn" onclick="removeGroup(this)">Supprimer catégorie</button><div class="dyn-label">Catégorie</div><input type="text" class="rc-cat" placeholder="Ex: Bars, Activités, Plages…"><div class="dyn-list rc-items"></div><button class="add-btn" onclick="addRecoItem(this)">+ Ajouter un lieu</button></div>`);
+}
+
+/* ================================================================
+   FILE UPLOAD
+   ================================================================ */
+let uploadedFiles = [];
+const zone = document.getElementById('upload-zone');
+zone.addEventListener('dragover', e => { e.preventDefault(); zone.classList.add('dragover'); });
+zone.addEventListener('dragleave', () => zone.classList.remove('dragover'));
+zone.addEventListener('drop', e => {
+  e.preventDefault();
+  zone.classList.remove('dragover');
+  handleFiles(e.dataTransfer.files);
+});
+document.getElementById('file-input').addEventListener('change', e => {
+  handleFiles(e.target.files);
+  e.target.value = '';
+});
+
+function handleFiles(files){
+  for (const file of files) {
+    const idx = uploadedFiles.length;
+    uploadedFiles.push(file);
+    const div = document.createElement('div');
+    div.className = 'dyn-item upload-file';
+    if (file.type.startsWith('image/')) {
+      const img = document.createElement('img');
+      const reader = new FileReader();
+      reader.onload = ev => img.src = ev.target.result;
+      reader.readAsDataURL(file);
+      div.appendChild(img);
+    } else {
+      const ic = document.createElement('span');
+      ic.className = 'file-icon';
+      ic.textContent = file.name.toLowerCase().endsWith('.pdf') ? '📄' : '📎';
+      div.appendChild(ic);
+    }
+    const info = document.createElement('span');
+    info.className = 'file-info';
+    info.textContent = `${file.name} (${Math.round(file.size / 1024)} Ko)`;
+    div.appendChild(info);
+    const btn = document.createElement('button');
+    btn.className = 'remove-btn';
+    btn.textContent = '✕';
+    btn.onclick = () => { uploadedFiles[idx] = null; div.remove(); };
+    div.appendChild(btn);
+    document.getElementById('upload-preview').appendChild(div);
+  }
+}
+
+/* ================================================================
+   COLLECT DATA
+   ================================================================ */
+function collectData(){
+  const d = {
+    name: V('prop-name'),
+    location: V('prop-location'),
+    welcomeTitle: V('welcome-title'),
+    welcomeText: V('welcome-text'),
+    wifiNet: V('wifi-network'),
+    wifiPass: V('wifi-password'),
+    wifiCoverage: V('wifi-coverage'),
+    wifiTrouble: V('wifi-trouble'),
+    ciTime: V('checkin-time'),
+    coTime: V('checkout-time'),
+    contacts: [],
+    emergency: [],
+    arrival: [],
+    departure: [],
+    infoBlocks: [],
+    rules: [],
+    equipGroups: [],
+    recoGroups: []
+  };
+
+  document.querySelectorAll('#contacts-list .dyn-item').forEach(el => {
+    d.contacts.push({
+      name:  el.querySelector('.ct-name').value,
+      phone: el.querySelector('.ct-phone').value,
+      role:  el.querySelector('.ct-role').value,
+      note:  el.querySelector('.ct-note').value
+    });
+  });
+  document.querySelectorAll('#emergency-list .dyn-item').forEach(el => {
+    d.emergency.push({
+      num:   el.querySelector('.em-num').value,
+      label: el.querySelector('.em-label').value
+    });
+  });
+  document.querySelectorAll('#arrival-list .dyn-item').forEach(el => {
+    d.arrival.push({
+      title: el.querySelector('.ar-title').value,
+      text:  el.querySelector('.ar-text').value
+    });
+  });
+  document.querySelectorAll('#departure-list .dyn-item').forEach(el => {
+    d.departure.push({
+      title: el.querySelector('.dp-title').value,
+      text:  el.querySelector('.dp-text').value
+    });
+  });
+  document.querySelectorAll('#info-blocks-list .dyn-item').forEach(el => {
+    d.infoBlocks.push({
+      cat:   el.querySelector('.ib-cat').value,
+      icon:  el.querySelector('.ib-icon').value,
+      title: el.querySelector('.ib-title').value,
+      text:  el.querySelector('.ib-text').value
+    });
+  });
+  document.querySelectorAll('#rules-list .dyn-item').forEach(el => {
+    d.rules.push({
+      icon: el.querySelector('.ru-icon').value,
+      text: el.querySelector('.ru-text').value
+    });
+  });
+  document.querySelectorAll('#equip-groups .group-block').forEach(gr => {
+    const group = { cat: gr.querySelector('.eq-cat').value, items: [] };
+    gr.querySelectorAll('.eq-items .dyn-item').forEach(it => {
+      group.items.push({
+        icon: it.querySelector('.ei-icon').value,
+        name: it.querySelector('.ei-name').value,
+        note: it.querySelector('.ei-note').value
+      });
+    });
+    d.equipGroups.push(group);
+  });
+  document.querySelectorAll('#reco-groups .group-block').forEach(gr => {
+    const group = { cat: gr.querySelector('.rc-cat').value, items: [] };
+    gr.querySelectorAll('.rc-items .dyn-item').forEach(it => {
+      group.items.push({
+        name: it.querySelector('.ri-name').value,
+        tag:  it.querySelector('.ri-tag').value,
+        note: it.querySelector('.ri-note').value
+      });
+    });
+    d.recoGroups.push(group);
+  });
+  return d;
+}
+
+/* ================================================================
+   HTML BUILDERS
+   ================================================================ */
+const e  = s => (s || '').toString().replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+const nl = s => (s || '').split(/\r?\n/).filter(x => x.trim());
+const textToP = (txt, cls) => nl(txt).map(l => {
+  const m = l.match(/^([^—]+)\s—\s(.+)$/);
+  if (m) return `        <p class="${cls}"><strong>${e(m[1].trim())}</strong> — ${e(m[2].trim())}</p>`;
+  return `        <p class="${cls}">${e(l)}</p>`;
+}).join('\n');
+
+const HEAD = (name, page) => `<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>${e(name)} — ${page}</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+`;
+
+const HEADER = (name) => `  <header class="site-header">
+    <div class="site-title">${e(name)}</div>
+    <div class="site-lang"><span class="active">FR</span><span>EN</span></div>
+  </header>
+`;
+
+const FOOT = `\n</body>\n</html>`;
+
+function genIndex(d) {
+  return `${HEAD(d.name, 'Accueil')}${HEADER(d.name)}
+  <div class="hero-image" style="background:linear-gradient(135deg,#3B5BDB,#0B1B3B);">
+    <div class="hero-location">${e(d.location)}</div>
+  </div>
+
+  <div class="content">
+    <h1 class="welcome-title">${e(d.welcomeTitle)}</h1>
+    <p class="welcome-text">${e(d.welcomeText)}</p>
+
+    <p class="section-label">Guide</p>
+    <div class="nav-grid">
+      <a href="./info.html" class="nav-card"><span class="nav-icon">💡</span><span>Infos essentielles</span></a>
+      <a href="./checkin.html" class="nav-card"><span class="nav-icon">🗝️</span><span>Arrivée & Départ</span></a>
+      <a href="./wifi.html" class="nav-card"><span class="nav-icon">📶</span><span>Wi-Fi</span></a>
+      <a href="./rules.html" class="nav-card"><span class="nav-icon">📋</span><span>Règlement</span></a>
+      <a href="./equipment.html" class="nav-card"><span class="nav-icon">🛋️</span><span>Équipements</span></a>
+      <a href="./contact.html" class="nav-card"><span class="nav-icon">📞</span><span>Contact & Urgences</span></a>
+      <a href="./recommendations.html" class="nav-card"><span class="nav-icon">📍</span><span>Recommandations</span></a>
+    </div>
+
+    <p class="section-label">Accès rapide</p>
+    <div class="quick-grid">
+      <div class="quick-card">
+        <div class="quick-label">📶 Wi-Fi</div>
+        <div class="quick-value">${e(d.wifiPass)}</div>
+        <div class="quick-sub">${e(d.wifiNet)}</div>
+      </div>
+      ${d.contacts[0] ? `<div class="quick-card">
+        <div class="quick-label">👤 ${e(d.contacts[0].role || 'Hôte')}</div>
+        <div class="quick-value">${e(d.contacts[0].name)}</div>
+        <div class="quick-sub">${e(d.contacts[0].note)}</div>
+        <a href="tel:${e(d.contacts[0].phone)}" class="quick-action">📞 Appeler</a>
+      </div>` : ''}
+    </div>
+  </div>${FOOT}`;
+}
+
+function genWifi(d) {
+  return `${HEAD(d.name, 'Wi-Fi')}${HEADER(d.name)}
+  <a href="./index.html" class="back-link">← Retour</a>
+  <h1 class="page-title"><span class="page-title-icon">📶</span> Wi-Fi</h1>
+
+  <div class="content">
+    <div class="sub-section">
+      <div class="wifi-card">
+        <div class="wifi-row"><span class="wifi-label">Réseau</span><span class="wifi-value">${e(d.wifiNet)}</span></div>
+        <div class="wifi-row"><span class="wifi-label">Mot de passe</span><span class="wifi-value">${e(d.wifiPass)}</span></div>
+      </div>
+    </div>
+    <div class="sub-section">
+      <p class="sub-title">Couverture</p>
+${textToP(d.wifiCoverage, 'info-block-text')}
+    </div>
+    <div class="sub-section">
+      <p class="sub-title">En cas de problème</p>
+${textToP(d.wifiTrouble, 'info-block-text')}
+    </div>
+  </div>${FOOT}`;
+}
+
+function genCheckin(d) {
+  const stepsHTML = arr => arr.map(s => `
+      <div class="step">
+        <p class="step-title">${e(s.title)}</p>
+        <p class="step-text">${e(s.text)}</p>
+      </div>`).join('');
+
+  return `${HEAD(d.name, 'Arrivée & Départ')}${HEADER(d.name)}
+  <a href="./index.html" class="back-link">← Retour</a>
+  <h1 class="page-title"><span class="page-title-icon">🗝️</span> Arrivée & Départ</h1>
+
+  <div class="content">
+    <div class="sub-section">
+      <div class="time-banner">
+        <div class="time-cell"><span class="time-cell-label">Check-in</span><span class="time-cell-value">${e(d.ciTime)}</span></div>
+        <div class="time-cell"><span class="time-cell-label">Check-out</span><span class="time-cell-value">${e(d.coTime)}</span></div>
+      </div>
+    </div>
+    <div class="sub-section">
+      <p class="sub-title">Arrivée</p>
+      <div class="steps">${stepsHTML(d.arrival)}</div>
+    </div>
+    <div class="sub-section">
+      <p class="sub-title">Départ</p>
+      <div class="steps">${stepsHTML(d.departure)}</div>
+    </div>
+  </div>${FOOT}`;
+}
+
+function genInfo(d) {
+  const cats = {};
+  d.infoBlocks.forEach(b => {
+    if (!cats[b.cat]) cats[b.cat] = [];
+    cats[b.cat].push(b);
+  });
+  let html = '';
+  for (const [cat, blocks] of Object.entries(cats)) {
+    html += `\n    <div class="sub-section">\n      <p class="sub-title">${e(cat)}</p>`;
+    blocks.forEach(b => {
+      html += `\n      <div class="info-block">
+        <div class="info-block-header"><span class="info-block-icon">${b.icon}</span><span class="info-block-title">${e(b.title)}</span></div>
+${textToP(b.text, 'info-block-text')}
+      </div>`;
+    });
+    html += `\n    </div>`;
+  }
+  return `${HEAD(d.name, 'Infos essentielles')}${HEADER(d.name)}
+  <a href="./index.html" class="back-link">← Retour</a>
+  <h1 class="page-title"><span class="page-title-icon">💡</span> Infos essentielles</h1>
+
+  <div class="content">${html}
+  </div>${FOOT}`;
+}
+
+function genRules(d) {
+  const rows = d.rules.map(r => `
+        <div class="list-row"><span class="list-row-icon">${r.icon}</span><span class="list-row-text">${e(r.text)}</span></div>`).join('');
+  return `${HEAD(d.name, 'Règlement')}${HEADER(d.name)}
+  <a href="./index.html" class="back-link">← Retour</a>
+  <h1 class="page-title"><span class="page-title-icon">📋</span> Règlement</h1>
+
+  <div class="content">
+    <div class="sub-section">
+      <div class="list-card">${rows}
+      </div>
+    </div>
+  </div>${FOOT}`;
+}
+
+function genEquipment(d) {
+  let html = '';
+  d.equipGroups.forEach(g => {
+    html += `\n    <div class="sub-section">\n      <p class="sub-title">${e(g.cat)}</p>\n      <div class="list-card">`;
+    g.items.forEach(i => {
+      html += `\n        <div class="list-row"><span class="list-row-icon">${i.icon}</span><span class="list-row-text">${e(i.name)}</span>${i.note ? `<span class="list-row-note">${e(i.note)}</span>` : ''}</div>`;
+    });
+    html += `\n      </div>\n    </div>`;
+  });
+  return `${HEAD(d.name, 'Équipements')}${HEADER(d.name)}
+  <a href="./index.html" class="back-link">← Retour</a>
+  <h1 class="page-title"><span class="page-title-icon">🛋️</span> Équipements</h1>
+
+  <div class="content">${html}
+  </div>${FOOT}`;
+}
+
+function genContact(d) {
+  const contactsHTML = d.contacts.map(c => `
+      <div class="contact-card">
+        <p class="contact-role">${e(c.role)}</p>
+        <p class="contact-name">${e(c.name)}</p>
+        <p class="contact-note">${e(c.note)}</p>
+        <div class="contact-actions">
+          <a href="tel:${e(c.phone)}" class="contact-action">📞 Appeler</a>
+          <a href="sms:${e(c.phone)}" class="contact-action">💬 SMS</a>
+        </div>
+      </div>`).join('\n');
+
+  const emergHTML = d.emergency.map(n => `
+        <a href="tel:${e(n.num)}" class="emergency-num"><strong>${e(n.num)}</strong><span>${e(n.label)}</span></a>`).join('');
+
+  return `${HEAD(d.name, 'Contact & Urgences')}${HEADER(d.name)}
+  <a href="./index.html" class="back-link">← Retour</a>
+  <h1 class="page-title"><span class="page-title-icon">📞</span> Contact & Urgences</h1>
+
+  <div class="content">
+    <div class="sub-section">
+      <p class="sub-title">Vos hôtes</p>
+${contactsHTML}
+    </div>
+    <div class="sub-section">
+      <p class="sub-title">Numéros d'urgence</p>
+      <div class="emergency-grid">${emergHTML}
+      </div>
+    </div>
+  </div>${FOOT}`;
+}
+
+function genReco(d) {
+  let html = '';
+  d.recoGroups.forEach(g => {
+    html += `\n    <div class="sub-section">\n      <p class="sub-title">${e(g.cat)}</p>`;
+    g.items.forEach(i => {
+      html += `\n      <div class="reco-card">
+        <div class="reco-top"><span class="reco-name">${e(i.name)}</span><span class="reco-tag">${e(i.tag)}</span></div>
+        <p class="reco-note">${e(i.note)}</p>
+      </div>`;
+    });
+    html += `\n    </div>`;
+  });
+  return `${HEAD(d.name, 'Recommandations')}${HEADER(d.name)}
+  <a href="./index.html" class="back-link">← Retour</a>
+  <h1 class="page-title"><span class="page-title-icon">📍</span> Recommandations</h1>
+
+  <div class="content">${html}
+  </div>${FOOT}`;
+}
+
+/* ================================================================
+   DEFAULT STYLE.CSS FOR THE GUIDE
+   ================================================================ */
+const DEFAULT_CSS = `/* Guide généré par Hostly — style minimal */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #F5F5F3; color: #111; font-size: 15px; line-height: 1.5; -webkit-font-smoothing: antialiased; }
+a { color: inherit; text-decoration: none; }
+
+.site-header { display: flex; justify-content: space-between; align-items: center; padding: 16px 20px; background: #fff; border-bottom: 1px solid #E2E2DE; position: sticky; top: 0; z-index: 10; }
+.site-title { font-weight: 700; font-size: 15px; }
+.site-lang { display: flex; gap: 8px; font-size: 12px; color: #999; font-weight: 600; }
+.site-lang .active { color: #111; }
+
+.hero-image { height: 220px; position: relative; background-size: cover; background-position: center; }
+.hero-location { position: absolute; bottom: 16px; left: 16px; background: rgba(255,255,255,0.92); padding: 6px 12px; border-radius: 999px; font-size: 12px; font-weight: 600; color: #111; }
+
+.content { max-width: 680px; margin: 0 auto; padding: 20px; }
+.welcome-title { font-size: 22px; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 8px; }
+.welcome-text { color: #555; font-size: 14px; line-height: 1.6; margin-bottom: 24px; }
+
+.section-label { font-size: 11px; font-weight: 700; color: #999; letter-spacing: 0.1em; text-transform: uppercase; margin: 24px 0 12px; }
+
+.nav-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.nav-card { background: #fff; border: 1px solid #E2E2DE; border-radius: 10px; padding: 14px; display: flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 600; transition: transform 0.15s, border-color 0.15s; }
+.nav-card:hover { transform: translateY(-2px); border-color: #999; }
+.nav-icon { font-size: 18px; }
+
+.quick-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.quick-card { background: #F5F5F3; border-radius: 10px; padding: 12px; }
+.quick-label { font-size: 10px; font-weight: 700; color: #999; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 4px; }
+.quick-value { font-size: 18px; font-weight: 700; letter-spacing: -0.01em; }
+.quick-sub { font-size: 11px; color: #555; margin-bottom: 6px; }
+.quick-action { display: inline-block; background: #fff; border: 1px solid #E2E2DE; border-radius: 6px; padding: 4px 10px; font-size: 11px; font-weight: 600; color: #1C6BF0; }
+
+.back-link { display: inline-block; margin: 16px 20px 0; font-size: 13px; color: #555; font-weight: 500; }
+.page-title { font-size: 24px; font-weight: 700; padding: 16px 20px 8px; letter-spacing: -0.02em; display: flex; align-items: center; gap: 10px; }
+.page-title-icon { font-size: 1em; }
+
+.sub-section { margin-bottom: 24px; }
+.sub-title { font-size: 14px; font-weight: 700; color: #555; letter-spacing: 0.02em; margin-bottom: 10px; padding-bottom: 6px; border-bottom: 1px solid #E2E2DE; }
+
+.wifi-card { background: #fff; border: 1px solid #E2E2DE; border-radius: 10px; padding: 16px; }
+.wifi-row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #F0F0EC; }
+.wifi-row:last-child { border-bottom: none; }
+.wifi-label { font-size: 12px; color: #999; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; }
+.wifi-value { font-size: 15px; font-weight: 700; font-family: 'Menlo', monospace; }
+
+.time-banner { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; background: #fff; border: 1px solid #E2E2DE; border-radius: 10px; padding: 16px; }
+.time-cell { text-align: center; }
+.time-cell-label { display: block; font-size: 11px; font-weight: 700; color: #999; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 4px; }
+.time-cell-value { font-size: 24px; font-weight: 700; letter-spacing: -0.02em; }
+
+.steps { display: flex; flex-direction: column; gap: 10px; }
+.step { background: #fff; border: 1px solid #E2E2DE; border-radius: 10px; padding: 14px; }
+.step-title { font-weight: 700; margin-bottom: 4px; font-size: 14px; }
+.step-text { font-size: 13px; color: #555; line-height: 1.55; }
+
+.info-block { background: #fff; border: 1px solid #E2E2DE; border-radius: 10px; padding: 14px; margin-bottom: 10px; }
+.info-block-header { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+.info-block-icon { font-size: 18px; }
+.info-block-title { font-weight: 700; font-size: 14px; }
+.info-block-text { font-size: 13px; color: #555; line-height: 1.6; margin-bottom: 4px; }
+.info-block-text:last-child { margin-bottom: 0; }
+
+.list-card { background: #fff; border: 1px solid #E2E2DE; border-radius: 10px; overflow: hidden; }
+.list-row { display: flex; align-items: center; gap: 10px; padding: 12px 14px; border-bottom: 1px solid #F0F0EC; font-size: 14px; }
+.list-row:last-child { border-bottom: none; }
+.list-row-icon { font-size: 16px; flex-shrink: 0; }
+.list-row-text { flex: 1; font-weight: 500; }
+.list-row-note { font-size: 12px; color: #999; font-style: italic; }
+
+.contact-card { background: #fff; border: 1px solid #E2E2DE; border-radius: 10px; padding: 14px; margin-bottom: 10px; }
+.contact-role { font-size: 11px; font-weight: 700; color: #999; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 2px; }
+.contact-name { font-size: 16px; font-weight: 700; margin-bottom: 2px; }
+.contact-note { font-size: 12px; color: #555; margin-bottom: 10px; }
+.contact-actions { display: flex; gap: 8px; }
+.contact-action { flex: 1; background: #F5F5F3; border-radius: 8px; padding: 8px; text-align: center; font-size: 13px; font-weight: 600; color: #1C6BF0; }
+
+.emergency-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.emergency-num { background: #fff; border: 1px solid #E2E2DE; border-radius: 10px; padding: 12px; text-align: center; transition: border-color 0.15s; }
+.emergency-num:hover { border-color: #1C6BF0; }
+.emergency-num strong { display: block; font-size: 22px; font-weight: 700; color: #DC2626; letter-spacing: -0.02em; }
+.emergency-num span { font-size: 11px; color: #999; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; }
+
+.reco-card { background: #fff; border: 1px solid #E2E2DE; border-radius: 10px; padding: 14px; margin-bottom: 10px; }
+.reco-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 6px; gap: 10px; }
+.reco-name { font-weight: 700; font-size: 14px; }
+.reco-tag { background: #EFF4FF; color: #1C6BF0; padding: 2px 8px; border-radius: 999px; font-size: 11px; font-weight: 600; white-space: nowrap; }
+.reco-note { font-size: 13px; color: #555; line-height: 1.55; }
+`;
+
+/* ================================================================
+   GENERATE & DOWNLOAD
+   ================================================================ */
+async function generate(){
+  const btn = document.getElementById('generateBtn');
+  const text = document.getElementById('generateBtnText');
+  btn.classList.add('loading');
+  text.textContent = 'Génération…';
+
+  try {
+    const d = collectData();
+
+    if (!d.name.trim()) {
+      showToast('Ajoutez au moins le nom de la propriété', true);
+      return;
+    }
+
+    const slug = d.name.toLowerCase()
+      .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/^-+|-+$/g, '') || 'guide';
+
+    const zip = new JSZip();
+    const folder = zip.folder(slug);
+
+    folder.file('style.css', DEFAULT_CSS);
+    folder.file('index.html', genIndex(d));
+    folder.file('wifi.html', genWifi(d));
+    folder.file('checkin.html', genCheckin(d));
+    folder.file('info.html', genInfo(d));
+    folder.file('rules.html', genRules(d));
+    folder.file('equipment.html', genEquipment(d));
+    folder.file('contact.html', genContact(d));
+    folder.file('recommendations.html', genReco(d));
+
+    const hasFiles = uploadedFiles.some(f => f !== null);
+    if (hasFiles) {
+      const docs = folder.folder('documents');
+      for (const file of uploadedFiles) {
+        if (file) docs.file(file.name, file);
+      }
+    }
+
+    const blob = await zip.generateAsync({ type: 'blob' });
+    saveAs(blob, slug + '-guide.zip');
+    showToast('Guide téléchargé !');
+  } catch (err) {
+    console.error(err);
+    showToast('Erreur lors de la génération', true);
+  } finally {
+    btn.classList.remove('loading');
+    text.textContent = 'Générer & Télécharger le guide (.zip)';
+  }
+}
+
+/* ================================================================
+   LOCAL SAVE (pour ne rien perdre)
+   ================================================================ */
+const STORAGE_KEY = 'hostly_gen_v2';
+function saveState() {
+  try {
+    const state = {
+      text: {},
+      dyn: document.getElementById('info-blocks-list').parentElement.parentElement.parentElement.innerHTML
+    };
+    document.querySelectorAll('input[id], textarea[id]').forEach(el => {
+      state.text[el.id] = el.value;
+    });
+    // on ne sauvegarde pas le DOM dynamique complet pour éviter corruption - user réouvre propre
+    localStorage.setItem(STORAGE_KEY, JSON.stringify({ text: state.text }));
+  } catch (e) {}
+}
+function loadState() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return;
+    const state = JSON.parse(raw);
+    if (state.text) {
+      Object.keys(state.text).forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.value = state.text[id];
+      });
+    }
+  } catch (e) {}
+}
+loadState();
+document.addEventListener('input', e => {
+  if (e.target.matches('input, textarea')) saveState();
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#ffffff" />
+  <title>Wi-Fi — Villa Dubois</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+<div class="page">
+
+  <header class="header">
+    <span class="header-name">Villa Dubois</span>
+    <div class="lang-switch">
+      <a href="./wifi.html"    class="lang-btn">FR</a>
+      <a href="./wifi-en.html" class="lang-btn active">EN</a>
+    </div>
+  </header>
+
+  <a href="./index-en.html" class="back-link">← Back</a>
+  <h1 class="page-title"><span class="page-title-icon">📶</span> Wi-Fi</h1>
+
+  <div class="content">
+    <div class="sub-section">
+      <div class="wifi-display">
+        <p class="wifi-network">Network: Livebox-234</p>
+        <p class="wifi-password">1234567</p>
+        <button class="wifi-copy-btn" onclick="copyWifi(this)"><span>Copy password</span></button>
+      </div>
+    </div>
+
+    <div class="sub-section">
+      <p class="sub-title">Good to know</p>
+      <div class="info-block">
+        <div class="info-block-header">
+          <span class="info-block-icon">📡</span>
+          <span class="info-block-title">Coverage &amp; speed</span>
+        </div>
+        <p class="info-block-text">Fiber connection (~500 Mb/s). Best signal in the living room and kitchen.</p>
+        <p class="info-block-text">Weaker signal in bedroom 3 — move closer to the hallway if needed.</p>
+      </div>
+      <div class="info-block">
+        <div class="info-block-header">
+          <span class="info-block-icon">🔄</span>
+          <span class="info-block-title">Connection issue?</span>
+        </div>
+        <p class="info-block-text">Restart the Livebox: hold the button on the back for 10 seconds. Wait 2 minutes.</p>
+        <p class="info-block-text">If the problem persists, contact Thomas.</p>
+      </div>
+    </div>
+  </div>
+
+</div>
+<script>
+function copyWifi(btn){
+  navigator.clipboard.writeText("1234567").then(()=>{
+    btn.classList.add("copied");btn.querySelector("span").textContent="Copied ✓";
+    setTimeout(()=>{btn.classList.remove("copied");btn.querySelector("span").textContent="Copy password"},2000);
+  }).catch(()=>{});
+}
+</script>
+</body>
+</html>

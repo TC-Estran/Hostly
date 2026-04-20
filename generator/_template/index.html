@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#ffffff" />
+  <title>{{PROPERTY_NAME}} — Guide d'accueil</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+
+<div class="page">
+
+  <!-- ── Header ─────────────────────────────────────────────── -->
+  <header class="header">
+    <span class="header-name">{{PROPERTY_NAME}}</span>
+    <div class="lang-switch">
+      <a href="./index.html"    class="lang-btn active">FR</a>
+      <a href="./index-en.html" class="lang-btn">EN</a>
+    </div>
+  </header>
+
+  <!-- ── Hero ───────────────────────────────────────────────── -->
+  <div class="hero">
+    <!--
+      Option A — photo :
+      <img class="hero-img" src="./assets/hero.jpg" alt="{{PROPERTY_NAME}}" />
+
+      Option B — dégradé (défaut) :
+    -->
+    <div class="hero-gradient" style="background: {{HERO_GRADIENT}};"></div>
+    <div class="hero-overlay"></div>
+    <span class="hero-badge">{{PROPERTY_LOCATION}}</span>
+  </div>
+
+  <!-- ── Welcome ────────────────────────────────────────────── -->
+  <section class="welcome">
+    <h1 class="welcome-title">{{WELCOME_TITLE}}</h1>
+    <p class="welcome-text">{{WELCOME_TEXT}}</p>
+  </section>
+
+  <!-- ── Navigation ─────────────────────────────────────────── -->
+  <p class="section-label">Guide</p>
+  <nav class="nav-grid" aria-label="Sections du guide">
+
+    <a href="./wifi.html" class="nav-card">
+      <span class="nav-card-icon">📶</span>
+      <span class="nav-card-label">Wi-Fi</span>
+    </a>
+
+    <a href="./checkin.html" class="nav-card">
+      <span class="nav-card-icon">🗝️</span>
+      <span class="nav-card-label">Arrivée &amp; Départ</span>
+    </a>
+
+    <a href="./rules.html" class="nav-card">
+      <span class="nav-card-icon">📋</span>
+      <span class="nav-card-label">Règlement</span>
+    </a>
+
+    <a href="./recommendations.html" class="nav-card">
+      <span class="nav-card-icon">📍</span>
+      <span class="nav-card-label">Recommandations</span>
+    </a>
+
+    <a href="./equipment.html" class="nav-card">
+      <span class="nav-card-icon">🛋️</span>
+      <span class="nav-card-label">Équipements</span>
+    </a>
+
+    <a href="./contact.html" class="nav-card">
+      <span class="nav-card-icon">📞</span>
+      <span class="nav-card-label">Contact</span>
+    </a>
+
+  </nav>
+
+  <!-- ── Quick info ──────────────────────────────────────────── -->
+  <p class="section-label">Infos rapides</p>
+  <div class="quick-grid">
+
+    <!-- Wi-Fi card -->
+    <div class="quick-card">
+      <div class="quick-card-tag">📶 Wi-Fi</div>
+      <div class="quick-card-main">{{WIFI_PASSWORD}}</div>
+      <div class="quick-card-sub">{{WIFI_NETWORK}}</div>
+      <button class="copy-btn" onclick="copyWifi(this)">
+        <span>Copier</span>
+      </button>
+    </div>
+
+    <!-- Contact card -->
+    <div class="quick-card">
+      <div class="quick-card-tag">👤 Hôte</div>
+      <div class="quick-card-main">{{HOST_NAME}}</div>
+      <div class="quick-card-sub">{{HOST_ROLE}}</div>
+      <a class="call-btn" href="tel:{{HOST_PHONE_RAW}}">
+        <span>📞</span> Appeler
+      </a>
+    </div>
+
+  </div>
+
+</div><!-- /.page -->
+
+<script>
+  const WIFI_PASSWORD = "{{WIFI_PASSWORD}}";
+
+  function copyWifi(btn) {
+    navigator.clipboard.writeText(WIFI_PASSWORD).then(() => {
+      btn.classList.add("copied");
+      btn.querySelector("span").textContent = "Copié ✓";
+      setTimeout(() => {
+        btn.classList.remove("copied");
+        btn.querySelector("span").textContent = "Copier";
+      }, 2000);
+    }).catch(() => {
+      // Fallback for older browsers
+      const ta = document.createElement("textarea");
+      ta.value = WIFI_PASSWORD;
+      ta.style.position = "fixed";
+      ta.style.opacity = "0";
+      document.body.appendChild(ta);
+      ta.focus(); ta.select();
+      document.execCommand("copy");
+      document.body.removeChild(ta);
+      btn.querySelector("span").textContent = "Copié ✓";
+      setTimeout(() => { btn.querySelector("span").textContent = "Copier"; }, 2000);
+    });
+  }
+</script>
+
+</body>
+</html>

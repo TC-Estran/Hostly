@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#ffffff" />
+  <title>Villa Lourme — Welcome Guide</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./assets/style.css" />
+</head>
+<body>
+<div class="page">
+
+  <header class="header">
+    <span class="header-name">Villa Lourme</span>
+    <div class="lang-switch">
+      <a href="./OUVRIR.html"    class="lang-btn">FR</a>
+      <a href="./OUVRIR-en.html" class="lang-btn active">EN</a>
+    </div>
+  </header>
+
+  <div class="hero">
+    <div class="hero-gradient" style="background:linear-gradient(160deg,#2c4a2e 0%,#5a7a3a 55%,#8aaa58 100%)"></div>
+    <div class="hero-overlay"></div>
+    <span class="hero-badge">Deauville, Normandy</span>
+  </div>
+
+  <section class="welcome">
+    <h1 class="welcome-title">Welcome to Villa Lourme</h1>
+    <p class="welcome-text">not thrilled to have you here...</p>
+  </section>
+
+  <p class="section-label">Guide</p>
+  <nav class="nav-grid" aria-label="Guide sections">
+    <a href="./assets/info-en.html" class="nav-card"><span class="nav-card-icon">💡</span><span class="nav-card-label">Essential Info</span></a>
+    <a href="./assets/checkin-en.html" class="nav-card"><span class="nav-card-icon">🗝️</span><span class="nav-card-label">Check-in &amp; Out</span></a>
+    <a href="./assets/wifi-en.html" class="nav-card"><span class="nav-card-icon">📶</span><span class="nav-card-label">Wi-Fi</span></a>
+    <a href="./assets/rules-en.html" class="nav-card"><span class="nav-card-icon">📋</span><span class="nav-card-label">House Rules</span></a>
+    <a href="./assets/equipment-en.html" class="nav-card"><span class="nav-card-icon">🛋️</span><span class="nav-card-label">Amenities</span></a>
+    <a href="./assets/contact-en.html" class="nav-card"><span class="nav-card-icon">📞</span><span class="nav-card-label">Contact &amp; Emergency</span></a>
+    <a href="./assets/recommendations-en.html" class="nav-card"><span class="nav-card-icon">📍</span><span class="nav-card-label">Recommendations</span></a>
+  </nav>
+
+  <p class="section-label">Quick access</p>
+  <div class="quick-grid">
+    <div class="quick-card">
+      <div class="quick-card-tag">📶 Wi-Fi</div>
+      <div class="quick-card-main">hbcefhdc3344FCD4</div>
+      <div class="quick-card-sub">Livebox-2323</div>
+      <button class="copy-btn" onclick="copyWifi(this)"><span>Copy</span></button>
+    </div>
+    <div class="quick-card">
+      <div class="quick-card-tag">👤 Host</div>
+      <div class="quick-card-main">Tomas Dubois</div>
+      <div class="quick-card-sub">Available every day, 10am – 9pm</div>
+      <a class="call-btn" href="tel:0674556661"><span>📞</span> Call</a>
+    </div>
+  </div>
+
+</div>
+<script>
+function copyWifi(btn){
+  navigator.clipboard.writeText("hbcefhdc3344FCD4").then(()=>{
+    btn.classList.add("copied");
+    btn.querySelector("span").textContent="Copied ✓";
+    setTimeout(()=>{btn.classList.remove("copied");btn.querySelector("span").textContent="Copy"},2000);
+  }).catch(()=>{});
+}
+</script>
+</body>
+</html>
