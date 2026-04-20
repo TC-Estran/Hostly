@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Offre Modification — Hostly</title>
+<meta name="description" content="Mettez à jour votre guide digital en quelques secondes, sans engagement.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+
+<style>
+.mod {
+  padding: 0 0 4rem;
+}
+
+.mod__header {
+  text-align: center;
+  padding: clamp(3rem, 6vw, 5rem) 0 clamp(2rem, 4vw, 3rem);
+  max-width: 700px;
+  margin: 0 auto;
+}
+.mod__badge {
+  display: inline-block;
+  background: var(--blue-hint);
+  color: var(--navy);
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 0.4rem 0.9rem;
+  border-radius: 999px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 1.5rem;
+}
+.mod__title {
+  font-size: clamp(2.5rem, 5vw, 3.75rem);
+  font-weight: 800;
+  color: var(--navy);
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+  margin-bottom: 1.25rem;
+}
+.mod__lead {
+  font-size: 1.1rem;
+  color: var(--text-soft);
+  line-height: 1.6;
+  max-width: 42ch;
+  margin: 0 auto;
+}
+
+.mod__cards {
+  max-width: 640px;
+  margin: 0 auto 2.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  padding: 0 var(--pad);
+}
+
+.mod__card {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  padding: 1.75rem 2rem;
+  transition: transform 0.3s var(--ease), box-shadow 0.3s var(--ease), border-color 0.3s var(--ease);
+}
+.mod__card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow);
+  border-color: transparent;
+}
+.mod__card-label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--text-mute);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+}
+.mod__card p {
+  color: var(--navy);
+  font-size: 1.05rem;
+  line-height: 1.5;
+  font-weight: 500;
+}
+.mod__card-sub {
+  color: var(--text-soft) !important;
+  font-size: 0.95rem !important;
+  font-weight: 400 !important;
+  margin-top: 0.5rem;
+}
+
+.mod__list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  margin-top: 0.25rem;
+}
+.mod__list li {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 1rem;
+  color: var(--navy);
+  font-weight: 500;
+}
+.mod__bullet {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--navy);
+  flex-shrink: 0;
+}
+
+/* PRICING CARD (tarif + bouton) */
+.mod__pricing {
+  max-width: 640px;
+  margin: 1.5rem auto 0;
+  padding: 0 var(--pad);
+}
+.mod__price-card {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  padding: 2.5rem 2rem;
+  text-align: center;
+  transition: transform 0.3s var(--ease), box-shadow 0.3s var(--ease);
+}
+.mod__price-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); }
+
+.mod__price-label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--text-mute);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+}
+.mod__price-amount {
+  font-size: clamp(3rem, 6vw, 4.5rem);
+  font-weight: 800;
+  color: var(--navy);
+  letter-spacing: -0.04em;
+  line-height: 1;
+  margin-bottom: 0.25rem;
+}
+.mod__price-unit {
+  color: var(--text-soft);
+  font-weight: 500;
+  font-size: 0.6em;
+}
+.mod__price-sub {
+  color: var(--text-mute);
+  font-size: 0.95rem;
+  margin-top: 0.75rem;
+}
+
+.mod__cta {
+  max-width: 640px;
+  margin: 1.5rem auto 0;
+  padding: 0 var(--pad);
+}
+.mod__cta .btn {
+  font-size: 1.05rem;
+  padding: 1.15rem 2rem;
+}
+
+/* MINI FEATURES ROW */
+.mod__mini {
+  max-width: 700px;
+  margin: 2.5rem auto 0;
+  padding: 0 var(--pad);
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+@media (max-width: 640px) {
+  .mod__mini { grid-template-columns: 1fr; }
+}
+.mod__mini-item {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.85rem 1rem;
+  justify-content: center;
+  font-size: 0.95rem;
+  color: var(--text-soft);
+  font-weight: 500;
+}
+.mod__mini-icon {
+  font-size: 1.25rem;
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  text-align: center;
+}
+
+/* BREADCRUMB */
+.breadcrumb {
+  padding: 1.5rem 0 0;
+  font-size: 0.9rem;
+  color: var(--text-soft);
+}
+.breadcrumb a { color: var(--text-soft); transition: color 0.2s var(--ease); }
+.breadcrumb a:hover { color: var(--navy); }
+.breadcrumb span { color: var(--navy); font-weight: 500; }
+</style>
+</head>
+<body>
+
+<nav class="nav" id="nav">
+  <div class="nav__inner">
+    <a href="index.html" class="nav__logo">
+      <span class="nav__logo-mark">H</span>
+      Hostly
+    </a>
+    <ul class="nav__menu" id="navMenu">
+      <li><a href="index.html" class="nav__link">Accueil</a></li>
+      <li><a href="offres.html" class="nav__link active">Nos offres</a></li>
+      <li><a href="apercu.html" class="nav__link">Aperçu du guide</a></li>
+      <li><a href="contact.html" class="nav__link">Contact</a></li>
+    </ul>
+    <div class="nav__right">
+      <a href="contact.html" class="btn btn--ghost">Nous contacter</a>
+      <a href="offres.html" class="btn btn--primary">Toutes les offres</a>
+      <button class="nav__burger" id="navBurger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<div class="container">
+  <div class="breadcrumb">
+    <a href="offres.html">Tarifs</a> / <span>Offre Modification</span>
+  </div>
+</div>
+
+<section class="mod">
+
+  <!-- HEADER -->
+  <div class="mod__header reveal">
+    <span class="mod__badge">Offre Modification</span>
+    <h1 class="mod__title">Modifier votre guide</h1>
+    <p class="mod__lead">Besoin de mettre à jour votre guide ? Demandez une modification en quelques secondes.</p>
+  </div>
+
+  <!-- COMMENT ÇA FONCTIONNE -->
+  <div class="mod__cards">
+    <div class="mod__card reveal">
+      <div class="mod__card-label">Comment ça fonctionne</div>
+      <p>Une modification vous permet de mettre à jour les informations de votre guide (WiFi, horaires, recommandations, contacts…)</p>
+      <p class="mod__card-sub">Après paiement, vous pourrez décrire précisément les changements à effectuer.</p>
+    </div>
+
+    <!-- CE QUI EST INCLUS -->
+    <div class="mod__card reveal">
+      <div class="mod__card-label">Ce qui est inclus</div>
+      <ul class="mod__list">
+        <li><span class="mod__bullet"></span> Mise à jour du WiFi</li>
+        <li><span class="mod__bullet"></span> Modification des horaires d'arrivée / départ</li>
+        <li><span class="mod__bullet"></span> Ajout ou suppression de recommandations</li>
+        <li><span class="mod__bullet"></span> Modification des informations pratiques</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- TARIF -->
+  <div class="mod__pricing reveal">
+    <div class="mod__price-card">
+      <div class="mod__price-label">Tarif</div>
+      <div class="mod__price-amount">20€<span class="mod__price-unit"> / modification</span></div>
+      <div class="mod__price-sub">Paiement unique — sans abonnement</div>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="mod__cta reveal">
+    <a href="https://buy.stripe.com/test_00w8wRdifaFfcy3cW5bjW00" target="_blank" rel="noopener" class="btn btn--primary btn--lg btn--block">
+      Demander une modification
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a>
+  </div>
+
+  <!-- MINI FEATURES -->
+  <div class="mod__mini reveal">
+    <div class="mod__mini-item">
+      <span class="mod__mini-icon">⚡</span>
+      Traitement rapide
+    </div>
+    <div class="mod__mini-item">
+      <span class="mod__mini-icon">✓</span>
+      Aucune démarche complexe
+    </div>
+    <div class="mod__mini-item">
+      <span class="mod__mini-icon">📝</span>
+      Modifications simples et efficaces
+    </div>
+  </div>
+
+</section>
+
+<section class="cta-final">
+  <div class="cta-final__inner">
+    <h2 class="cta-final__title">Une question avant de commander ?</h2>
+    <p class="cta-final__desc">Écrivez-nous, on répond sous 24h.</p>
+    <a href="contact.html?offre=modification" class="btn btn--lg cta-final__btn-white">
+      Nous contacter
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer__grid">
+      <div>
+        <div class="footer__brand">
+          <span class="nav__logo-mark">H</span>
+          Hostly
+        </div>
+        <p class="footer__tag">Guide digital pour locations courte durée. Pensé et fabriqué à Caen, en Normandie.</p>
+        <div class="footer__social">
+          <a href="#" aria-label="Instagram">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg>
+          </a>
+          <a href="#" aria-label="LinkedIn">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5C4.98 4.88 3.87 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5zM0 8h5v16H0V8zm7.98 0H13v2.2h.07c.7-1.3 2.4-2.68 4.93-2.68 5.27 0 6.25 3.47 6.25 7.98V24h-5v-7.4c0-1.77-.03-4.04-2.46-4.04-2.47 0-2.85 1.92-2.85 3.9V24h-5V8z"/></svg>
+          </a>
+          <a href="mailto:mj.thomasduboispro@gmail.com" aria-label="Email">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="footer__col">
+        <h4>Navigation</h4>
+        <ul>
+          <li><a href="index.html">Accueil</a></li>
+          <li><a href="offres.html">Nos offres</a></li>
+          <li><a href="apercu.html">Aperçu du guide</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+
+      <div class="footer__col">
+        <h4>Légal</h4>
+        <ul>
+          <li><a href="mentions-legales.html">Mentions légales</a></li>
+          <li><a href="mentions-legales.html#confidentialite">Confidentialité</a></li>
+          <li><a href="mentions-legales.html#cgv">CGV</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer__bottom">
+      <span>© Hostly 2026 — Fait avec soin à Caen, Normandie.</span>
+      <span>mj.thomasduboispro@gmail.com</span>
+    </div>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>

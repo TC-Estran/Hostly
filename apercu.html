@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aperçu du guide — Hostly</title>
+<meta name="description" content="Découvrez l'interface Hostly telle que vos voyageurs la verront.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+
+<style>
+.preview {
+  padding: 2rem 0 4rem;
+}
+.preview__layout {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: clamp(2rem, 5vw, 4rem);
+  align-items: start;
+}
+
+.preview__info { position: sticky; top: 100px; }
+.preview__info .eyebrow { margin-bottom: 1rem; }
+.preview__info h2 {
+  font-size: clamp(1.875rem, 3.5vw, 2.5rem);
+  font-weight: 800;
+  color: var(--navy);
+  letter-spacing: -0.025em;
+  line-height: 1.1;
+  margin-bottom: 1.5rem;
+}
+.preview__info h2 em { font-style: normal; color: var(--blue); }
+.preview__info p {
+  color: var(--text-soft);
+  line-height: 1.7;
+  margin-bottom: 1.5rem;
+}
+.preview__features {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-bottom: 2rem;
+}
+.preview__features li {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.95rem;
+  color: var(--navy);
+  font-weight: 500;
+}
+.preview__features-check {
+  width: 22px; height: 22px;
+  border-radius: 50%;
+  background: var(--success);
+  color: var(--success-ink);
+  display: grid; place-items: center;
+  flex-shrink: 0;
+}
+.preview__features-check svg { width: 12px; height: 12px; stroke-width: 3; }
+.preview__actions {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+/* MOCKED GUIDE INTERFACE */
+.guide-mock {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-lg);
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+.guide-mock__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid var(--line);
+  background: #fff;
+  position: sticky;
+  top: 0;
+  z-index: 3;
+}
+.guide-mock__title-top {
+  font-weight: 700;
+  color: var(--navy);
+  font-size: 1rem;
+  letter-spacing: -0.01em;
+}
+.guide-mock__lang {
+  display: flex;
+  gap: 2px;
+  padding: 3px;
+  background: var(--bg-soft);
+  border-radius: 8px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+.guide-mock__lang-opt {
+  padding: 0.3rem 0.7rem;
+  border-radius: 6px;
+  color: var(--text-mute);
+  cursor: pointer;
+  transition: background 0.2s var(--ease), color 0.2s var(--ease);
+}
+.guide-mock__lang-opt.active {
+  background: #fff;
+  color: var(--navy);
+  box-shadow: var(--shadow-sm);
+}
+
+.guide-mock__hero {
+  position: relative;
+  height: 200px;
+  /* Remplacer par ta vraie photo — mets-la dans un dossier `photos/` à côté du site :
+     background-image: url("photos/villa-dubois.jpg");
+     En attendant, photo similaire de style manoir : */
+  background-image: url("https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=1000&auto=format&fit=crop&q=80");
+  background-size: cover;
+  background-position: center;
+}
+.guide-mock__hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 40%, rgba(0,0,0,0.35) 100%);
+}
+.guide-mock__loc {
+  position: absolute;
+  bottom: 1rem;
+  left: 1rem;
+  background: rgba(255,255,255,0.95);
+  backdrop-filter: blur(8px);
+  padding: 0.4rem 0.85rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--navy);
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+.guide-mock__loc svg { width: 12px; height: 12px; color: var(--blue); }
+
+.guide-mock__content {
+  padding: 1.5rem 1.25rem;
+}
+.guide-mock__welcome-title {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--navy);
+  letter-spacing: -0.02em;
+  margin-bottom: 0.5rem;
+  line-height: 1.2;
+}
+.guide-mock__welcome-desc {
+  font-size: 0.9rem;
+  color: var(--text-soft);
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+}
+
+.guide-mock__section-label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--text-mute);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 0.75rem;
+}
+
+.guide-mock__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.6rem;
+  margin-bottom: 1.5rem;
+}
+.guide-mock__card {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 0.85rem 0.75rem;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--navy);
+  cursor: pointer;
+  transition: transform 0.2s var(--ease), border-color 0.2s var(--ease), box-shadow 0.2s var(--ease);
+}
+.guide-mock__card:hover {
+  transform: translateY(-2px);
+  border-color: transparent;
+  box-shadow: var(--shadow);
+}
+.guide-mock__card-emoji {
+  font-size: 1.1rem;
+  line-height: 1;
+}
+
+.guide-mock__quick {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.6rem;
+}
+.guide-mock__quick-card {
+  background: var(--bg-soft);
+  border-radius: 10px;
+  padding: 0.85rem;
+}
+.guide-mock__quick-label {
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: var(--text-mute);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 0.2rem;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+.guide-mock__quick-value {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: var(--navy);
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+}
+.guide-mock__quick-sub {
+  font-size: 0.75rem;
+  color: var(--text-soft);
+  margin-bottom: 0.5rem;
+}
+.guide-mock__quick-btn {
+  background: var(--blue-hint);
+  color: var(--blue);
+  border-radius: 6px;
+  padding: 0.25rem 0.5rem;
+  font-size: 0.7rem;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  cursor: pointer;
+  transition: background 0.2s var(--ease);
+}
+.guide-mock__quick-btn:hover { background: var(--blue); color: #fff; }
+.guide-mock__quick-btn svg { width: 10px; height: 10px; }
+
+/* DEMO LINK */
+.demo-link {
+  padding: clamp(3rem, 5vw, 4rem) var(--pad);
+  background: var(--bg-soft);
+}
+.demo-link__inner {
+  max-width: 700px;
+  margin: 0 auto;
+  text-align: center;
+}
+.demo-link__inner .eyebrow { margin-bottom: 1rem; }
+.demo-link__inner h2 {
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-weight: 800;
+  color: var(--navy);
+  letter-spacing: -0.02em;
+  margin-bottom: 1rem;
+}
+.demo-link__inner p {
+  color: var(--text-soft);
+  margin-bottom: 2rem;
+  line-height: 1.6;
+}
+
+@media (max-width: 900px) {
+  .preview__layout { grid-template-columns: 1fr; gap: 2rem; }
+  .preview__info { position: static; }
+  .guide-mock { max-width: 100%; }
+}
+</style>
+</head>
+<body>
+
+<nav class="nav" id="nav">
+  <div class="nav__inner">
+    <a href="index.html" class="nav__logo">
+      <span class="nav__logo-mark">H</span>
+      Hostly
+    </a>
+    <ul class="nav__menu" id="navMenu">
+      <li><a href="index.html" class="nav__link">Accueil</a></li>
+      <li><a href="offres.html" class="nav__link">Nos offres</a></li>
+      <li><a href="apercu.html" class="nav__link active">Aperçu du guide</a></li>
+      <li><a href="contact.html" class="nav__link">Contact</a></li>
+    </ul>
+    <div class="nav__right">
+      <a href="contact.html" class="btn btn--ghost">Nous contacter</a>
+      <a href="offres.html" class="btn btn--primary">Commencer</a>
+      <button class="nav__burger" id="navBurger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<header class="page-header">
+  <div class="page-header__bg"></div>
+  <div class="container">
+    <span class="eyebrow">Aperçu</span>
+    <h1 class="h1">Découvrez l'interface<br>côté voyageur.</h1>
+    <p class="lead">Ce que vos hôtes verront quand ils scanneront votre totem. Une interface pensée pour être claire, instantanée, sans application à installer.</p>
+  </div>
+</header>
+
+<section class="preview">
+  <div class="container">
+    <div class="preview__layout">
+
+      <div class="preview__info reveal">
+        <span class="eyebrow">Exemple en conditions réelles</span>
+        <h2>Un guide <em>complet</em>, accessible en un scan.</h2>
+        <p>Voici un exemple d'interface que vos voyageurs découvrent dès leur arrivée. Chaque section est personnalisée selon votre logement : infos pratiques, wifi, règlement, recommandations locales…</p>
+        <ul class="preview__features">
+          <li>
+            <span class="preview__features-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20 6L9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            7 sections personnalisables
+          </li>
+          <li>
+            <span class="preview__features-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20 6L9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            Accès rapide wifi & contact hôte
+          </li>
+          <li>
+            <span class="preview__features-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20 6L9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            Bilingue Français / Anglais
+          </li>
+          <li>
+            <span class="preview__features-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20 6L9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            Photo de couverture de votre logement
+          </li>
+          <li>
+            <span class="preview__features-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20 6L9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            Responsive sur mobile et tablette
+          </li>
+        </ul>
+        <div class="preview__actions">
+          <a href="https://magnificent-cassata-a59cb3.netlify.app" target="_blank" rel="noopener" class="btn btn--primary">
+            Voir la vraie démo
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7M7 7h10v10" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          <a href="offres.html" class="btn btn--ghost">
+            Découvrir les offres
+          </a>
+        </div>
+      </div>
+
+      <div class="reveal">
+        <div class="guide-mock">
+          <div class="guide-mock__header">
+            <div class="guide-mock__title-top">Villa Dubois</div>
+            <div class="guide-mock__lang">
+              <span class="guide-mock__lang-opt active">FR</span>
+              <span class="guide-mock__lang-opt">EN</span>
+            </div>
+          </div>
+
+          <div class="guide-mock__hero">
+            <div class="guide-mock__loc">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              Pont-Audemer, Normandie
+            </div>
+          </div>
+
+          <div class="guide-mock__content">
+            <h3 class="guide-mock__welcome-title">Bienvenue chez les Dubois</h3>
+            <p class="guide-mock__welcome-desc">Nous sommes ravis de vous accueillir. Tout ce dont vous avez besoin pour profiter de votre séjour se trouve dans ce guide.</p>
+
+            <div class="guide-mock__section-label">Guide</div>
+            <div class="guide-mock__grid">
+              <div class="guide-mock__card">
+                <span class="guide-mock__card-emoji">💡</span>
+                Infos essentielles
+              </div>
+              <div class="guide-mock__card">
+                <span class="guide-mock__card-emoji">🗝️</span>
+                Arrivée & Départ
+              </div>
+              <div class="guide-mock__card">
+                <span class="guide-mock__card-emoji">📶</span>
+                Wi-Fi
+              </div>
+              <div class="guide-mock__card">
+                <span class="guide-mock__card-emoji">📋</span>
+                Règlement
+              </div>
+              <div class="guide-mock__card">
+                <span class="guide-mock__card-emoji">🛋️</span>
+                Équipements
+              </div>
+              <div class="guide-mock__card">
+                <span class="guide-mock__card-emoji">📞</span>
+                Contact & Urgences
+              </div>
+              <div class="guide-mock__card" style="grid-column: span 2;">
+                <span class="guide-mock__card-emoji">📍</span>
+                Recommandations
+              </div>
+            </div>
+
+            <div class="guide-mock__section-label">Accès rapide</div>
+            <div class="guide-mock__quick">
+              <div class="guide-mock__quick-card">
+                <div class="guide-mock__quick-label">📶 Wi-Fi</div>
+                <div class="guide-mock__quick-value">1234567</div>
+                <div class="guide-mock__quick-sub">Livebox-234</div>
+                <span class="guide-mock__quick-btn">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+                  Copier
+                </span>
+              </div>
+              <div class="guide-mock__quick-card">
+                <div class="guide-mock__quick-label">👤 Hôte</div>
+                <div class="guide-mock__quick-value">Thomas</div>
+                <div class="guide-mock__quick-sub">Disponible 8h – 21h</div>
+                <span class="guide-mock__quick-btn">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>
+                  Appeler
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section class="cta-final">
+  <div class="cta-final__inner">
+    <h2 class="cta-final__title">Prêt à passer le pas ?</h2>
+    <p class="cta-final__desc">Choisissez votre formule. On crée votre guide sur-mesure et on vous envoie le totem sous quelques jours.</p>
+    <a href="offres.html" class="btn btn--lg cta-final__btn-white">
+      Voir les offres
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer__grid">
+      <div>
+        <div class="footer__brand">
+          <span class="nav__logo-mark">H</span>
+          Hostly
+        </div>
+        <p class="footer__tag">Guide digital pour locations courte durée. Pensé et fabriqué à Caen, en Normandie.</p>
+        <div class="footer__social">
+          <a href="#" aria-label="Instagram">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg>
+          </a>
+          <a href="#" aria-label="LinkedIn">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5C4.98 4.88 3.87 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5zM0 8h5v16H0V8zm7.98 0H13v2.2h.07c.7-1.3 2.4-2.68 4.93-2.68 5.27 0 6.25 3.47 6.25 7.98V24h-5v-7.4c0-1.77-.03-4.04-2.46-4.04-2.47 0-2.85 1.92-2.85 3.9V24h-5V8z"/></svg>
+          </a>
+          <a href="mailto:mj.thomasduboispro@gmail.com" aria-label="Email">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="footer__col">
+        <h4>Navigation</h4>
+        <ul>
+          <li><a href="index.html">Accueil</a></li>
+          <li><a href="offres.html">Nos offres</a></li>
+          <li><a href="apercu.html">Aperçu du guide</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+
+      <div class="footer__col">
+        <h4>Légal</h4>
+        <ul>
+          <li><a href="mentions-legales.html">Mentions légales</a></li>
+          <li><a href="mentions-legales.html#confidentialite">Confidentialité</a></li>
+          <li><a href="mentions-legales.html#cgv">CGV</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer__bottom">
+      <span>© Hostly 2026 — Fait avec soin à Caen, Normandie.</span>
+      <span>mj.thomasduboispro@gmail.com</span>
+    </div>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
