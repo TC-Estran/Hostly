@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nos offres — Hostly</title>
+<meta name="description" content="Totem NFC + guide digital. Trois formules simples pour tous les hôtes : Classique, Abonnement ou Modification ponctuelle.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+
+<style>
+/* PRICING */
+.pricing__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+  margin-top: 3rem;
+}
+.plan {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  transition: transform 0.3s var(--ease), box-shadow 0.3s var(--ease);
+  scroll-margin-top: 100px;
+}
+.plan:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+.plan--featured {
+  border: 2px solid var(--navy);
+  transform: scale(1.02);
+}
+.plan--featured:hover { transform: scale(1.02) translateY(-4px); }
+.plan__badge {
+  position: absolute;
+  top: -12px; left: 50%;
+  transform: translateX(-50%);
+  background: var(--navy);
+  color: #fff;
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 0.35rem 0.8rem;
+  border-radius: 999px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+.plan__tag {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-mute);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 0.75rem;
+}
+.plan__name {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--navy);
+  letter-spacing: -0.02em;
+  margin-bottom: 0.75rem;
+}
+.plan__desc {
+  color: var(--text-soft);
+  font-size: 0.95rem;
+  line-height: 1.5;
+  margin-bottom: 1.5rem;
+  min-height: 3em;
+}
+.plan__price {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+.plan__price-num {
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: var(--navy);
+  letter-spacing: -0.03em;
+  line-height: 1;
+}
+.plan__price-unit {
+  font-size: 0.95rem;
+  color: var(--text-soft);
+  font-weight: 500;
+}
+.plan__sub {
+  font-size: 0.85rem;
+  color: var(--text-mute);
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--line);
+}
+.plan__features {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-bottom: 2rem;
+  flex: 1;
+}
+.plan__features li {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.9rem;
+  color: var(--navy);
+  font-weight: 500;
+}
+.plan__check {
+  width: 20px; height: 20px;
+  border-radius: 50%;
+  background: var(--success);
+  color: var(--success-ink);
+  display: grid; place-items: center;
+  flex-shrink: 0;
+}
+.plan__check svg { width: 11px; height: 11px; stroke-width: 3; }
+
+.plan__features li.not-included { color: var(--text-mute); }
+.plan__cross {
+  width: 20px; height: 20px;
+  border-radius: 50%;
+  background: #FEECEC;
+  color: #DC2626;
+  display: grid; place-items: center;
+  flex-shrink: 0;
+}
+.plan__cross svg { width: 11px; height: 11px; stroke-width: 3; }
+
+/* COMPARISON */
+.compare { background: var(--bg-soft); }
+.compare__head { text-align: center; max-width: 700px; margin: 0 auto 3rem; }
+.compare__head .eyebrow { margin-bottom: 1rem; }
+
+.compare__table {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+.compare__row {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr 1fr 1fr;
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid var(--line);
+  align-items: center;
+}
+.compare__row:last-child { border-bottom: none; }
+.compare__row--head {
+  background: var(--bg-soft);
+  font-weight: 700;
+  color: var(--navy);
+  font-size: 0.9rem;
+}
+.compare__row--head > div:first-child { color: var(--text-mute); font-weight: 600; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.08em; }
+.compare__row > div {
+  font-size: 0.9rem;
+  color: var(--text-soft);
+  text-align: center;
+}
+.compare__row > div:first-child {
+  text-align: left;
+  color: var(--navy);
+  font-weight: 500;
+}
+.compare__check {
+  display: inline-grid;
+  place-items: center;
+  width: 22px; height: 22px;
+  border-radius: 50%;
+  background: var(--success);
+  color: var(--success-ink);
+}
+.compare__check svg { width: 12px; height: 12px; stroke-width: 3; }
+.compare__dash {
+  display: inline-block;
+  color: var(--text-mute);
+}
+
+/* FAQ */
+.faq {
+  max-width: 760px;
+  margin: 0 auto;
+}
+.faq__head {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+.faq__head .eyebrow { margin-bottom: 1rem; }
+.faq__item { border-bottom: 1px solid var(--line); }
+.faq__item:first-child { border-top: 1px solid var(--line); }
+.faq__q {
+  width: 100%;
+  padding: 1.5rem 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  text-align: left;
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--navy);
+  letter-spacing: -0.01em;
+}
+.faq__icon {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  background: var(--bg-soft);
+  display: grid; place-items: center;
+  flex-shrink: 0;
+  transition: background 0.2s var(--ease), color 0.2s var(--ease);
+  color: var(--navy);
+}
+.faq__icon svg { width: 14px; height: 14px; transition: transform 0.3s var(--ease); }
+.faq__item.open .faq__icon { background: var(--navy); color: #fff; }
+.faq__item.open .faq__icon svg { transform: rotate(45deg); }
+.faq__a {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s var(--ease), padding 0.4s var(--ease);
+  color: var(--text-soft);
+  line-height: 1.7;
+}
+.faq__item.open .faq__a {
+  max-height: 500px;
+  padding: 0 0 1.5rem;
+}
+
+@media (max-width: 900px) {
+  .pricing__grid { grid-template-columns: 1fr; }
+  .plan--featured { transform: none; }
+  .plan--featured:hover { transform: translateY(-4px); }
+  .compare__row { grid-template-columns: 1.2fr 1fr 1fr 1fr; padding: 1rem; font-size: 0.85rem; }
+  .compare__row > div { font-size: 0.8rem; }
+}
+</style>
+</head>
+<body>
+
+<nav class="nav" id="nav">
+  <div class="nav__inner">
+    <a href="index.html" class="nav__logo">
+      <span class="nav__logo-mark">H</span>
+      Hostly
+    </a>
+    <ul class="nav__menu" id="navMenu">
+      <li><a href="index.html" class="nav__link">Accueil</a></li>
+      <li><a href="offres.html" class="nav__link active">Nos offres</a></li>
+      <li><a href="apercu.html" class="nav__link">Aperçu du guide</a></li>
+      <li><a href="contact.html" class="nav__link">Contact</a></li>
+    </ul>
+    <div class="nav__right">
+      <a href="contact.html" class="btn btn--ghost">Nous contacter</a>
+      <a href="#pricing" class="btn btn--primary">Commencer</a>
+      <button class="nav__burger" id="navBurger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<header class="page-header">
+  <div class="page-header__bg"></div>
+  <div class="container">
+    <span class="eyebrow">Nos offres</span>
+    <h1 class="h1">Choisissez votre formule.</h1>
+    <p class="lead">Totem NFC + guide digital. Trois formules simples, pensées pour tous les hôtes. Sans surprise, sans engagement caché.</p>
+  </div>
+</header>
+
+<section class="section" id="pricing" style="padding-top: 2rem;">
+  <div class="container">
+    <div class="pricing__grid reveal-stagger">
+      <article class="plan" id="classique">
+        <div class="plan__tag">Sans engagement</div>
+        <h3 class="plan__name">Offre Classique</h3>
+        <p class="plan__desc">Achetez votre totem une seule fois. Inclut votre guide digital personnalisé, prêt à l'emploi.</p>
+        <div class="plan__price">
+          <span class="plan__price-num">79€</span>
+          <span class="plan__price-unit">une fois</span>
+        </div>
+        <div class="plan__sub">Paiement unique — sans abonnement</div>
+        <ul class="plan__features">
+          <li><span class="plan__check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20 6L9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Totem Hostly</li>
+          <li><span class="plan__check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20 6L9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Guide digital personnalisé</li>
+          <li><span class="plan__check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20 6L9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Choix de la finition (Noir, Blanc, Bois)</li>
+          <li class="not-included"><span class="plan__cross"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M18 6L6 18M6 6l12 12" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Modifications du guide non incluses</li>
+        </ul>
+        <a href="offre-classique.html" class="btn btn--outline btn--block">Choisir cette offre</a>
+      </article>
+
+      <article class="plan plan--featured" id="abonnement">
+        <div class="plan__badge">Populaire</div>
+        <div class="plan__tag">Avec abonnement</div>
+        <h3 class="plan__name">Offre Abonnement</h3>
+        <p class="plan__desc">Totem à prix réduit + modifications illimitées de votre guide chaque mois.</p>
+        <div class="plan__price">
+          <span class="plan__price-num">29€</span>
+          <span class="plan__price-unit">+ 4€/mois</span>
+        </div>
+        <div class="plan__sub">Totem réduit — 1 an d'engagement</div>
+        <ul class="plan__features">
+          <li><span class="plan__check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20 6L9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Totem Hostly à prix réduit</li>
+          <li><span class="plan__check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20 6L9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Guide digital personnalisé</li>
+          <li><span class="plan__check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20 6L9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Choix de la finition (Noir, Blanc, Bois)</li>
+          <li><span class="plan__check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20 6L9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Modifications du guide incluses</li>
+        </ul>
+        <a href="offre-abonnement.html" class="btn btn--primary btn--block">Choisir cette offre</a>
+      </article>
+
+      <article class="plan" id="modification">
+        <div class="plan__tag">Sans abonnement</div>
+        <h3 class="plan__name">Offre Modification</h3>
+        <p class="plan__desc">Vous avez déjà un totem ? Faites modifier votre guide à la demande, sans engagement.</p>
+        <div class="plan__price">
+          <span class="plan__price-num">20€</span>
+          <span class="plan__price-unit">/ modification</span>
+        </div>
+        <div class="plan__sub">Paiement à l'acte — sans abonnement</div>
+        <ul class="plan__features">
+          <li><span class="plan__check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20 6L9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Mise à jour complète du guide</li>
+          <li><span class="plan__check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20 6L9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Aucun engagement</li>
+          <li><span class="plan__check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20 6L9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Idéal pour les mises à jour occasionnelles</li>
+          <li><span class="plan__check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20 6L9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Traitement rapide — 100% digital</li>
+        </ul>
+        <a href="offre-modification.html" class="btn btn--outline btn--block">Commander</a>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="section compare">
+  <div class="container">
+    <div class="compare__head reveal">
+      <span class="eyebrow">Comparatif</span>
+      <h2 class="h2" style="margin-top: 1rem;">Quelle offre pour quel usage ?</h2>
+    </div>
+
+    <div class="compare__table reveal">
+      <div class="compare__row compare__row--head">
+        <div>Fonctionnalité</div>
+        <div>Classique</div>
+        <div>Abonnement</div>
+        <div>Modification</div>
+      </div>
+      <div class="compare__row">
+        <div>Totem Hostly inclus</div>
+        <div><span class="compare__check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20 6L9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
+        <div><span class="compare__check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20 6L9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
+        <div><span class="compare__dash">—</span></div>
+      </div>
+      <div class="compare__row">
+        <div>Guide digital personnalisé</div>
+        <div><span class="compare__check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20 6L9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
+        <div><span class="compare__check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20 6L9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
+        <div><span class="compare__check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20 6L9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
+      </div>
+      <div class="compare__row">
+        <div>Modifications illimitées</div>
+        <div><span class="compare__dash">—</span></div>
+        <div><span class="compare__check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20 6L9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
+        <div><span class="compare__dash">—</span></div>
+      </div>
+      <div class="compare__row">
+        <div>Engagement</div>
+        <div>Aucun</div>
+        <div>1 an</div>
+        <div>Aucun</div>
+      </div>
+      <div class="compare__row">
+        <div>Prix total sur 1 an</div>
+        <div>79€</div>
+        <div>77€</div>
+        <div>variable</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="faq">
+  <div class="container">
+    <div class="faq">
+      <div class="faq__head reveal">
+        <span class="eyebrow">Questions fréquentes</span>
+        <h2 class="h2" style="margin-top: 1rem;">Tout ce qu'il faut savoir.</h2>
+      </div>
+
+      <div class="faq__list">
+        <div class="faq__item">
+          <button class="faq__q">
+            Comment fonctionne la puce NFC ?
+            <span class="faq__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14" stroke-linecap="round"/></svg></span>
+          </button>
+          <div class="faq__a">La puce NFC est intégrée au totem. Votre voyageur approche simplement son téléphone, un lien s'ouvre automatiquement — sans application à installer, sans compte à créer. Compatible iOS et Android.</div>
+        </div>
+
+        <div class="faq__item">
+          <button class="faq__q">
+            Puis-je modifier mon guide après la commande ?
+            <span class="faq__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14" stroke-linecap="round"/></svg></span>
+          </button>
+          <div class="faq__a">Oui. Avec l'offre abonnement, les modifications sont incluses chaque mois. Sinon, vous pouvez commander une modification ponctuelle à 20€ à tout moment.</div>
+        </div>
+
+        <div class="faq__item">
+          <button class="faq__q">
+            Combien de temps pour recevoir mon totem ?
+            <span class="faq__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14" stroke-linecap="round"/></svg></span>
+          </button>
+          <div class="faq__a">Comptez environ 5 jours ouvrés après la validation de votre guide. Le totem est expédié depuis Caen, en Normandie, emballé avec soin.</div>
+        </div>
+
+        <div class="faq__item">
+          <button class="faq__q">
+            Dans quelles langues le guide est-il disponible ?
+            <span class="faq__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14" stroke-linecap="round"/></svg></span>
+          </button>
+          <div class="faq__a">Le guide est disponible par défaut en français et en anglais. D'autres langues peuvent être ajoutées sur demande.</div>
+        </div>
+
+        <div class="faq__item">
+          <button class="faq__q">
+            L'offre Abonnement a-t-elle un engagement ?
+            <span class="faq__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14" stroke-linecap="round"/></svg></span>
+          </button>
+          <div class="faq__a">Oui, l'Offre Abonnement a un engagement de <strong>1 an</strong>. Pendant cette période, vous bénéficiez du totem à prix réduit (29€ au lieu de 79€) et des modifications illimitées du guide. À l'issue des 12 mois, vous pouvez résilier sans frais ou continuer au tarif de 4€/mois. Vous gardez votre totem dans tous les cas.</div>
+        </div>
+
+        <div class="faq__item">
+          <button class="faq__q">
+            Puis-je installer Hostly dans plusieurs logements ?
+            <span class="faq__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14" stroke-linecap="round"/></svg></span>
+          </button>
+          <div class="faq__a">Oui, il suffit de commander un totem et un guide par logement. Contactez-nous directement pour discuter d'un tarif dégressif si vous gérez plusieurs locations.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-final">
+  <div class="cta-final__inner">
+    <h2 class="cta-final__title">Une question avant de commander ?</h2>
+    <p class="cta-final__desc">Écrivez-nous, on vous répond sous 24h. On parle vrai, sans commerciaux ni baratin.</p>
+    <a href="contact.html" class="btn btn--lg cta-final__btn-white">
+      Nous contacter
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer__grid">
+      <div>
+        <div class="footer__brand">
+          <span class="nav__logo-mark">H</span>
+          Hostly
+        </div>
+        <p class="footer__tag">Guide digital pour locations courte durée. Pensé et fabriqué à Caen, en Normandie.</p>
+        <div class="footer__social">
+          <a href="#" aria-label="Instagram">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg>
+          </a>
+          <a href="#" aria-label="LinkedIn">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5C4.98 4.88 3.87 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5zM0 8h5v16H0V8zm7.98 0H13v2.2h.07c.7-1.3 2.4-2.68 4.93-2.68 5.27 0 6.25 3.47 6.25 7.98V24h-5v-7.4c0-1.77-.03-4.04-2.46-4.04-2.47 0-2.85 1.92-2.85 3.9V24h-5V8z"/></svg>
+          </a>
+          <a href="mailto:mj.thomasduboispro@gmail.com" aria-label="Email">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="footer__col">
+        <h4>Navigation</h4>
+        <ul>
+          <li><a href="index.html">Accueil</a></li>
+          <li><a href="offres.html">Nos offres</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="https://magnificent-cassata-a59cb3.netlify.app">Démo</a></li>
+        </ul>
+      </div>
+
+      <div class="footer__col">
+        <h4>Légal</h4>
+        <ul>
+          <li><a href="mentions-legales.html">Mentions légales</a></li>
+          <li><a href="mentions-legales.html#confidentialite">Confidentialité</a></li>
+          <li><a href="mentions-legales.html#cgv">CGV</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer__bottom">
+      <span>© Hostly 2026 — Fait avec soin à Caen, Normandie.</span>
+      <span>mj.thomasduboispro@gmail.com</span>
+    </div>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mentions légales — Hostly</title>
+<meta name="description" content="Mentions légales, politique de confidentialité et conditions générales de vente d'Hostly.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+
+<style>
+.legal__layout {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  gap: 3rem;
+  align-items: start;
+}
+
+/* Sticky nav on side */
+.legal__nav {
+  position: sticky;
+  top: 100px;
+  background: var(--bg-soft);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 1.25rem;
+}
+.legal__nav-title {
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--text-mute);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 0.75rem;
+}
+.legal__nav ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+.legal__nav a {
+  display: block;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--text-soft);
+  border-radius: 6px;
+  transition: background 0.2s var(--ease), color 0.2s var(--ease);
+}
+.legal__nav a:hover,
+.legal__nav a.active {
+  background: #fff;
+  color: var(--navy);
+}
+
+.legal__content {
+  max-width: 720px;
+}
+.legal__section {
+  padding-bottom: 3rem;
+  margin-bottom: 3rem;
+  border-bottom: 1px solid var(--line);
+  scroll-margin-top: 100px;
+}
+.legal__section:last-child { border-bottom: none; }
+.legal__section h2 {
+  font-size: 1.75rem;
+  font-weight: 800;
+  color: var(--navy);
+  letter-spacing: -0.02em;
+  margin-bottom: 1.5rem;
+}
+.legal__section h3 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--navy);
+  margin-top: 2rem;
+  margin-bottom: 0.75rem;
+  letter-spacing: -0.015em;
+}
+.legal__section p {
+  color: var(--text-soft);
+  line-height: 1.7;
+  margin-bottom: 1rem;
+}
+.legal__section ul {
+  padding-left: 1.25rem;
+  color: var(--text-soft);
+  line-height: 1.7;
+  margin-bottom: 1rem;
+}
+.legal__section ul li { margin-bottom: 0.5rem; }
+.legal__section strong { color: var(--navy); font-weight: 600; }
+.legal__section a { color: var(--blue); font-weight: 500; }
+.legal__section a:hover { text-decoration: underline; }
+
+.legal__meta {
+  font-size: 0.85rem;
+  color: var(--text-mute);
+  padding: 0.75rem 1rem;
+  background: var(--bg-soft);
+  border-radius: 8px;
+  margin-bottom: 2rem;
+  display: inline-block;
+}
+
+@media (max-width: 900px) {
+  .legal__layout { grid-template-columns: 1fr; }
+  .legal__nav { position: static; }
+}
+</style>
+</head>
+<body>
+
+<nav class="nav" id="nav">
+  <div class="nav__inner">
+    <a href="index.html" class="nav__logo">
+      <span class="nav__logo-mark">H</span>
+      Hostly
+    </a>
+    <ul class="nav__menu" id="navMenu">
+      <li><a href="index.html" class="nav__link">Accueil</a></li>
+      <li><a href="offres.html" class="nav__link">Nos offres</a></li>
+      <li><a href="apercu.html" class="nav__link">Aperçu du guide</a></li>
+      <li><a href="contact.html" class="nav__link">Contact</a></li>
+    </ul>
+    <div class="nav__right">
+      <a href="contact.html" class="btn btn--ghost">Nous contacter</a>
+      <a href="offres.html" class="btn btn--primary">Commencer</a>
+      <button class="nav__burger" id="navBurger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<header class="page-header">
+  <div class="page-header__bg"></div>
+  <div class="container">
+    <span class="eyebrow">Informations légales</span>
+    <h1 class="h1">Mentions légales & CGV.</h1>
+    <p class="lead">Tout ce qui concerne la transparence, la confidentialité et les conditions d'utilisation de nos services.</p>
+  </div>
+</header>
+
+<section class="section" style="padding-top: 2rem;">
+  <div class="container">
+    <div class="legal__layout">
+      <aside class="legal__nav">
+        <div class="legal__nav-title">Sommaire</div>
+        <ul>
+          <li><a href="#mentions" class="active">Mentions légales</a></li>
+          <li><a href="#confidentialite">Confidentialité</a></li>
+          <li><a href="#cookies">Cookies</a></li>
+          <li><a href="#cgv">CGV</a></li>
+          <li><a href="#retractation">Rétractation</a></li>
+        </ul>
+      </aside>
+
+      <div class="legal__content">
+        <span class="legal__meta">Dernière mise à jour : 16 avril 2026</span>
+
+        <section class="legal__section" id="mentions">
+          <h2>1. Mentions légales</h2>
+
+          <h3>Éditeur du site</h3>
+          <p>Le site <strong>hostly.fr</strong> est édité par <strong>Hostly</strong>, entreprise individuelle enregistrée en France.</p>
+          <ul>
+            <li><strong>Siège social :</strong> Caen, 14000 Normandie, France</li>
+            <li><strong>Email :</strong> <a href="mailto:mj.thomasduboispro@gmail.com">mj.thomasduboispro@gmail.com</a></li>
+            <li><strong>Numéro SIRET :</strong> à compléter</li>
+            <li><strong>Directeur de la publication :</strong> à compléter</li>
+          </ul>
+
+          <h3>Hébergeur</h3>
+          <p>Le site est hébergé par <strong>à compléter</strong>.</p>
+
+          <h3>Propriété intellectuelle</h3>
+          <p>L'ensemble des éléments présents sur ce site (textes, graphismes, logos, icônes, images, vidéos) sont la propriété exclusive de Hostly. Toute reproduction, représentation ou diffusion, totale ou partielle, est interdite sans autorisation écrite préalable.</p>
+        </section>
+
+        <section class="legal__section" id="confidentialite">
+          <h2>2. Politique de confidentialité</h2>
+          <p>Hostly s'engage à protéger la vie privée de ses utilisateurs et à respecter la réglementation en vigueur, notamment le RGPD.</p>
+
+          <h3>Données collectées</h3>
+          <p>Nous collectons les données suivantes uniquement dans le cadre de nos services :</p>
+          <ul>
+            <li>Données d'identification : nom, prénom, adresse email, téléphone</li>
+            <li>Données de livraison : adresse postale</li>
+            <li>Données de paiement : traitées via Stripe, non stockées par Hostly</li>
+            <li>Contenu du guide digital : informations fournies par l'hôte</li>
+          </ul>
+
+          <h3>Utilisation des données</h3>
+          <p>Vos données sont utilisées pour traiter votre commande, personnaliser votre guide, assurer le service client et vous tenir informé des évolutions du produit. Elles ne sont jamais vendues ni cédées à des tiers.</p>
+
+          <h3>Vos droits</h3>
+          <p>Conformément au RGPD, vous disposez d'un droit d'accès, de rectification, de suppression, d'opposition et de portabilité de vos données. Pour exercer ces droits, contactez-nous à <a href="mailto:mj.thomasduboispro@gmail.com">mj.thomasduboispro@gmail.com</a>.</p>
+        </section>
+
+        <section class="legal__section" id="cookies">
+          <h2>3. Cookies</h2>
+          <p>Le site hostly.fr utilise un nombre limité de cookies techniques nécessaires à son bon fonctionnement. Aucun cookie publicitaire ou de tracking tiers n'est utilisé par défaut.</p>
+
+          <h3>Cookies utilisés</h3>
+          <ul>
+            <li><strong>Cookies techniques :</strong> nécessaires au fonctionnement du site</li>
+            <li><strong>Cookies analytiques :</strong> mesure d'audience anonyme, sous réserve de votre consentement</li>
+          </ul>
+          <p>Vous pouvez à tout moment paramétrer votre navigateur pour refuser les cookies.</p>
+        </section>
+
+        <section class="legal__section" id="cgv">
+          <h2>4. Conditions générales de vente</h2>
+          <p>Les présentes CGV régissent les relations contractuelles entre Hostly et ses clients dans le cadre de la vente de Totems Hostly et de services associés.</p>
+
+          <h3>Produits et services</h3>
+          <p>Hostly propose trois formules :</p>
+          <ul>
+            <li><strong>Offre Classique :</strong> 79€ — paiement unique, sans engagement, sans modifications du guide incluses</li>
+            <li><strong>Offre Abonnement :</strong> 29€ à la commande + 4€/mois — <strong>engagement de 12 mois</strong>, avec modifications illimitées du guide incluses pendant toute la durée du contrat</li>
+            <li><strong>Offre Modification :</strong> 20€ par modification ponctuelle — service 100% digital, sans engagement</li>
+          </ul>
+
+          <h3>Engagement de l'Offre Abonnement</h3>
+          <p>L'Offre Abonnement implique un <strong>engagement de 12 mois</strong> à compter de la date de souscription. Pendant cette période, le client bénéficie du totem à tarif préférentiel ainsi que des modifications illimitées du guide. Aucune résiliation anticipée ne peut être demandée, sauf motifs légitimes prévus par la loi (déménagement, force majeure, etc.).</p>
+          <p>À l'issue de la période d'engagement, l'abonnement se poursuit de mois en mois au tarif de 4€/mois, résiliable à tout moment avec un préavis d'un mois. Le client peut également résilier sans frais à la date d'échéance annuelle.</p>
+          <p>En cas de résiliation, le client conserve son totem (les 29€ initiaux en font l'acquisition). Seul l'accès aux modifications du guide est interrompu.</p>
+
+          <h3>Commande & paiement</h3>
+          <p>La commande se fait via notre site ou par contact direct. Les paiements sont sécurisés et traités par Stripe. Les prix sont indiqués en euros, TTC. Pour l'Offre Abonnement, le client est prélevé de 29€ à la commande, puis de 4€ chaque mois à la date anniversaire de la commande.</p>
+
+          <h3>Livraison</h3>
+          <p>Les totems sont expédiés depuis Caen, en Normandie, sous 5 jours ouvrés après validation du guide. Les frais de port sont inclus pour la France métropolitaine.</p>
+          <p>L'Offre Modification est un service 100% digital ne nécessitant aucune livraison physique.</p>
+
+          <h3>Garantie</h3>
+          <p>Les totems bénéficient d'une garantie légale de conformité de 2 ans. En cas de défaut, contactez-nous pour un échange ou un remboursement.</p>
+        </section>
+
+        <section class="legal__section" id="retractation">
+          <h2>5. Droit de rétractation</h2>
+          <p>Conformément à l'article L.221-18 du Code de la consommation, vous disposez d'un délai de <strong>14 jours</strong> à compter de la réception de votre totem (Offre Classique ou Abonnement) pour exercer votre droit de rétractation, sans avoir à justifier de motif.</p>
+          <p>Pour l'exercer, envoyez-nous un email à <a href="mailto:mj.thomasduboispro@gmail.com">mj.thomasduboispro@gmail.com</a>. Le produit devra être retourné dans son emballage d'origine, non utilisé.</p>
+          <p><strong>Exception :</strong> le droit de rétractation ne s'applique pas aux services personnalisés (guides digitaux déjà réalisés sur mesure, modifications ponctuelles déjà effectuées).</p>
+          <p><strong>Cas de l'Offre Abonnement :</strong> si vous exercez votre droit de rétractation dans les 14 jours, le totem et l'abonnement sont annulés. Vous êtes remboursé intégralement après réception du totem retourné.</p>
+        </section>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer__grid">
+      <div>
+        <div class="footer__brand">
+          <span class="nav__logo-mark">H</span>
+          Hostly
+        </div>
+        <p class="footer__tag">Guide digital pour locations courte durée. Pensé et fabriqué à Caen, en Normandie.</p>
+        <div class="footer__social">
+          <a href="#" aria-label="Instagram">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg>
+          </a>
+          <a href="#" aria-label="LinkedIn">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5C4.98 4.88 3.87 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5zM0 8h5v16H0V8zm7.98 0H13v2.2h.07c.7-1.3 2.4-2.68 4.93-2.68 5.27 0 6.25 3.47 6.25 7.98V24h-5v-7.4c0-1.77-.03-4.04-2.46-4.04-2.47 0-2.85 1.92-2.85 3.9V24h-5V8z"/></svg>
+          </a>
+          <a href="mailto:mj.thomasduboispro@gmail.com" aria-label="Email">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="footer__col">
+        <h4>Navigation</h4>
+        <ul>
+          <li><a href="index.html">Accueil</a></li>
+          <li><a href="offres.html">Nos offres</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="https://magnificent-cassata-a59cb3.netlify.app">Démo</a></li>
+        </ul>
+      </div>
+
+      <div class="footer__col">
+        <h4>Légal</h4>
+        <ul>
+          <li><a href="mentions-legales.html">Mentions légales</a></li>
+          <li><a href="mentions-legales.html#confidentialite">Confidentialité</a></li>
+          <li><a href="mentions-legales.html#cgv">CGV</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer__bottom">
+      <span>© Hostly 2026 — Fait avec soin à Caen, Normandie.</span>
+      <span>mj.thomasduboispro@gmail.com</span>
+    </div>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+<script>
+  // Scroll spy
+  const links = document.querySelectorAll('.legal__nav a');
+  const sections = document.querySelectorAll('.legal__section');
+  const spy = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        const id = e.target.id;
+        links.forEach(l => {
+          l.classList.toggle('active', l.getAttribute('href') === '#' + id);
+        });
+      }
+    });
+  }, { rootMargin: '-100px 0px -60% 0px' });
+  sections.forEach(s => spy.observe(s));
+</script>
+</body>
+</html>

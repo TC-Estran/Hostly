@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Offre Classique — Hostly</title>
+<meta name="description" content="Totem NFC + guide digital personnalisé — paiement unique, sans abonnement.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+
+<style>
+/* BREADCRUMB */
+.breadcrumb {
+  padding: 1.5rem 0 0;
+  font-size: 0.9rem;
+  color: var(--text-soft);
+}
+.breadcrumb a { color: var(--text-soft); transition: color 0.2s var(--ease); }
+.breadcrumb a:hover { color: var(--navy); }
+.breadcrumb span { color: var(--navy); font-weight: 500; }
+
+/* PRODUCT LAYOUT */
+.product {
+  padding: 2rem 0 4rem;
+}
+.product__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(2rem, 5vw, 4rem);
+  align-items: start;
+}
+
+/* CAROUSEL */
+.carousel {
+  position: relative;
+  background: var(--bg-soft);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  aspect-ratio: 1 / 1;
+}
+.carousel__track {
+  display: flex;
+  height: 100%;
+  transition: transform 0.5s var(--ease);
+}
+.carousel__slide {
+  min-width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  position: relative;
+  overflow: hidden;
+}
+.carousel__slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.carousel__slide--placeholder {
+  background: linear-gradient(135deg, #f4f6fb 0%, #e6ebf5 100%);
+  display: grid;
+  place-items: center;
+  padding: 2rem;
+}
+.carousel__slide--placeholder .totem-mock {
+  width: 40%;
+  aspect-ratio: 3 / 5;
+  background:
+    linear-gradient(135deg, rgba(255,255,255,0.06) 0%, transparent 40%),
+    linear-gradient(180deg, #1a2240 0%, #0B1B3B 50%, #060D23 100%);
+  border-radius: 16px;
+  box-shadow: var(--shadow-lg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.5rem 0.75rem 1rem;
+  color: #fff;
+  font-weight: 800;
+  font-size: 1rem;
+  letter-spacing: -0.02em;
+  transform: rotate(-3deg);
+  position: relative;
+}
+.carousel__slide--placeholder.white .totem-mock {
+  background: linear-gradient(180deg, #fff 0%, #e8ecf3 100%);
+  color: var(--navy);
+  border: 1px solid var(--line);
+}
+.carousel__slide--placeholder.wood .totem-mock {
+  background:
+    linear-gradient(135deg, rgba(255,255,255,0.1) 0%, transparent 50%),
+    linear-gradient(180deg, #c4946b 0%, #a77a51 50%, #8b6239 100%);
+  color: #fff;
+}
+.totem-mock__logo {
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+.totem-mock__chip {
+  width: 38%;
+  aspect-ratio: 1;
+  opacity: 0.7;
+}
+
+.carousel__counter {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: rgba(11, 27, 59, 0.7);
+  color: #fff;
+  padding: 0.35rem 0.8rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  backdrop-filter: blur(8px);
+  z-index: 2;
+}
+
+.carousel__arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 44px;
+  height: 44px;
+  background: #fff;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  box-shadow: var(--shadow);
+  cursor: pointer;
+  transition: transform 0.2s var(--ease), box-shadow 0.2s var(--ease);
+  z-index: 2;
+}
+.carousel__arrow:hover { transform: translateY(-50%) scale(1.08); box-shadow: var(--shadow-lg); }
+.carousel__arrow--prev { left: 1rem; }
+.carousel__arrow--next { right: 1rem; }
+.carousel__arrow svg { width: 18px; height: 18px; color: var(--navy); }
+
+.carousel__dots {
+  position: absolute;
+  bottom: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 6px;
+  z-index: 2;
+}
+.carousel__dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: rgba(11, 27, 59, 0.25);
+  cursor: pointer;
+  transition: background 0.2s var(--ease), width 0.2s var(--ease);
+}
+.carousel__dot.active { background: var(--navy); width: 24px; border-radius: 4px; }
+
+/* PRODUCT INFO */
+.product__badge {
+  display: inline-block;
+  background: var(--success);
+  color: var(--success-ink);
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 0.35rem 0.85rem;
+  border-radius: 999px;
+  margin-bottom: 1.25rem;
+}
+.product__category {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--text-mute);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 0.75rem;
+}
+.product__title {
+  font-size: clamp(2rem, 3.5vw, 2.75rem);
+  font-weight: 800;
+  color: var(--navy);
+  letter-spacing: -0.025em;
+  line-height: 1.1;
+  margin-bottom: 0.75rem;
+}
+.product__price {
+  font-size: clamp(2rem, 3.5vw, 2.75rem);
+  font-weight: 800;
+  color: var(--navy);
+  letter-spacing: -0.025em;
+  line-height: 1.1;
+  margin-bottom: 0.75rem;
+}
+.product__sub {
+  font-size: 0.95rem;
+  color: var(--text-soft);
+  margin-bottom: 2rem;
+}
+
+.product__included {
+  background: var(--bg-soft);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+}
+.product__included-title {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--text-mute);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+}
+.product__included-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+.product__included-list li {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.95rem;
+  color: var(--navy);
+  font-weight: 500;
+}
+.product__included-check {
+  width: 22px; height: 22px;
+  border-radius: 50%;
+  background: var(--success);
+  color: var(--success-ink);
+  display: grid; place-items: center;
+  flex-shrink: 0;
+}
+.product__included-check svg { width: 12px; height: 12px; stroke-width: 3; }
+
+.product__included-list li.not-included {
+  color: var(--text-mute);
+}
+.product__included-cross {
+  width: 22px; height: 22px;
+  border-radius: 50%;
+  background: #FEECEC;
+  color: #DC2626;
+  display: grid; place-items: center;
+  flex-shrink: 0;
+}
+.product__included-cross svg { width: 12px; height: 12px; stroke-width: 3; }
+
+/* FINISH */
+.finish { margin-bottom: 2rem; }
+.finish__label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--text-mute);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+}
+.finish__options {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.75rem;
+}
+.finish__opt {
+  background: #fff;
+  border: 1.5px solid var(--line);
+  border-radius: 10px;
+  padding: 0.9rem 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--navy);
+  cursor: pointer;
+  transition: border-color 0.2s var(--ease), background 0.2s var(--ease), transform 0.2s var(--ease);
+}
+.finish__opt:hover {
+  border-color: var(--text-mute);
+  transform: translateY(-1px);
+}
+.finish__opt.active {
+  border-color: var(--navy);
+  background: var(--bg-soft);
+  border-width: 2px;
+  padding: calc(0.9rem - 0.5px) calc(1rem - 0.5px);
+}
+.finish__swatch {
+  width: 16px; height: 16px;
+  border-radius: 50%;
+  border: 1.5px solid var(--line);
+  flex-shrink: 0;
+}
+.finish__swatch--white { background: #fff; }
+.finish__swatch--black { background: var(--navy); }
+.finish__swatch--wood  { background: linear-gradient(135deg, #c4946b, #8b6239); border-color: transparent; }
+
+/* SPECS */
+.specs { margin-bottom: 2rem; }
+.specs__label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--text-mute);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+}
+.specs__list { list-style: none; }
+.specs__list li {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.85rem 0;
+  border-bottom: 1px solid var(--line);
+  font-size: 0.95rem;
+}
+.specs__list li:last-child { border-bottom: none; }
+.specs__list span { color: var(--text-soft); }
+.specs__list strong { color: var(--navy); font-weight: 600; }
+
+/* BUY */
+.buy { border-top: 1px solid var(--line); padding-top: 2rem; }
+.buy__sub {
+  text-align: center;
+  font-size: 0.85rem;
+  color: var(--text-mute);
+  margin-top: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+}
+.buy__sub svg { width: 14px; height: 14px; }
+
+@media (max-width: 900px) {
+  .product__grid { grid-template-columns: 1fr; gap: 2rem; }
+  .finish__options { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<nav class="nav" id="nav">
+  <div class="nav__inner">
+    <a href="index.html" class="nav__logo">
+      <span class="nav__logo-mark">H</span>
+      Hostly
+    </a>
+    <ul class="nav__menu" id="navMenu">
+      <li><a href="index.html" class="nav__link">Accueil</a></li>
+      <li><a href="offres.html" class="nav__link active">Nos offres</a></li>
+      <li><a href="apercu.html" class="nav__link">Aperçu du guide</a></li>
+      <li><a href="contact.html" class="nav__link">Contact</a></li>
+    </ul>
+    <div class="nav__right">
+      <a href="contact.html" class="btn btn--ghost">Nous contacter</a>
+      <a href="offres.html" class="btn btn--primary">Toutes les offres</a>
+      <button class="nav__burger" id="navBurger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<div class="container">
+  <div class="breadcrumb">
+    <a href="offres.html">Tarifs</a> / <span>Offre Classique</span>
+  </div>
+</div>
+
+<section class="product">
+  <div class="container">
+    <div class="product__grid">
+
+      <!-- CAROUSEL -->
+      <div class="carousel" id="carousel">
+        <div class="carousel__counter"><span id="current">1</span> / 3</div>
+
+        <div class="carousel__track" id="track">
+          <div class="carousel__slide carousel__slide--placeholder">
+            <div class="totem-mock">
+              <span class="totem-mock__logo">Hostly</span>
+              <svg class="totem-mock__chip" viewBox="0 0 60 60" fill="none">
+                <rect x="12" y="12" width="36" height="36" rx="4" stroke="rgba(255,255,255,0.3)" stroke-width="0.8"/>
+                <rect x="18" y="18" width="24" height="24" rx="2" stroke="rgba(255,255,255,0.4)" stroke-width="0.8"/>
+                <circle cx="30" cy="30" r="2" fill="rgba(255,255,255,0.5)"/>
+                <path d="M22 30 L28 30 M30 22 L30 28 M32 30 L38 30 M30 32 L30 38" stroke="rgba(255,255,255,0.5)" stroke-width="0.8" stroke-linecap="round"/>
+              </svg>
+            </div>
+          </div>
+          <div class="carousel__slide carousel__slide--placeholder white">
+            <div class="totem-mock">
+              <span class="totem-mock__logo">Hostly</span>
+              <svg class="totem-mock__chip" viewBox="0 0 60 60" fill="none">
+                <rect x="12" y="12" width="36" height="36" rx="4" stroke="rgba(11,27,59,0.3)" stroke-width="0.8"/>
+                <rect x="18" y="18" width="24" height="24" rx="2" stroke="rgba(11,27,59,0.4)" stroke-width="0.8"/>
+                <circle cx="30" cy="30" r="2" fill="rgba(11,27,59,0.5)"/>
+                <path d="M22 30 L28 30 M30 22 L30 28 M32 30 L38 30 M30 32 L30 38" stroke="rgba(11,27,59,0.5)" stroke-width="0.8" stroke-linecap="round"/>
+              </svg>
+            </div>
+          </div>
+          <div class="carousel__slide carousel__slide--placeholder wood">
+            <div class="totem-mock">
+              <span class="totem-mock__logo">Hostly</span>
+              <svg class="totem-mock__chip" viewBox="0 0 60 60" fill="none">
+                <rect x="12" y="12" width="36" height="36" rx="4" stroke="rgba(255,255,255,0.3)" stroke-width="0.8"/>
+                <rect x="18" y="18" width="24" height="24" rx="2" stroke="rgba(255,255,255,0.4)" stroke-width="0.8"/>
+                <circle cx="30" cy="30" r="2" fill="rgba(255,255,255,0.5)"/>
+                <path d="M22 30 L28 30 M30 22 L30 28 M32 30 L38 30 M30 32 L30 38" stroke="rgba(255,255,255,0.5)" stroke-width="0.8" stroke-linecap="round"/>
+              </svg>
+            </div>
+          </div>
+        </div>
+
+        <button class="carousel__arrow carousel__arrow--prev" id="prev" aria-label="Précédent">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <button class="carousel__arrow carousel__arrow--next" id="next" aria-label="Suivant">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 18l6-6-6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+
+        <div class="carousel__dots" id="dots">
+          <span class="carousel__dot active" data-idx="0"></span>
+          <span class="carousel__dot" data-idx="1"></span>
+          <span class="carousel__dot" data-idx="2"></span>
+        </div>
+      </div>
+
+      <!-- INFO -->
+      <div>
+        <span class="product__badge">Sans engagement</span>
+        <div class="product__category">Totem Hostly</div>
+        <h1 class="product__title">Offre Classique</h1>
+        <div class="product__price">79€<span style="color: var(--text-soft); font-weight: 500; font-size: 0.6em;"> une fois</span></div>
+        <p class="product__sub">Paiement unique — sans abonnement</p>
+
+        <div class="product__included">
+          <div class="product__included-title">Inclus dans cette offre</div>
+          <ul class="product__included-list">
+            <li>
+              <span class="product__included-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20 6L9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              Totem Hostly
+            </li>
+            <li>
+              <span class="product__included-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20 6L9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              Guide digital personnalisé
+            </li>
+            <li>
+              <span class="product__included-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20 6L9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              Choix de finition : Noir, Blanc, Imitation Bois
+            </li>
+            <li class="not-included">
+              <span class="product__included-cross"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M18 6L6 18M6 6l12 12" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              Modifications du guide non incluses
+            </li>
+          </ul>
+        </div>
+
+        <div class="finish">
+          <div class="finish__label">Choisissez votre finition</div>
+          <div class="finish__options" id="finishOptions">
+            <button class="finish__opt" data-finish="blanc" data-idx="1">
+              <span class="finish__swatch finish__swatch--white"></span>
+              Blanc
+            </button>
+            <button class="finish__opt active" data-finish="noir" data-idx="0">
+              <span class="finish__swatch finish__swatch--black"></span>
+              Noir
+            </button>
+            <button class="finish__opt" data-finish="bois" data-idx="2">
+              <span class="finish__swatch finish__swatch--wood"></span>
+              Imitation Bois
+            </button>
+          </div>
+        </div>
+
+        <div class="specs">
+          <div class="specs__label">Caractéristiques</div>
+          <ul class="specs__list">
+            <li><span>Dimensions</span><strong>8 × 6 × 12 cm</strong></li>
+            <li><span>Finition sélectionnée</span><strong id="selectedFinish">Noire</strong></li>
+            <li><span>Technologie</span><strong>Puce NFC intégrée</strong></li>
+            <li><span>Compatibilité</span><strong>iOS & Android (sans app)</strong></li>
+            <li><span>Fabrication</span><strong>Normandie, Caen</strong></li>
+          </ul>
+        </div>
+
+        <div class="buy">
+          <a href="https://buy.stripe.com/test_00w8wRdifaFfcy3cW5bjW00" target="_blank" rel="noopener" class="btn btn--primary btn--lg btn--block">
+            Acheter
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          <div class="buy__sub">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+            Paiement sécurisé via Stripe
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section class="cta-final">
+  <div class="cta-final__inner">
+    <h2 class="cta-final__title">Une question avant de commander ?</h2>
+    <p class="cta-final__desc">Écrivez-nous, on répond sous 24h.</p>
+    <a href="contact.html?offre=classique" class="btn btn--lg cta-final__btn-white">
+      Nous contacter
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer__grid">
+      <div>
+        <div class="footer__brand">
+          <span class="nav__logo-mark">H</span>
+          Hostly
+        </div>
+        <p class="footer__tag">Guide digital pour locations courte durée. Pensé et fabriqué à Caen, en Normandie.</p>
+        <div class="footer__social">
+          <a href="#" aria-label="Instagram">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg>
+          </a>
+          <a href="#" aria-label="LinkedIn">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5C4.98 4.88 3.87 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5zM0 8h5v16H0V8zm7.98 0H13v2.2h.07c.7-1.3 2.4-2.68 4.93-2.68 5.27 0 6.25 3.47 6.25 7.98V24h-5v-7.4c0-1.77-.03-4.04-2.46-4.04-2.47 0-2.85 1.92-2.85 3.9V24h-5V8z"/></svg>
+          </a>
+          <a href="mailto:mj.thomasduboispro@gmail.com" aria-label="Email">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="footer__col">
+        <h4>Navigation</h4>
+        <ul>
+          <li><a href="index.html">Accueil</a></li>
+          <li><a href="offres.html">Nos offres</a></li>
+          <li><a href="apercu.html">Aperçu du guide</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+
+      <div class="footer__col">
+        <h4>Légal</h4>
+        <ul>
+          <li><a href="mentions-legales.html">Mentions légales</a></li>
+          <li><a href="mentions-legales.html#confidentialite">Confidentialité</a></li>
+          <li><a href="mentions-legales.html#cgv">CGV</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer__bottom">
+      <span>© Hostly 2026 — Fait avec soin à Caen, Normandie.</span>
+      <span>mj.thomasduboispro@gmail.com</span>
+    </div>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+<script>
+  // CAROUSEL
+  const track = document.getElementById('track');
+  const dots = document.querySelectorAll('.carousel__dot');
+  const counter = document.getElementById('current');
+  const prev = document.getElementById('prev');
+  const next = document.getElementById('next');
+  const total = 3;
+  let idx = 0;
+
+  const goTo = (i) => {
+    idx = (i + total) % total;
+    track.style.transform = `translateX(-${idx * 100}%)`;
+    counter.textContent = idx + 1;
+    dots.forEach((d, n) => d.classList.toggle('active', n === idx));
+    const finishMap = { 0: 'noir', 1: 'blanc', 2: 'bois' };
+    updateFinish(finishMap[idx], false);
+  };
+
+  prev.addEventListener('click', () => goTo(idx - 1));
+  next.addEventListener('click', () => goTo(idx + 1));
+  dots.forEach(d => d.addEventListener('click', () => goTo(parseInt(d.dataset.idx))));
+
+  // FINITION
+  const finishOpts = document.querySelectorAll('.finish__opt');
+  const selectedFinish = document.getElementById('selectedFinish');
+
+  const updateFinish = (value, syncCarousel = true) => {
+    finishOpts.forEach(o => o.classList.toggle('active', o.dataset.finish === value));
+    const labels = { noir: 'Noire', blanc: 'Blanche', bois: 'Imitation Bois' };
+    selectedFinish.textContent = labels[value] || value;
+    if (syncCarousel) {
+      const el = document.querySelector(`.finish__opt[data-finish="${value}"]`);
+      if (el) goTo(parseInt(el.dataset.idx));
+    }
+  };
+
+  finishOpts.forEach(o => {
+    o.addEventListener('click', () => updateFinish(o.dataset.finish));
+  });
+
+  let startX = 0;
+  track.addEventListener('touchstart', (e) => { startX = e.touches[0].clientX; }, { passive: true });
+  track.addEventListener('touchend', (e) => {
+    const diff = startX - e.changedTouches[0].clientX;
+    if (Math.abs(diff) > 50) goTo(diff > 0 ? idx + 1 : idx - 1);
+  });
+</script>
+</body>
+</html>
