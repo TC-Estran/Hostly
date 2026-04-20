@@ -912,8 +912,9 @@
   .big-totem__body { aspect-ratio: auto !important; min-height: 180px; }
   .big-totem__caption { font-size: 0.75rem !important; }
 
-  /* Mini-téléphone : caché sur mobile, trop serré */
-  .mini-phone { display: none !important; }
+  /* Mini-téléphone : caché sur mobile + overflow clippé pour Safari */
+  .mini-phone { display: none !important; visibility: hidden !important; }
+  .hero__visual { overflow: hidden; }
 
   /* ── NAV opaque sur mobile ── */
   .nav {
