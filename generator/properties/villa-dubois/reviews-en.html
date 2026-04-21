@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#ffffff" />
+  <title>Leave a review — Villa Dubois</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+<div class="page">
+
+  <header class="header">
+    <span class="header-name">Villa Dubois</span>
+    <div class="lang-switch">
+      <a href="./reviews.html" class="lang-btn">FR</a>
+      <a href="./reviews-en.html" class="lang-btn active">EN</a>
+    </div>
+  </header>
+
+  <a href="./index-en.html" class="back-link">← Back</a>
+  <h1 class="page-title"><span class="page-title-icon">⭐</span> Leave a review</h1>
+
+  <div class="content">
+    <div class="sub-section">
+      <div class="info-block">
+        <div class="info-block-header"><span class="info-block-icon">💬</span><span class="info-block-title">Your opinion matters</span></div>
+        <p class="info-block-text">Did you enjoy your stay? Your review helps us a lot and allows us to welcome our future guests even better. Thank you!</p>
+      </div>
+    </div>
+    <div class="sub-section">
+      <p class="sub-title">Choose your platform</p>
+      <div class="review-list">
+        <a href="#" class="review-btn">
+          <span class="review-btn-icon">🏠</span>
+          <span class="review-btn-label">Leave a review on Airbnb</span>
+          <span class="review-btn-arrow">→</span>
+        </a>
+        <a href="#" class="review-btn">
+          <span class="review-btn-icon">🔍</span>
+          <span class="review-btn-label">Leave a review on Google</span>
+          <span class="review-btn-arrow">→</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+<style>
+.review-list{display:flex;flex-direction:column;gap:12px;margin-top:8px}
+.review-btn{display:flex;align-items:center;gap:14px;background:#fff;border:1px solid #E2E8F0;border-radius:14px;padding:16px 18px;text-decoration:none;color:#0B1B3B;transition:box-shadow .2s,transform .2s}
+.review-btn:active{transform:scale(.98)}
+.review-btn-icon{font-size:24px;flex-shrink:0}
+.review-btn-label{flex:1;font-size:15px;font-weight:600}
+.review-btn-arrow{font-size:18px;color:#94A3B8}
+</style>
+
+</div>
+</body>
+</html>
