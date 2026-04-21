@@ -442,17 +442,27 @@
     e.preventDefault();
     const btn = document.getElementById('submitBtn');
     const text = document.getElementById('submitText');
+    const success = document.getElementById('formSuccess');
+    const errEl = document.getElementById('formError');
+    success.classList.remove('show');
+    errEl.classList.remove('show');
     btn.classList.add('btn--loading');
     text.textContent = 'Envoi en cours…';
     try {
-      const res = await fetch(form.action, { method: 'POST', body: new FormData(form) });
-      const data = await res.json();
-      if (data.success) {
-        document.getElementById('formSuccess').classList.add('show');
+      const data = Object.fromEntries(new FormData(form).entries());
+      const res = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify(data)
+      });
+      const result = await res.json();
+      if (result.success) {
+        success.classList.add('show');
         form.reset();
-      } else throw new Error();
-    } catch {
-      document.getElementById('formError').classList.add('show');
+      } else throw new Error(result.message);
+    } catch (err) {
+      console.error(err);
+      errEl.classList.add('show');
     } finally {
       btn.classList.remove('btn--loading');
       text.textContent = 'Envoyer ma demande';

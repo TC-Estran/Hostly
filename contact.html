@@ -445,29 +445,13 @@
   const submitBtn = document.getElementById('submitBtn');
   const submitText = document.getElementById('submitText');
 
-  // On détecte si la clé Web3Forms a été configurée
-  const accessKeyInput = form.querySelector('input[name="access_key"]');
-  const hasWeb3FormsKey = accessKeyInput && accessKeyInput.value && accessKeyInput.value !== '4c8833db-6be3-47d5-bec9-bcd21060d501';
-
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
     success.classList.remove('show');
     error.classList.remove('show');
 
-    const formData = new FormData(form);
-    const data = Object.fromEntries(formData.entries());
+    const data = Object.fromEntries(new FormData(form).entries());
 
-    // Si pas de clé Web3Forms configurée → fallback mailto
-    if (!hasWeb3FormsKey) {
-      const body = `Prénom : ${data.prenom || ''}\nNom : ${data.nom || ''}\nEmail : ${data.email || ''}\nTéléphone : ${data.telephone || ''}\nSujet : ${data.sujet_demande || ''}\n\nMessage :\n${data.message || ''}`;
-      const subject = `[Hostly] Contact — ${data.sujet_demande || 'Question'}`;
-      window.location.href = `mailto:mj.thomasduboispro@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-      success.classList.add('show');
-      setTimeout(() => success.classList.remove('show'), 8000);
-      return;
-    }
-
-    // Sinon → envoi AJAX via Web3Forms
     submitBtn.classList.add('btn--loading');
     submitText.textContent = 'Envoi en cours…';
 
