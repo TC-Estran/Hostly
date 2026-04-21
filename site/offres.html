@@ -239,6 +239,21 @@
   .compare__row { grid-template-columns: 1.2fr 1fr 1fr 1fr; padding: 1rem; font-size: 0.85rem; }
   .compare__row > div { font-size: 0.8rem; }
 }
+
+@media (max-width: 600px) {
+  /* Tableau scrollable horizontalement sur mobile */
+  .compare__table {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .compare__row {
+    grid-template-columns: 140px 80px 90px 95px;
+    min-width: 420px;
+    padding: 0.75rem 1rem;
+  }
+  .compare__row > div { font-size: 0.75rem; }
+  .compare__row--head > div { font-size: 0.7rem; }
+}
 </style>
 </head>
 <body>
