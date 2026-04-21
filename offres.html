@@ -183,6 +183,182 @@
   color: var(--text-mute);
 }
 
+/* TABS */
+.pricing-tabs {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--bg-soft);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 0.3rem;
+  width: fit-content;
+  margin: 0 auto 3rem;
+}
+.pricing-tab {
+  padding: 0.65rem 1.4rem;
+  border-radius: 999px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-soft);
+  cursor: pointer;
+  transition: background 0.2s var(--ease), color 0.2s var(--ease), box-shadow 0.2s var(--ease);
+  white-space: nowrap;
+  border: none;
+  background: none;
+  font-family: var(--font);
+}
+.pricing-tab.active {
+  background: #fff;
+  color: var(--navy);
+  box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+}
+
+/* PRO PANEL */
+.pro-panel {
+  display: none;
+  max-width: 700px;
+  margin: 0 auto;
+}
+.pro-panel.visible { display: block; }
+
+.pro-card {
+  background: var(--navy);
+  border-radius: var(--radius-lg);
+  padding: clamp(2.5rem, 5vw, 4rem);
+  color: #fff;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.pro-card::before {
+  content: "";
+  position: absolute;
+  top: -80px; right: -80px;
+  width: 300px; height: 300px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.04);
+}
+.pro-card::after {
+  content: "";
+  position: absolute;
+  bottom: -60px; left: -60px;
+  width: 220px; height: 220px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.03);
+}
+.pro-card__eyebrow {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.5);
+  margin-bottom: 1.5rem;
+}
+.pro-card__title {
+  font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+  margin-bottom: 1rem;
+}
+.pro-card__sub {
+  font-size: 1.05rem;
+  color: rgba(255,255,255,0.65);
+  line-height: 1.6;
+  max-width: 480px;
+  margin: 0 auto 2.5rem;
+}
+.pro-card__values {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+  margin-bottom: 2.5rem;
+  position: relative;
+  z-index: 1;
+}
+.pro-value {
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 14px;
+  padding: 1.25rem 1rem;
+  text-align: center;
+}
+.pro-value__icon { font-size: 1.5rem; margin-bottom: 0.5rem; }
+.pro-value__label {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: rgba(255,255,255,0.75);
+  line-height: 1.4;
+}
+.pro-card__pricing {
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 14px;
+  padding: 1.75rem 1.5rem;
+  margin-bottom: 2rem;
+  text-align: left;
+  position: relative;
+  z-index: 1;
+}
+.pro-pricing__title {
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.45);
+  margin-bottom: 1rem;
+}
+.pro-pricing__items {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+.pro-pricing__item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 0.95rem;
+  color: rgba(255,255,255,0.85);
+  font-weight: 500;
+}
+.pro-pricing__dot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.3);
+  flex-shrink: 0;
+}
+.pro-card__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  background: #fff;
+  color: var(--navy);
+  font-weight: 700;
+  font-size: 1rem;
+  padding: 1rem 2rem;
+  border-radius: 999px;
+  text-decoration: none;
+  transition: transform 0.2s var(--ease), box-shadow 0.2s var(--ease);
+  position: relative;
+  z-index: 1;
+}
+.pro-card__cta:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.2); }
+.pro-card__cta svg { width: 16px; height: 16px; }
+.pro-card__note {
+  margin-top: 1rem;
+  font-size: 0.8rem;
+  color: rgba(255,255,255,0.35);
+  position: relative; z-index: 1;
+}
+
+@media (max-width: 600px) {
+  .pricing-tabs { width: 100%; border-radius: 14px; flex-direction: column; }
+  .pricing-tab { width: 100%; text-align: center; }
+  .pro-card__values { grid-template-columns: 1fr; gap: 0.75rem; }
+}
+
 /* FAQ */
 .faq {
   max-width: 760px;
@@ -282,6 +458,15 @@
 
 <section class="section" id="pricing" style="padding-top: 2rem;">
   <div class="container">
+
+    <!-- TOGGLE TABS -->
+    <div class="pricing-tabs" role="tablist">
+      <button class="pricing-tab active" id="tab-btn-part" role="tab" aria-selected="true" onclick="switchTab('part')">Pour les hôtes particuliers</button>
+      <button class="pricing-tab" id="tab-btn-pro" role="tab" aria-selected="false" onclick="switchTab('pro')">Vous gérez plusieurs logements ?</button>
+    </div>
+
+    <!-- TAB 1 : PARTICULIERS -->
+    <div id="tab-part">
     <div class="pricing__grid reveal-stagger">
       <article class="plan" id="classique">
         <div class="plan__tag">Sans engagement</div>
@@ -338,10 +523,52 @@
         <a href="offre-modification.html" class="btn btn--outline btn--block">Commander</a>
       </article>
     </div>
+    </div><!-- /tab-part -->
+
+    <!-- TAB 2 : PROFESSIONNELS -->
+    <div id="tab-pro" class="pro-panel">
+      <div class="pro-card reveal">
+        <span class="pro-card__eyebrow">Offre Professionnelle</span>
+        <h2 class="pro-card__title">Une solution pensée pour les pros.</h2>
+        <p class="pro-card__sub">Conciergeries, gestionnaires de biens, multi-propriétaires — gérez tous vos logements depuis une seule solution, avec un tarif adapté à votre volume.</p>
+
+        <div class="pro-card__values">
+          <div class="pro-value">
+            <div class="pro-value__icon">⏱️</div>
+            <div class="pro-value__label">Moins de questions répétitives</div>
+          </div>
+          <div class="pro-value">
+            <div class="pro-value__icon">🏘️</div>
+            <div class="pro-value__label">Gestion centralisée multi-logements</div>
+          </div>
+          <div class="pro-value">
+            <div class="pro-value__icon">⭐</div>
+            <div class="pro-value__label">Expérience voyageur cohérente</div>
+          </div>
+        </div>
+
+        <div class="pro-card__pricing">
+          <div class="pro-pricing__title">Tarification</div>
+          <div class="pro-pricing__items">
+            <div class="pro-pricing__item"><span class="pro-pricing__dot"></span>Abonnement par logement, adapté à votre portefeuille</div>
+            <div class="pro-pricing__item"><span class="pro-pricing__dot"></span>Plus vous avez de logements, meilleur est le tarif</div>
+            <div class="pro-pricing__item"><span class="pro-pricing__dot"></span>Mise à jour des guides à tout moment, sans friction</div>
+            <div class="pro-pricing__item"><span class="pro-pricing__dot"></span>Devis personnalisé sous 24h</div>
+          </div>
+        </div>
+
+        <a href="contact.html" class="pro-card__cta">
+          Demander un devis personnalisé
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <p class="pro-card__note">Réponse sous 24h — sans engagement</p>
+      </div>
+    </div><!-- /tab-pro -->
+
   </div>
 </section>
 
-<section class="section compare">
+<section class="section compare" id="section-compare">
   <div class="container">
     <div class="compare__head reveal">
       <span class="eyebrow">Comparatif</span>
@@ -389,7 +616,7 @@
   </div>
 </section>
 
-<section class="section" id="faq">
+<section class="section" id="section-faq">
   <div class="container">
     <div class="faq">
       <div class="faq__head reveal">
@@ -511,5 +738,21 @@
 </footer>
 
 <script src="script.js"></script>
+<script>
+function switchTab(tab) {
+  var isPro = tab === 'pro';
+  // Toggle tab buttons
+  document.getElementById('tab-btn-part').classList.toggle('active', !isPro);
+  document.getElementById('tab-btn-pro').classList.toggle('active', isPro);
+  // Toggle panels
+  document.getElementById('tab-part').style.display = isPro ? 'none' : '';
+  document.getElementById('tab-pro').classList.toggle('visible', isPro);
+  // Hide compare & FAQ when pro tab active
+  var compare = document.getElementById('section-compare');
+  var faq = document.getElementById('section-faq');
+  if (compare) compare.style.display = isPro ? 'none' : '';
+  if (faq) faq.style.display = isPro ? 'none' : '';
+}
+</script>
 </body>
 </html>
