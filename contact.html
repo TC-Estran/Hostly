@@ -303,7 +303,7 @@
                3. Reçois ta clé d'accès par email
                4. Remplace la valeur ci-dessous par ta clé
           -->
-          <input type="hidden" name="access_key" value="VOTRE_CLE_WEB3FORMS_ICI">
+          <input type="hidden" name="access_key" value="4c8833db-6be3-47d5-bec9-bcd21060d501">
 
           <!-- Sujet envoyé dans l'email reçu -->
           <input type="hidden" name="subject" value="Nouveau message depuis hostly.fr">
@@ -447,7 +447,7 @@
 
   // On détecte si la clé Web3Forms a été configurée
   const accessKeyInput = form.querySelector('input[name="access_key"]');
-  const hasWeb3FormsKey = accessKeyInput && accessKeyInput.value && accessKeyInput.value !== 'VOTRE_CLE_WEB3FORMS_ICI';
+  const hasWeb3FormsKey = accessKeyInput && accessKeyInput.value && accessKeyInput.value !== '4c8833db-6be3-47d5-bec9-bcd21060d501';
 
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
