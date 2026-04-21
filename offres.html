@@ -353,10 +353,19 @@
   position: relative; z-index: 1;
 }
 
-@media (max-width: 600px) {
-  .pricing-tabs { width: 100%; border-radius: 14px; flex-direction: column; }
-  .pricing-tab { width: 100%; text-align: center; }
-  .pro-card__values { grid-template-columns: 1fr; gap: 0.75rem; }
+@media (max-width: 768px) {
+  .pricing-tabs { width: 100%; }
+  .pricing-tab { font-size: 0.82rem; padding: 0.55rem 1rem; }
+  .pro-card__values { grid-template-columns: 1fr; gap: 0.65rem; }
+  .pro-card__title { font-size: 1.5rem; }
+  .pro-card__sub { font-size: 0.9rem; }
+}
+@media (max-width: 480px) {
+  .pricing-tabs { flex-direction: column; border-radius: 14px; }
+  .pricing-tab { width: 100%; text-align: center; border-radius: 10px; }
+  .pro-card { padding: 1.4rem 1.1rem; }
+  .pro-card__pricing { padding: 1rem; }
+  .pro-card__cta { font-size: 0.9rem; padding: 0.85rem 1.4rem; }
 }
 
 /* FAQ */
@@ -553,12 +562,12 @@
             <div class="pro-pricing__item"><span class="pro-pricing__dot"></span>Accès dès 10 logements — un tarif à la hauteur de votre engagement</div>
             <div class="pro-pricing__item"><span class="pro-pricing__dot"></span>Tarif unitaire dégressif selon la taille de votre portefeuille</div>
             <div class="pro-pricing__item"><span class="pro-pricing__dot"></span>Mises à jour illimitées sur l'ensemble de vos guides</div>
-            <div class="pro-pricing__item"><span class="pro-pricing__dot"></span>Proposition commerciale personnalisée sous 24h</div>
+            <div class="pro-pricing__item"><span class="pro-pricing__dot"></span>Offre sur mesure selon votre portefeuille, sous 24h</div>
           </div>
         </div>
 
         <a href="contact.html" class="pro-card__cta">
-          Demander une proposition
+          Obtenir mon offre sur mesure
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </a>
         <p class="pro-card__note">Sans engagement — réponse sous 24h</p>
