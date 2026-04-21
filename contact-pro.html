@@ -140,36 +140,25 @@
   line-height: 1.35;
 }
 
-/* VOLUME SLIDER */
-.volume-display {
+/* VOLUME INPUT */
+.volume-input-wrap {
   display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  margin-bottom: 0.5rem;
+  align-items: center;
+  gap: 0.75rem;
 }
-.volume-display__value {
-  font-size: 1.6rem;
+.volume-input-wrap .form__input {
+  width: 120px;
+  font-size: 1.4rem;
   font-weight: 800;
+  text-align: center;
+  letter-spacing: -0.02em;
   color: var(--navy);
-  letter-spacing: -0.03em;
+  flex-shrink: 0;
 }
-.volume-display__label {
-  font-size: 0.82rem;
+.volume-input-wrap span {
+  font-size: 0.9rem;
   color: var(--text-mute);
   font-weight: 500;
-}
-.form__range {
-  width: 100%;
-  accent-color: var(--navy);
-  height: 6px;
-  cursor: pointer;
-}
-.volume-ticks {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 0.4rem;
-  font-size: 0.72rem;
-  color: var(--text-mute);
 }
 
 /* SECTION DIVIDER */
@@ -292,11 +281,11 @@
         <div class="form__row">
           <div class="form__group" style="margin-bottom:0">
             <label class="form__label" for="firstname">Prénom <span>*</span></label>
-            <input type="text" id="firstname" name="prenom" class="form__input" placeholder="Thomas" required>
+            <input type="text" id="firstname" name="prenom" class="form__input" placeholder="Votre prénom" required>
           </div>
           <div class="form__group" style="margin-bottom:0">
             <label class="form__label" for="lastname">Nom <span>*</span></label>
-            <input type="text" id="lastname" name="nom" class="form__input" placeholder="Dubois" required>
+            <input type="text" id="lastname" name="nom" class="form__input" placeholder="Votre nom" required>
           </div>
         </div>
 
@@ -305,7 +294,7 @@
             Société / Conciergerie
             <span class="form__label-hint">— facultatif si vous êtes indépendant</span>
           </label>
-          <input type="text" id="company" name="societe" class="form__input" placeholder="Ma Conciergerie SAS">
+          <input type="text" id="company" name="societe" class="form__input" placeholder="Nom de votre société ou conciergerie">
         </div>
 
         <div class="form__divider"></div>
@@ -340,16 +329,12 @@
         <div class="form__section-title">Votre portefeuille</div>
 
         <div class="form__group">
-          <label class="form__label">
+          <label class="form__label" for="volumeInput">
             Nombre de logements à équiper <span>*</span>
           </label>
-          <div class="volume-display">
-            <span class="volume-display__value" id="volumeValue">10</span>
-            <span class="volume-display__label">logements</span>
-          </div>
-          <input type="range" class="form__range" id="volumeRange" name="nb_logements" min="10" max="100" step="5" value="10">
-          <div class="volume-ticks">
-            <span>10</span><span>30</span><span>50</span><span>75</span><span>100+</span>
+          <div class="volume-input-wrap">
+            <input type="number" id="volumeInput" name="nb_logements" class="form__input" min="10" placeholder="27" required>
+            <span>logements</span>
           </div>
         </div>
 
@@ -366,11 +351,11 @@
         <div class="form__row">
           <div class="form__group" style="margin-bottom:0">
             <label class="form__label" for="email">Email <span>*</span></label>
-            <input type="email" id="email" name="email" class="form__input" placeholder="thomas@exemple.fr" required>
+            <input type="email" id="email" name="email" class="form__input" placeholder="votre@email.fr" required>
           </div>
           <div class="form__group" style="margin-bottom:0">
             <label class="form__label" for="phone">Téléphone <span class="form__label-hint">— facultatif</span></label>
-            <input type="tel" id="phone" name="telephone" class="form__input" placeholder="06 12 34 56 78">
+            <input type="tel" id="phone" name="telephone" class="form__input" placeholder="Votre numéro">
           </div>
         </div>
 
@@ -451,13 +436,6 @@
 
 <script src="script.js"></script>
 <script>
-  // Slider volume
-  const range = document.getElementById('volumeRange');
-  const display = document.getElementById('volumeValue');
-  range.addEventListener('input', () => {
-    display.textContent = range.value == 100 ? '100+' : range.value;
-  });
-
   // Soumission formulaire
   const form = document.getElementById('proForm');
   form.addEventListener('submit', async (e) => {
@@ -472,7 +450,6 @@
       if (data.success) {
         document.getElementById('formSuccess').classList.add('show');
         form.reset();
-        display.textContent = '10';
       } else throw new Error();
     } catch {
       document.getElementById('formError').classList.add('show');
