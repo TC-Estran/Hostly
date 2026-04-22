@@ -6,19 +6,24 @@ html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; -moz-osx-fo
 body { overflow-x: clip; }
 
 :root {
-  --navy:        #0B1B3B;
-  --navy-deep:   #08152F;
-  --navy-soft:   #1E2F52;
-  --blue:        #3B5BDB;
-  --blue-light:  #EAF0FF;
-  --blue-hint:   #F5F8FF;
-  --text:        #0B1B3B;
-  --text-soft:   #5A6B8C;
-  --text-mute:   #8A96B1;
-  --bg:          #FFFFFF;
-  --bg-soft:     #F8FAFD;
-  --line:        #E6EBF5;
-  --line-soft:   #F0F3FA;
+  /* ── Palette Sable & Marine (nouvelle) ──
+     Ancienne palette :
+     --navy: #0B1B3B / --blue: #3B5BDB / --bg: #FFFFFF / --bg-soft: #F8FAFD
+     --text-soft: #5A6B8C / --text-mute: #8A96B1 / --line: #E6EBF5
+  */
+  --navy:        #1B2F4B;
+  --navy-deep:   #111E30;
+  --navy-soft:   #2A4060;
+  --blue:        #C4704F;
+  --blue-light:  #F7EDE7;
+  --blue-hint:   #FBF5F2;
+  --text:        #1B2F4B;
+  --text-soft:   #4A5E72;
+  --text-mute:   #8A96A8;
+  --bg:          #F5F0E8;
+  --bg-soft:     #EDE8DF;
+  --line:        #DDD8CE;
+  --line-soft:   #E8E4DC;
   --success:     #E8F3EE;
   --success-ink: #2E7D5B;
 
