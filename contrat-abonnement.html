@@ -5,23 +5,20 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Contrat d'abonnement — Hostly</title>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
-
   * { box-sizing: border-box; margin: 0; padding: 0; }
 
   body {
-    font-family: 'Plus Jakarta Sans', Georgia, serif;
+    font-family: Georgia, 'Times New Roman', serif;
     font-size: 11pt;
-    line-height: 1.7;
-    color: #1a1a2e;
+    line-height: 1.75;
+    color: #1B2F4B;
     background: #fff;
-    padding: 0;
   }
 
   .page {
-    max-width: 780px;
+    max-width: 720px;
     margin: 0 auto;
-    padding: 60px 64px;
+    padding: 56px 64px;
   }
 
   /* En-tête */
@@ -29,257 +26,199 @@
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    padding-bottom: 32px;
-    border-bottom: 2px solid #0f172a;
-    margin-bottom: 40px;
+    margin-bottom: 36px;
+    padding-bottom: 20px;
+    border-bottom: 1.5px solid #1B2F4B;
   }
-  .header-brand { }
-  .header-logo {
-    font-size: 22pt;
-    font-weight: 800;
-    color: #0f172a;
+  .logo {
+    font-family: Arial, sans-serif;
+    font-size: 20pt;
+    font-weight: 900;
+    color: #1B2F4B;
     letter-spacing: -0.5px;
   }
-  .header-logo span { color: #6366f1; }
-  .header-subtitle {
-    font-size: 9pt;
-    color: #64748b;
-    margin-top: 4px;
-    font-weight: 500;
-    text-transform: uppercase;
-    letter-spacing: .08em;
-  }
-  .header-meta {
+  .logo span { color: #C4704F; }
+  .header-ref {
     text-align: right;
+    font-family: Arial, sans-serif;
     font-size: 9pt;
-    color: #64748b;
+    color: #4A5E72;
     line-height: 1.8;
   }
-  .header-meta strong {
+  .header-ref strong {
     display: block;
+    color: #1B2F4B;
     font-size: 10pt;
-    color: #0f172a;
-    font-weight: 700;
-    margin-bottom: 4px;
+    margin-bottom: 2px;
   }
 
   /* Titre */
-  .contract-title {
+  h1 {
+    font-family: Arial, sans-serif;
+    font-size: 15pt;
+    font-weight: 900;
+    color: #1B2F4B;
     text-align: center;
-    margin-bottom: 40px;
-  }
-  .contract-title h1 {
-    font-size: 18pt;
-    font-weight: 800;
-    color: #0f172a;
-    margin-bottom: 8px;
-    letter-spacing: -.3px;
-  }
-  .contract-title .badge {
-    display: inline-block;
-    background: #6366f1;
-    color: #fff;
-    font-size: 8.5pt;
-    font-weight: 700;
-    padding: 4px 14px;
-    border-radius: 20px;
-    letter-spacing: .06em;
+    margin-bottom: 4px;
     text-transform: uppercase;
+    letter-spacing: .04em;
+  }
+  .subtitle {
+    text-align: center;
+    font-family: Arial, sans-serif;
+    font-size: 9pt;
+    color: #C4704F;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    margin-bottom: 32px;
   }
 
   /* Parties */
   .parties {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
-    margin-bottom: 36px;
+    border: 1px solid #DDD8CE;
+    border-radius: 6px;
+    overflow: hidden;
+    margin-bottom: 28px;
   }
-  .partie-box {
-    border: 1.5px solid #e2e8f0;
-    border-radius: 10px;
-    padding: 20px 22px;
+  .partie {
+    padding: 16px 20px;
+    display: flex;
+    gap: 16px;
   }
-  .partie-box.prestataire { border-color: #6366f1; background: #f8f7ff; }
+  .partie + .partie { border-top: 1px solid #DDD8CE; }
   .partie-label {
+    font-family: Arial, sans-serif;
     font-size: 8pt;
     font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: .1em;
-    color: #6366f1;
-    margin-bottom: 10px;
+    letter-spacing: .08em;
+    color: #C4704F;
+    white-space: nowrap;
+    padding-top: 2px;
+    min-width: 90px;
   }
-  .partie-box.client .partie-label { color: #0f172a; }
-  .partie-name {
-    font-size: 11pt;
-    font-weight: 700;
-    color: #0f172a;
-    margin-bottom: 6px;
+  .partie-content {
+    font-size: 10pt;
+    color: #1B2F4B;
+    line-height: 1.6;
   }
-  .partie-detail {
-    font-size: 9pt;
-    color: #64748b;
-    line-height: 1.7;
-  }
-  .fill-line {
+  .fill {
     display: inline-block;
-    min-width: 180px;
-    border-bottom: 1px solid #94a3b8;
-    height: 1.2em;
+    min-width: 160px;
+    border-bottom: 1px solid #8A96A8;
+    height: 1.1em;
     vertical-align: bottom;
-    margin-left: 4px;
   }
 
-  /* Récapitulatif offre */
-  .offre-recap {
-    background: #0f172a;
-    border-radius: 12px;
-    padding: 24px 28px;
-    margin-bottom: 36px;
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 20px;
-    text-align: center;
+  /* Récap tarifaire */
+  .tarif-recap {
+    background: #F5F0E8;
+    border: 1px solid #DDD8CE;
+    border-radius: 6px;
+    padding: 16px 20px;
+    margin-bottom: 28px;
+    font-family: Arial, sans-serif;
+    font-size: 10pt;
+    display: flex;
+    gap: 32px;
+    flex-wrap: wrap;
   }
-  .recap-item { }
-  .recap-val {
-    font-size: 16pt;
-    font-weight: 800;
-    color: #6366f1;
-    line-height: 1;
-    margin-bottom: 4px;
-  }
-  .recap-lab {
-    font-size: 8pt;
-    color: rgba(255,255,255,.55);
-    font-weight: 500;
-    text-transform: uppercase;
-    letter-spacing: .06em;
+  .tarif-item strong {
+    color: #C4704F;
+    font-size: 12pt;
   }
 
   /* Articles */
   .article {
-    margin-bottom: 28px;
+    margin-bottom: 22px;
   }
   .article-title {
-    font-size: 11pt;
-    font-weight: 800;
-    color: #0f172a;
-    margin-bottom: 10px;
-    padding-bottom: 6px;
-    border-bottom: 1px solid #e2e8f0;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-  .article-num {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 22px;
-    height: 22px;
-    background: #6366f1;
-    color: #fff;
-    border-radius: 50%;
-    font-size: 8pt;
+    font-family: Arial, sans-serif;
+    font-size: 10.5pt;
     font-weight: 700;
-    flex-shrink: 0;
+    color: #1B2F4B;
+    text-transform: uppercase;
+    letter-spacing: .04em;
+    margin-bottom: 8px;
+    padding-bottom: 4px;
+    border-bottom: 1px solid #DDD8CE;
   }
   .article p {
     margin-bottom: 8px;
     font-size: 10.5pt;
-    color: #334155;
+    text-align: justify;
   }
   .article ul {
-    margin: 8px 0 8px 20px;
+    margin: 6px 0 8px 22px;
   }
   .article ul li {
     font-size: 10.5pt;
-    color: #334155;
-    margin-bottom: 4px;
+    margin-bottom: 3px;
   }
-  .highlight {
-    background: #fef9c3;
-    border-left: 3px solid #eab308;
+  .encadre {
+    border-left: 3px solid #C4704F;
+    background: #FBF5F2;
     padding: 10px 14px;
-    border-radius: 0 6px 6px 0;
     margin: 10px 0;
-    font-size: 10pt;
-    color: #713f12;
-    font-weight: 500;
-  }
-  .highlight.red {
-    background: #fef2f2;
-    border-color: #ef4444;
-    color: #7f1d1d;
+    font-size: 10.5pt;
+    text-align: justify;
   }
 
   /* Signatures */
   .signatures {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 40px;
-    margin-top: 48px;
-    padding-top: 32px;
-    border-top: 2px solid #0f172a;
+    gap: 48px;
+    margin-top: 44px;
+    padding-top: 28px;
+    border-top: 1.5px solid #1B2F4B;
   }
-  .sig-block { }
   .sig-label {
+    font-family: Arial, sans-serif;
     font-size: 8.5pt;
     font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: .08em;
-    color: #64748b;
-    margin-bottom: 10px;
+    letter-spacing: .07em;
+    color: #4A5E72;
+    margin-bottom: 6px;
   }
   .sig-name {
-    font-size: 11pt;
-    font-weight: 700;
-    color: #0f172a;
-    margin-bottom: 6px;
+    font-size: 10.5pt;
+    font-weight: bold;
+    margin-bottom: 4px;
   }
   .sig-date {
     font-size: 9.5pt;
-    color: #64748b;
-    margin-bottom: 24px;
+    color: #4A5E72;
+    margin-bottom: 20px;
   }
   .sig-zone {
-    border-bottom: 1.5px solid #94a3b8;
-    height: 56px;
-    position: relative;
-  }
-  .sig-zone::after {
-    content: 'Signature';
-    position: absolute;
-    bottom: 6px;
-    left: 0;
-    font-size: 8pt;
-    color: #cbd5e1;
-    font-style: italic;
+    height: 52px;
+    border-bottom: 1px solid #8A96A8;
   }
   .sig-mention {
     font-size: 8pt;
-    color: #94a3b8;
-    margin-top: 8px;
+    color: #8A96A8;
+    font-style: italic;
+    margin-top: 6px;
   }
 
-  /* Footer doc */
+  /* Pied de page */
   .doc-footer {
-    margin-top: 40px;
-    padding-top: 16px;
-    border-top: 1px solid #e2e8f0;
+    margin-top: 36px;
+    padding-top: 12px;
+    border-top: 1px solid #DDD8CE;
+    font-family: Arial, sans-serif;
+    font-size: 8pt;
+    color: #8A96A8;
     display: flex;
     justify-content: space-between;
-    font-size: 8pt;
-    color: #94a3b8;
   }
 
   @media print {
-    body { padding: 0; }
-    .page { padding: 40px 48px; max-width: 100%; }
-    .offre-recap { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-    .partie-box.prestataire { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-    .article-num { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-    .contract-title .badge { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .page { padding: 36px 44px; }
+    .tarif-recap, .encadre { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
   }
 </style>
 </head>
@@ -288,194 +227,132 @@
 
   <!-- EN-TÊTE -->
   <div class="header">
-    <div class="header-brand">
-      <div class="header-logo">host<span>ly</span></div>
-      <div class="header-subtitle">Guide digital pour hôtes Airbnb</div>
-    </div>
-    <div class="header-meta">
-      <strong>Contrat n° _________</strong>
-      Date de signature : <span class="fill-line" style="min-width:100px;"></span><br>
-      Thomas Dubois — TC.Estran<br>
-      hostly-pro.fr
+    <div class="logo">host<span>ly</span></div>
+    <div class="header-ref">
+      <strong>Contrat n° <span class="fill" style="min-width:80px;"></span></strong>
+      Date : <span class="fill" style="min-width:90px;"></span><br>
+      contact@hostly-pro.fr — hostly-pro.fr
     </div>
   </div>
 
   <!-- TITRE -->
-  <div class="contract-title">
-    <h1>Contrat d'abonnement annuel</h1>
-    <span class="badge">Engagement 12 mois — Offre Abonnement</span>
-  </div>
+  <h1>Contrat d'abonnement annuel</h1>
+  <div class="subtitle">Engagement 12 mois ferme — Offre Abonnement</div>
 
   <!-- PARTIES -->
   <div class="parties">
-    <div class="partie-box prestataire">
-      <div class="partie-label">Le prestataire</div>
-      <div class="partie-name">Thomas Dubois</div>
-      <div class="partie-detail">
-        Nom commercial : TC.Estran / Hostly<br>
-        Site : hostly-pro.fr<br>
-        Email : contact@hostly-pro.fr<br>
-        Statut : Micro-entrepreneur
+    <div class="partie">
+      <div class="partie-label">Prestataire</div>
+      <div class="partie-content">
+        <strong>Thomas Dubois</strong> — TC.Estran / Hostly<br>
+        Micro-entrepreneur · hostly-pro.fr · contact@hostly-pro.fr
       </div>
     </div>
-    <div class="partie-box client">
-      <div class="partie-label">Le client</div>
-      <div class="partie-name">
-        <span class="fill-line" style="min-width:200px;"></span>
-      </div>
-      <div class="partie-detail">
-        Email : <span class="fill-line"></span><br>
-        Téléphone : <span class="fill-line"></span><br>
-        Propriété Airbnb : <span class="fill-line"></span>
+    <div class="partie">
+      <div class="partie-label">Client</div>
+      <div class="partie-content">
+        Nom : <span class="fill" style="min-width:200px;"></span><br>
+        Email : <span class="fill"></span> &nbsp; Tél. : <span class="fill"></span><br>
+        Propriété : <span class="fill" style="min-width:220px;"></span>
       </div>
     </div>
   </div>
 
-  <!-- RÉCAP OFFRE -->
-  <div class="offre-recap">
-    <div class="recap-item">
-      <div class="recap-val">39 €</div>
-      <div class="recap-lab">Frais de création uniques</div>
-    </div>
-    <div class="recap-item">
-      <div class="recap-val">4 €</div>
-      <div class="recap-lab">Par période de 4 semaines</div>
-    </div>
-    <div class="recap-item">
-      <div class="recap-val">12 mois</div>
-      <div class="recap-lab">Engagement minimum</div>
-    </div>
+  <!-- RÉCAP TARIF -->
+  <div class="tarif-recap">
+    <div class="tarif-item">Création : <strong>39 €</strong> (paiement unique)</div>
+    <div class="tarif-item">Abonnement : <strong>4 €</strong> / 4 semaines (prélt. SEPA)</div>
+    <div class="tarif-item">Engagement : <strong>12 mois</strong> ferme</div>
   </div>
 
   <!-- ARTICLES -->
 
   <div class="article">
-    <div class="article-title">
-      <span class="article-num">1</span>
-      Objet du contrat
-    </div>
-    <p>Le présent contrat a pour objet la fourniture par Thomas Dubois (TC.Estran / Hostly) d'un guide digital personnalisé destiné aux hôtes de location courte durée (Airbnb et plateformes similaires), ainsi que sa maintenance et ses mises à jour régulières pendant toute la durée de l'abonnement.</p>
+    <div class="article-title">Article 1 — Objet</div>
+    <p>Le présent contrat a pour objet la création et la mise en ligne d'un guide digital personnalisé pour hôtes de location courte durée (Airbnb et plateformes similaires), ainsi que sa maintenance et ses mises à jour pendant toute la durée de l'abonnement.</p>
     <p>Les prestations comprennent :</p>
     <ul>
-      <li>Création et mise en ligne d'un guide digital personnalisé aux couleurs de la propriété du client</li>
-      <li>Mises à jour du contenu du guide sur demande (textes, photos, informations pratiques)</li>
-      <li>Accès aux nouvelles fonctionnalités et améliorations introduites sur la plateforme Hostly</li>
+      <li>Création du guide digital personnalisé aux couleurs de la propriété du client</li>
+      <li>Mises à jour du contenu sur demande (textes, photos, informations pratiques)</li>
+      <li>Accès aux améliorations et nouvelles fonctionnalités introduites sur la plateforme Hostly</li>
       <li>Support par email sous 48h ouvrées</li>
-      <li>Tout avantage ou service supplémentaire qui pourrait être introduit dans l'offre Abonnement au cours de la période contractuelle</li>
+      <li>Tout avantage supplémentaire introduit dans l'offre Abonnement au cours du contrat</li>
     </ul>
   </div>
 
   <div class="article">
-    <div class="article-title">
-      <span class="article-num">2</span>
-      Durée et engagement
-    </div>
+    <div class="article-title">Article 2 — Durée et engagement</div>
     <p>Le présent contrat est conclu pour une durée minimale de <strong>douze (12) mois</strong> à compter de la date de signature.</p>
-    <div class="highlight red">
-      Le client s'engage expressément à honorer l'intégralité des paiements dus pour la période de 12 mois, sans possibilité de résiliation anticipée. Toute demande de résiliation formulée avant l'échéance des 12 mois n'interrompra pas les prélèvements, qui continueront jusqu'au terme du contrat.
+    <div class="encadre">
+      Le client s'engage à honorer l'intégralité des paiements dus pendant les 12 mois, sans possibilité de résiliation anticipée. Toute demande de résiliation formulée avant l'échéance des 12 mois n'interrompra pas les prélèvements, qui continueront jusqu'au terme du contrat.
     </div>
-    <p>À l'issue de la période d'engagement de 12 mois, le contrat se poursuit tacitement par périodes de 4 semaines, renouvelables automatiquement, jusqu'à résiliation par l'une ou l'autre des parties.</p>
+    <p>À l'issue des 12 mois, le contrat se poursuit automatiquement par périodes de 4 semaines, jusqu'à résiliation par l'une des parties.</p>
   </div>
 
   <div class="article">
-    <div class="article-title">
-      <span class="article-num">3</span>
-      Tarifs et modalités de paiement
-    </div>
-    <p><strong>Frais de création (paiement unique) :</strong> 39 € TTC, prélevés à la signature du présent contrat.</p>
-    <p><strong>Abonnement récurrent :</strong> 4 € TTC par période de 4 semaines, prélevés automatiquement par prélèvement SEPA sur le compte bancaire du client, à date fixe.</p>
-    <p>En signant ce contrat, le client autorise expressément Thomas Dubois (TC.Estran) à effectuer des prélèvements SEPA récurrents de 4 € toutes les 4 semaines pendant toute la durée du contrat, y compris la période d'engagement minimale de 12 mois.</p>
-    <div class="highlight">
-      En cas d'échec de prélèvement, le client s'engage à régulariser sa situation dans un délai de 7 jours calendaires. Passé ce délai, le prestataire se réserve le droit de suspendre l'accès au guide jusqu'au règlement effectif, sans que cela ne constitue une résiliation du contrat.
+    <div class="article-title">Article 3 — Tarifs et paiement</div>
+    <p><strong>Frais de création (paiement unique) :</strong> 39 € TTC, prélevés à la signature.</p>
+    <p><strong>Abonnement récurrent :</strong> 4 € TTC toutes les 4 semaines, par prélèvement SEPA automatique. En signant ce contrat, le client autorise expressément ces prélèvements récurrents pendant toute la durée du contrat, y compris la période d'engagement de 12 mois.</p>
+    <p>En cas d'échec de prélèvement, le client dispose de 7 jours pour régulariser. Passé ce délai, le prestataire peut suspendre l'accès au guide sans que cela constitue une résiliation.</p>
+  </div>
+
+  <div class="article">
+    <div class="article-title">Article 4 — Résiliation après la période d'engagement</div>
+    <p>À l'issue des 12 mois, le client peut résilier à tout moment par email à <strong>contact@hostly-pro.fr</strong>. La résiliation prend effet à la fin de la période de 4 semaines en cours. Cette dernière période est intégralement facturée. Aucun remboursement n'est effectué pour une période entamée.</p>
+  </div>
+
+  <div class="article">
+    <div class="article-title">Article 5 — Résiliation anticipée</div>
+    <div class="encadre">
+      Toute demande de résiliation formulée avant l'expiration des 12 mois n'entraîne pas l'arrêt des prélèvements. Les paiements continueront jusqu'à la date anniversaire du contrat. Le service reste actif jusqu'à cette date. En cas d'opposition bancaire avant le terme, le présent contrat fait foi de l'engagement du client.
     </div>
   </div>
 
   <div class="article">
-    <div class="article-title">
-      <span class="article-num">4</span>
-      Résiliation après la période d'engagement
-    </div>
-    <p>À l'issue des 12 mois d'engagement, le client peut résilier son abonnement à tout moment, sans préavis ni pénalité, en adressant une demande écrite à <strong>contact@hostly-pro.fr</strong>.</p>
-    <p>La résiliation prend effet à la fin de la période de 4 semaines en cours au moment de la réception de la demande. Cette dernière période sera intégralement facturée et prélevée.</p>
-    <p>Aucun remboursement ne sera effectué pour une période entamée.</p>
-  </div>
-
-  <div class="article">
-    <div class="article-title">
-      <span class="article-num">5</span>
-      Résiliation anticipée (avant 12 mois)
-    </div>
-    <div class="highlight red">
-      Toute demande de résiliation formulée par le client avant l'expiration de la période d'engagement de 12 mois n'entraîne pas l'arrêt des prélèvements. Les paiements continueront à être effectués jusqu'à la date anniversaire du contrat, conformément à l'engagement souscrit. Le service restera actif et disponible jusqu'à cette même date.
-    </div>
-    <p>Le prestataire ne pourra être tenu responsable d'un refus de prélèvement ou d'une opposition formulée par le client auprès de sa banque avant le terme des 12 mois. En cas de litige, le présent contrat fait foi de l'engagement du client.</p>
-  </div>
-
-  <div class="article">
-    <div class="article-title">
-      <span class="article-num">6</span>
-      Obligations du prestataire
-    </div>
+    <div class="article-title">Article 6 — Obligations du prestataire</div>
     <ul>
-      <li>Livrer le guide digital dans un délai de <strong>7 jours ouvrés</strong> à compter de la réception des informations nécessaires (photos, textes, informations pratiques)</li>
-      <li>Effectuer les mises à jour demandées dans un délai raisonnable (sous 72h ouvrées pour les modifications simples)</li>
-      <li>Assurer la disponibilité du guide en ligne pendant toute la durée de l'abonnement</li>
-      <li>Informer le client de toute évolution majeure du service</li>
+      <li>Livraison du guide dans les 7 jours ouvrés suivant la réception des informations client</li>
+      <li>Mises à jour effectuées sous 72h ouvrées pour les modifications simples</li>
+      <li>Disponibilité du guide en ligne pendant toute la durée de l'abonnement</li>
     </ul>
   </div>
 
   <div class="article">
-    <div class="article-title">
-      <span class="article-num">7</span>
-      Obligations du client
-    </div>
+    <div class="article-title">Article 7 — Obligations du client</div>
     <ul>
-      <li>Fournir les informations, textes et visuels nécessaires à la création du guide dans les meilleurs délais</li>
-      <li>S'assurer que le compte bancaire associé au prélèvement SEPA dispose des fonds suffisants à chaque échéance</li>
-      <li>Ne pas reproduire, revendre ou distribuer le guide à des tiers sans autorisation écrite préalable du prestataire</li>
-      <li>Informer le prestataire de tout changement d'informations bancaires dans les meilleurs délais</li>
+      <li>Fournir les informations, textes et visuels nécessaires dans les meilleurs délais</li>
+      <li>S'assurer que le compte bancaire dispose des fonds suffisants à chaque échéance</li>
+      <li>Ne pas reproduire ou revendre le guide sans autorisation écrite préalable</li>
     </ul>
   </div>
 
   <div class="article">
-    <div class="article-title">
-      <span class="article-num">8</span>
-      Propriété intellectuelle
-    </div>
-    <p>Le guide digital créé reste la propriété intellectuelle de Thomas Dubois (TC.Estran / Hostly) pour ce qui concerne son développement technique et sa structure. Le contenu fourni par le client (textes, photos, informations) reste sa propriété.</p>
-    <p>En cas de résiliation ou fin de contrat, le client conserve accès à son guide jusqu'à la fin de la période payée. Passé cette date, le guide peut être désactivé.</p>
-  </div>
-
-  <div class="article">
-    <div class="article-title">
-      <span class="article-num">9</span>
-      Loi applicable et litiges
-    </div>
-    <p>Le présent contrat est soumis au droit français. En cas de litige, les parties s'efforceront de trouver une solution amiable. À défaut, le litige sera porté devant les juridictions compétentes du ressort de Caen (Normandie).</p>
+    <div class="article-title">Article 8 — Loi applicable</div>
+    <p>Le présent contrat est soumis au droit français. En cas de litige non résolu à l'amiable, les juridictions compétentes du ressort de Caen (Normandie) seront saisies.</p>
   </div>
 
   <!-- SIGNATURES -->
   <div class="signatures">
-    <div class="sig-block">
+    <div>
       <div class="sig-label">Le prestataire</div>
       <div class="sig-name">Thomas Dubois — TC.Estran</div>
-      <div class="sig-date">Fait à Caen, le <span class="fill-line" style="min-width:100px;"></span></div>
+      <div class="sig-date">Fait à Caen, le <span class="fill" style="min-width:90px;"></span></div>
       <div class="sig-zone"></div>
-      <div class="sig-mention">Signature précédée de la mention « Lu et approuvé »</div>
+      <div class="sig-mention">Signature précédée de « Lu et approuvé »</div>
     </div>
-    <div class="sig-block">
+    <div>
       <div class="sig-label">Le client</div>
-      <div class="sig-name"><span class="fill-line" style="min-width:200px;"></span></div>
-      <div class="sig-date">Fait à <span class="fill-line" style="min-width:80px;"></span>, le <span class="fill-line" style="min-width:80px;"></span></div>
+      <div class="sig-name"><span class="fill" style="min-width:180px;"></span></div>
+      <div class="sig-date">Fait à <span class="fill" style="min-width:70px;"></span>, le <span class="fill" style="min-width:70px;"></span></div>
       <div class="sig-zone"></div>
-      <div class="sig-mention">Signature précédée de la mention « Lu et approuvé »</div>
+      <div class="sig-mention">Signature précédée de « Lu et approuvé »</div>
     </div>
   </div>
 
-  <!-- FOOTER DOC -->
+  <!-- PIED DE PAGE -->
   <div class="doc-footer">
-    <span>Hostly — Thomas Dubois / TC.Estran — hostly-pro.fr — contact@hostly-pro.fr</span>
-    <span>Document contractuel — 1/1</span>
+    <span>Hostly — Thomas Dubois / TC.Estran — hostly-pro.fr</span>
+    <span>1 / 1</span>
   </div>
 
 </div>
