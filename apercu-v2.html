@@ -1,0 +1,1221 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Guide d'accueil — Villa Dubois</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:         #F5F0E8;
+  --surface:    #FFFFFF;
+  --navy:       #1B2F4B;
+  --accent:     #C4704F;
+  --accent-bg:  #F9EDE7;
+  --accent-dark:#8B4A2E;
+  --soft:       #7A8799;
+  --border:     rgba(27,47,75,0.09);
+  --r:          14px;
+  --shadow:     0 2px 16px rgba(27,47,75,0.07);
+  --font:       'Plus Jakarta Sans', sans-serif;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { height: 100%; }
+body {
+  font-family: var(--font);
+  background: #DDD8CF;
+  -webkit-font-smoothing: antialiased;
+  overflow: hidden;
+}
+
+/* FR/EN */
+body.en  .fr { display: none !important; }
+body:not(.en) .en { display: none !important; }
+
+/* ── APP SHELL ── */
+.app {
+  max-width: 480px;
+  margin: 0 auto;
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
+  background: var(--bg);
+}
+
+/* ── SCREENS ── */
+.screen {
+  position: absolute;
+  inset: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  background: var(--bg);
+  transform: translateX(105%);
+  transition: transform 0.3s cubic-bezier(0.4,0,0.2,1);
+  -webkit-overflow-scrolling: touch;
+}
+#home { transform: translateX(0); }
+#home.peek { transform: translateX(-6%); transition: transform 0.3s cubic-bezier(0.4,0,0.2,1); }
+.screen.active { transform: translateX(0); }
+
+/* ── HERO ── */
+.hero {
+  position: relative;
+  height: 220px;
+  background: url('images/villa-dubois-hero.webp') center/cover no-repeat;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 0 20px 20px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0.45) 100%);
+}
+.hero__lang {
+  position: absolute;
+  top: 16px; right: 16px;
+  display: flex; gap: 2px;
+  background: rgba(0,0,0,0.25);
+  backdrop-filter: blur(8px);
+  border-radius: 8px;
+  padding: 3px;
+  z-index: 2;
+}
+.hero__lang button {
+  font-family: var(--font);
+  font-size: 11px; font-weight: 700;
+  color: rgba(255,255,255,0.5);
+  background: none; border: none;
+  padding: 4px 10px; border-radius: 5px;
+  cursor: pointer; transition: all 0.18s;
+  letter-spacing: 0.04em;
+}
+.hero__lang button.active { background: rgba(255,255,255,0.22); color: #fff; }
+.hero__eyebrow {
+  font-size: 11px; font-weight: 600;
+  color: rgba(255,255,255,0.6);
+  letter-spacing: 0.1em; text-transform: uppercase;
+  margin-bottom: 5px; position: relative; z-index: 2;
+}
+.hero__name {
+  font-size: 28px; font-weight: 800;
+  color: #fff; letter-spacing: -0.025em;
+  position: relative; z-index: 2;
+}
+
+/* ── HOST BAR ── */
+.host-bar {
+  display: flex; align-items: center; gap: 13px;
+  background: var(--surface);
+  margin: 10px 10px 0;
+  border-radius: var(--r);
+  padding: 14px 16px;
+  box-shadow: var(--shadow);
+}
+.host-avatar {
+  width: 46px; height: 46px;
+  border-radius: 50%;
+  background: var(--accent-bg);
+  display: grid; place-items: center;
+  font-size: 18px; font-weight: 800;
+  color: var(--accent); flex-shrink: 0;
+}
+.host-info { flex: 1; }
+.host-name { font-size: 15px; font-weight: 700; color: var(--navy); }
+.host-role { font-size: 12px; color: var(--soft); margin-top: 1px; }
+.host-badge {
+  font-size: 11px; font-weight: 600;
+  background: var(--accent-bg); color: var(--accent);
+  border-radius: 20px; padding: 4px 10px;
+}
+
+/* ── QUICK BAR ── */
+.quick-bar {
+  display: grid; grid-template-columns: 1fr 1fr 1fr;
+  gap: 8px; margin: 8px 10px 0;
+}
+.quick-item {
+  background: var(--surface);
+  border-radius: var(--r);
+  padding: 12px 10px;
+  display: flex; flex-direction: column; gap: 2px;
+  box-shadow: var(--shadow);
+}
+.quick-lbl {
+  font-size: 10px; font-weight: 600; color: var(--soft);
+  text-transform: uppercase; letter-spacing: 0.06em;
+}
+.quick-val {
+  font-size: 14px; font-weight: 800; color: var(--navy);
+  letter-spacing: -0.01em; margin-top: 1px;
+}
+.quick-sub { font-size: 10px; color: var(--soft); }
+.quick-btn {
+  display: inline-flex; align-items: center; gap: 3px;
+  margin-top: 5px;
+  background: var(--accent-bg); color: var(--accent);
+  border: none; border-radius: 6px;
+  padding: 4px 8px;
+  font-family: var(--font); font-size: 11px; font-weight: 700;
+  cursor: pointer; transition: background 0.15s;
+  text-decoration: none;
+}
+.quick-btn:hover { background: var(--accent); color: #fff; }
+.quick-btn.call { background: #E8F5E9; color: #1B5E20; }
+
+/* ── SECTION LABEL ── */
+.sect-lbl {
+  font-size: 11px; font-weight: 700; color: var(--soft);
+  letter-spacing: 0.1em; text-transform: uppercase;
+  padding: 18px 20px 10px;
+}
+
+/* ── NAV GRID ── */
+.nav-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 8px; padding: 0 10px;
+}
+.nav-tile {
+  background: var(--surface); border: none;
+  border-radius: var(--r);
+  padding: 16px 14px;
+  display: flex; align-items: center; gap: 10px;
+  cursor: pointer; text-align: left;
+  box-shadow: var(--shadow);
+  transition: transform 0.15s;
+  font-family: var(--font);
+}
+.nav-tile:active { transform: scale(0.96); }
+.tile-emoji { font-size: 22px; flex-shrink: 0; }
+.tile-label { font-size: 13px; font-weight: 700; color: var(--navy); line-height: 1.25; }
+/* Style B — SVG dans carré arrondi */
+.tile-sq {
+  width: 36px; height: 36px; border-radius: 10px;
+  background: var(--accent-bg);
+  display: grid; place-items: center; flex-shrink: 0;
+}
+.tile-sq svg { width: 18px; height: 18px; stroke: var(--accent); fill: none; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+.tile-sq em { font-size: 18px; line-height: 1; font-style: normal; }
+/* Style C — Numéro dans cercle terracotta */
+.tile-num {
+  width: 36px; height: 36px; border-radius: 50%;
+  background: var(--accent); color: #fff;
+  font-size: 16px; font-weight: 800;
+  display: grid; place-items: center; flex-shrink: 0;
+}
+/* Style D — Initiale dans cercle navy */
+.tile-init {
+  width: 36px; height: 36px; border-radius: 50%;
+  background: var(--navy); color: #fff;
+  font-size: 14px; font-weight: 800;
+  display: grid; place-items: center; flex-shrink: 0;
+}
+
+/* ── WELCOME TEXT ── */
+.welcome {
+  padding: 18px 20px 4px;
+}
+.welcome-title {
+  font-size: 18px; font-weight: 800;
+  color: var(--navy); letter-spacing: -0.02em;
+  margin-bottom: 5px;
+}
+.welcome-text {
+  font-size: 13px; color: var(--soft);
+  line-height: 1.6;
+}
+
+.home-footer {
+  text-align: center; padding: 28px 16px 36px;
+  font-size: 12px; color: var(--soft);
+}
+.home-footer a { color: var(--accent); text-decoration: none; font-weight: 600; }
+
+/* ── VIEW HEADER ── */
+.view-header {
+  position: sticky; top: 0; z-index: 10;
+  display: flex; align-items: center; gap: 10px;
+  padding: 13px 16px;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+}
+.back-btn {
+  display: flex; align-items: center; gap: 4px;
+  font-family: var(--font); font-size: 13px; font-weight: 600;
+  color: var(--accent); background: none; border: none;
+  cursor: pointer; flex-shrink: 0; padding: 2px 0;
+}
+.back-btn svg { width: 16px; height: 16px; }
+.view-title { font-size: 14px; font-weight: 700; color: var(--navy); flex: 1; text-align: center; }
+.view-lang {
+  display: flex; gap: 2px;
+  background: var(--bg); border-radius: 6px; padding: 2px;
+  flex-shrink: 0;
+}
+.view-lang button {
+  font-family: var(--font); font-size: 10px; font-weight: 700;
+  background: none; border: none; color: var(--soft);
+  padding: 3px 8px; border-radius: 4px; cursor: pointer;
+}
+.view-lang button.active { background: var(--surface); color: var(--navy); }
+
+/* ── VIEW CONTENT ── */
+.view-body { padding: 20px 16px 56px; }
+.page-title {
+  font-size: 22px; font-weight: 800; color: var(--navy);
+  letter-spacing: -0.02em; margin-bottom: 22px;
+  display: flex; align-items: center; gap: 10px;
+}
+.page-title-icon { font-size: 26px; }
+
+/* ── SUB-SECTIONS ── */
+.sub { margin-bottom: 20px; }
+.sub-title {
+  font-size: 11px; font-weight: 700; color: var(--soft);
+  text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 8px;
+}
+
+/* ── INFO BLOCKS ── */
+.iblock {
+  background: var(--surface);
+  border-radius: var(--r);
+  padding: 14px 16px;
+  margin-bottom: 8px;
+  box-shadow: var(--shadow);
+}
+.iblock-head {
+  display: flex; align-items: center; gap: 8px; margin-bottom: 9px;
+}
+.iblock-icon { font-size: 18px; line-height: 1; }
+.iblock-title { font-size: 14px; font-weight: 700; color: var(--navy); }
+.iblock-text {
+  font-size: 13px; color: #4A5568;
+  line-height: 1.65; margin-bottom: 4px;
+}
+.iblock-text:last-child { margin-bottom: 0; }
+.iblock-text strong { color: var(--navy); font-weight: 700; }
+
+/* ── RECO CARDS (bons plans) ── */
+.reco {
+  background: var(--surface);
+  border-radius: var(--r);
+  padding: 14px 16px;
+  margin-bottom: 8px;
+  box-shadow: var(--shadow);
+}
+.reco-top {
+  display: flex; align-items: baseline; gap: 8px;
+  flex-wrap: wrap; margin-bottom: 4px;
+}
+.reco-name { font-size: 14px; font-weight: 700; color: var(--navy); }
+.reco-tag {
+  font-size: 10px; font-weight: 600;
+  background: var(--accent-bg); color: var(--accent-dark);
+  border-radius: 20px; padding: 2px 9px; white-space: nowrap;
+}
+.reco-note { font-size: 12.5px; color: var(--soft); line-height: 1.55; }
+
+/* ── RULES ── */
+.rules-block {
+  background: var(--surface);
+  border-radius: var(--r);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+}
+.rule {
+  display: flex; align-items: center; gap: 14px;
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--border);
+  font-size: 13.5px; color: var(--navy); font-weight: 500;
+  line-height: 1.4;
+}
+.rule:last-child { border-bottom: none; }
+.rule-emoji { font-size: 20px; flex-shrink: 0; line-height: 1; }
+
+/* ── TIME GRID ── */
+.time-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 8px; margin-bottom: 16px;
+}
+.time-card {
+  background: var(--surface); border-radius: var(--r);
+  padding: 16px; text-align: center; box-shadow: var(--shadow);
+}
+.time-lbl {
+  font-size: 11px; font-weight: 600; color: var(--soft);
+  text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 6px;
+}
+.time-val { font-size: 30px; font-weight: 800; color: var(--navy); letter-spacing: -0.02em; }
+
+/* ── CHECKLIST ── */
+.checklist { background: var(--surface); border-radius: var(--r); padding: 4px 16px; box-shadow: var(--shadow); }
+.check-item {
+  display: flex; align-items: center; gap: 12px;
+  padding: 12px 0; border-bottom: 1px solid var(--border);
+  font-size: 13.5px; color: var(--navy); font-weight: 500;
+}
+.check-item:last-child { border-bottom: none; }
+.chk {
+  width: 22px; height: 22px; border-radius: 6px;
+  border: 2px solid rgba(196,112,79,0.35);
+  flex-shrink: 0; display: grid; place-items: center;
+  cursor: pointer; transition: all 0.15s;
+}
+.chk.done { background: var(--accent); border-color: var(--accent); }
+.chk.done::after { content: "✓"; color: #fff; font-size: 12px; font-weight: 800; font-family: var(--font); }
+
+/* ── EQUIPMENT GRID ── */
+.equip-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.equip-item {
+  background: var(--surface); border-radius: 10px;
+  padding: 12px 10px;
+  display: flex; align-items: center; gap: 8px;
+  font-size: 12.5px; font-weight: 600; color: var(--navy);
+  box-shadow: var(--shadow);
+}
+.equip-item span:first-child { font-size: 18px; flex-shrink: 0; }
+
+/* ── WIFI PAGE ── */
+.wifi-card {
+  background: var(--surface); border-radius: var(--r);
+  padding: 32px 20px; text-align: center;
+  box-shadow: var(--shadow); margin-bottom: 12px;
+}
+.wifi-network {
+  font-size: 12px; font-weight: 600; color: var(--soft);
+  text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 8px;
+}
+.wifi-pass {
+  font-size: 30px; font-weight: 800; color: var(--navy);
+  letter-spacing: 0.06em; margin-bottom: 20px;
+}
+.wifi-copy {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: var(--accent); color: #fff;
+  border: none; border-radius: 10px;
+  padding: 12px 24px;
+  font-family: var(--font); font-size: 14px; font-weight: 700;
+  cursor: pointer; transition: opacity 0.15s;
+}
+.wifi-copy:hover { opacity: 0.88; }
+.wifi-note { text-align: center; font-size: 12.5px; color: var(--soft); margin-top: 12px; }
+
+/* ── CONTACT ── */
+.host-row {
+  background: var(--surface); border-radius: var(--r);
+  padding: 16px; display: flex; align-items: center; gap: 14px;
+  box-shadow: var(--shadow); margin-bottom: 20px;
+}
+.hr-avatar {
+  width: 44px; height: 44px; border-radius: 50%;
+  background: var(--accent-bg);
+  display: grid; place-items: center;
+  font-size: 17px; font-weight: 800; color: var(--accent);
+  flex-shrink: 0;
+}
+.hr-info { flex: 1; }
+.hr-name { font-size: 15px; font-weight: 700; color: var(--navy); }
+.hr-role { font-size: 12px; color: var(--soft); margin-top: 2px; }
+.hr-btns { display: flex; flex-direction: column; gap: 6px; flex-shrink: 0; }
+.hr-call, .hr-sms {
+  border-radius: 8px; padding: 8px 14px;
+  font-family: var(--font); font-size: 12px; font-weight: 700;
+  text-decoration: none; text-align: center;
+  transition: opacity 0.15s; display: block;
+}
+.hr-call { background: var(--accent); color: #fff; }
+.hr-sms { background: var(--accent-bg); color: var(--accent-dark); }
+.hr-call:hover, .hr-sms:hover { opacity: 0.8; }
+.emg-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 8px;
+}
+.emg-tile {
+  background: var(--surface); border-radius: var(--r);
+  padding: 20px 16px; text-align: center;
+  text-decoration: none; box-shadow: var(--shadow);
+  transition: transform 0.15s;
+  display: block;
+}
+.emg-tile:active { transform: scale(0.96); }
+.emg-num {
+  font-size: 34px; font-weight: 800; color: var(--navy);
+  letter-spacing: -0.02em; margin-bottom: 4px;
+}
+.emg-name { font-size: 12px; font-weight: 600; color: var(--soft); }
+
+/* ── REVIEWS ── */
+.stars { display: flex; justify-content: center; gap: 5px; margin-bottom: 14px; }
+.rev-msg { text-align: center; font-size: 15px; font-weight: 700; color: var(--navy); margin-bottom: 6px; }
+.rev-sub { text-align: center; font-size: 13px; color: var(--soft); margin-bottom: 24px; line-height: 1.55; }
+.rev-btn {
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  padding: 14px; border-radius: 12px;
+  font-size: 13.5px; font-weight: 700;
+  text-decoration: none; margin-bottom: 10px; color: #fff;
+  transition: opacity 0.15s;
+}
+.rev-btn:hover { opacity: 0.88; }
+.rev-btn.airbnb { background: #FF5A5F; }
+.rev-btn.google { background: #4285F4; }
+</style>
+</head>
+<body>
+<div class="app">
+
+<!-- ══════════════════════════════════════
+     HOME
+══════════════════════════════════════ -->
+<div id="home" class="screen">
+
+  <div class="hero">
+    <div class="hero__lang">
+      <button class="active" onclick="setLang('fr')">FR</button>
+      <button onclick="setLang('en')">EN</button>
+    </div>
+    <div class="hero__eyebrow fr">Guide d'accueil</div>
+    <div class="hero__eyebrow en">Welcome Guide</div>
+    <div class="hero__name">Villa Dubois</div>
+  </div>
+
+  <div class="host-bar">
+    <div class="host-avatar">T</div>
+    <div class="host-info">
+      <div class="host-name">Thomas & Marie</div>
+      <div class="host-role fr">Vos hôtes · Disponibles 8h–21h</div>
+      <div class="host-role en">Your hosts · Available 8am–9pm</div>
+    </div>
+    <div class="host-badge fr">Superhôte</div>
+    <div class="host-badge en">Superhost</div>
+  </div>
+
+  <div class="quick-bar">
+    <div class="quick-item">
+      <div class="quick-lbl">📶 Wi-Fi</div>
+      <div class="quick-val">Livebox-234</div>
+      <button class="quick-btn" id="qCopyBtn" onclick="quickCopy(this)">
+        <span class="fr">Copier</span><span class="en">Copy</span>
+      </button>
+    </div>
+    <div class="quick-item">
+      <div class="quick-lbl fr">🕚 Départ</div>
+      <div class="quick-lbl en">🕚 Check-out</div>
+      <div class="quick-val">11h</div>
+      <div class="quick-sub fr">Code boite : 1234</div>
+      <div class="quick-sub en">Box code: 1234</div>
+    </div>
+    <div class="quick-item">
+      <div class="quick-lbl fr">📞 Hôte</div>
+      <div class="quick-lbl en">📞 Host</div>
+      <div class="quick-val">Thomas</div>
+      <a class="quick-btn call" href="tel:+33600000000">
+        <span class="fr">Appeler</span><span class="en">Call</span>
+      </a>
+    </div>
+  </div>
+
+  <div class="welcome">
+    <p class="welcome-title fr">Bienvenue chez les Dubois</p>
+    <p class="welcome-title en">Welcome to Villa Dubois</p>
+    <p class="welcome-text fr">Nous sommes ravis de vous accueillir. Tout ce dont vous avez besoin pour profiter de votre séjour se trouve dans ce guide.</p>
+    <p class="welcome-text en">We're delighted to have you. Everything you need to enjoy your stay is right here in this guide.</p>
+  </div>
+
+  <p class="sect-lbl fr">Guide</p>
+  <p class="sect-lbl en">Guide</p>
+  <div class="nav-grid">
+    <button class="nav-tile" onclick="go('pg-infos')">
+      <div class="tile-sq"><em>💡</em></div>
+      <span class="tile-label fr">Infos essentielles</span>
+      <span class="tile-label en">Essential info</span>
+    </button>
+    <button class="nav-tile" onclick="go('pg-wifi')">
+      <div class="tile-sq"><em>📶</em></div>
+      <span class="tile-label">Wi-Fi</span>
+    </button>
+    <button class="nav-tile" onclick="go('pg-checkin')">
+      <div class="tile-sq"><em>🗝️</em></div>
+      <span class="tile-label fr">Arrivée & Départ</span>
+      <span class="tile-label en">Check-in & Out</span>
+    </button>
+    <button class="nav-tile" onclick="go('pg-rules')">
+      <div class="tile-sq"><em>📋</em></div>
+      <span class="tile-label fr">Règles</span>
+      <span class="tile-label en">House rules</span>
+    </button>
+    <button class="nav-tile" onclick="go('pg-equip')">
+      <div class="tile-sq"><em>🛋️</em></div>
+      <span class="tile-label fr">Équipements</span>
+      <span class="tile-label en">Amenities</span>
+    </button>
+    <button class="nav-tile" onclick="go('pg-contact')">
+      <div class="tile-sq"><em>📞</em></div>
+      <span class="tile-label fr">Contact & Urgences</span>
+      <span class="tile-label en">Contact & Emergency</span>
+    </button>
+    <button class="nav-tile" onclick="go('pg-tips')">
+      <div class="tile-sq"><em>📍</em></div>
+      <span class="tile-label fr">Bons plans</span>
+      <span class="tile-label en">Local tips</span>
+    </button>
+    <button class="nav-tile" onclick="go('pg-reviews')">
+      <div class="tile-sq"><em>⭐</em></div>
+      <span class="tile-label fr">Laisser un avis</span>
+      <span class="tile-label en">Leave a review</span>
+    </button>
+  </div>
+
+  <div class="home-footer">
+    <p class="fr">Guide créé avec <a href="https://hostly-pro.fr">Hostly</a></p>
+    <p class="en">Guide powered by <a href="https://hostly-pro.fr">Hostly</a></p>
+  </div>
+
+</div><!-- /#home -->
+
+
+<!-- ══════════════════════════════════════
+     PAGE: INFOS ESSENTIELLES
+══════════════════════════════════════ -->
+<div id="pg-infos" class="screen">
+  <div class="view-header">
+    <button class="back-btn" onclick="back('pg-infos')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+      <span class="fr">Retour</span><span class="en">Back</span>
+    </button>
+    <div class="view-title">Villa Dubois</div>
+    <div class="view-lang">
+      <button class="active" onclick="setLang('fr')">FR</button>
+      <button onclick="setLang('en')">EN</button>
+    </div>
+  </div>
+  <div class="view-body">
+    <div class="page-title"><span class="page-title-icon">💡</span><span class="fr">Infos essentielles</span><span class="en">Essential info</span></div>
+
+    <div class="sub">
+      <p class="sub-title fr">Où trouver quoi</p>
+      <p class="sub-title en">Where to find things</p>
+      <div class="iblock">
+        <div class="iblock-head"><span class="iblock-icon">🧺</span><span class="iblock-title fr">Linge & textiles</span><span class="iblock-title en">Linen & towels</span></div>
+        <p class="iblock-text fr"><strong>Serviettes</strong> — tiroirs dans la salle de bain.</p>
+        <p class="iblock-text en"><strong>Towels</strong> — in the bathroom drawers.</p>
+        <p class="iblock-text fr"><strong>Draps supplémentaires</strong> — placard du couloir, étagère du bas.</p>
+        <p class="iblock-text en"><strong>Extra sheets</strong> — hallway cupboard, bottom shelf.</p>
+        <p class="iblock-text fr"><strong>Couvertures & oreillers</strong> — placard de la chambre 1, étagère du haut.</p>
+        <p class="iblock-text en"><strong>Blankets & pillows</strong> — bedroom 1 cupboard, top shelf.</p>
+      </div>
+      <div class="iblock">
+        <div class="iblock-head"><span class="iblock-icon">🔌</span><span class="iblock-title fr">Appareils utiles</span><span class="iblock-title en">Useful appliances</span></div>
+        <p class="iblock-text fr"><strong>Sèche-cheveux</strong> — tiroir de la salle de bain principale.</p>
+        <p class="iblock-text en"><strong>Hair dryer</strong> — main bathroom drawer.</p>
+        <p class="iblock-text fr"><strong>Fer à repasser & planche</strong> — buanderie, sur l'étagère.</p>
+        <p class="iblock-text en"><strong>Iron & board</strong> — laundry room, on the shelf.</p>
+        <p class="iblock-text fr"><strong>Aspirateur</strong> — placard technique du couloir.</p>
+        <p class="iblock-text en"><strong>Vacuum</strong> — hallway utility cupboard.</p>
+      </div>
+    </div>
+
+    <div class="sub">
+      <p class="sub-title fr">Chauffage & eau chaude</p>
+      <p class="sub-title en">Heating & hot water</p>
+      <div class="iblock">
+        <div class="iblock-head"><span class="iblock-icon">🌡️</span><span class="iblock-title fr">Thermostat</span><span class="iblock-title en">Thermostat</span></div>
+        <p class="iblock-text fr">Dans l'entrée, à droite de la porte. Température recommandée : <strong>19–21 °C</strong>. Ne pas dépasser 24 °C.</p>
+        <p class="iblock-text en">In the hallway, right of the front door. Recommended temperature: <strong>19–21°C</strong>. Please don't exceed 24°C.</p>
+      </div>
+      <div class="iblock">
+        <div class="iblock-head"><span class="iblock-icon">🚿</span><span class="iblock-title fr">Chauffe-eau</span><span class="iblock-title en">Water heater</span></div>
+        <p class="iblock-text fr">Placard technique du couloir. En cas de panne d'eau chaude, vérifiez le disjoncteur : <strong>rangée 2, position 4</strong> du tableau électrique.</p>
+        <p class="iblock-text en">Located in the hallway utility cupboard. No hot water? Check the circuit breaker: <strong>row 2, position 4</strong> in the electrical panel.</p>
+      </div>
+    </div>
+
+    <div class="sub">
+      <p class="sub-title fr">Cuisine</p>
+      <p class="sub-title en">Kitchen</p>
+      <div class="iblock">
+        <div class="iblock-head"><span class="iblock-icon">🍳</span><span class="iblock-title fr">Plaques à induction</span><span class="iblock-title en">Induction hob</span></div>
+        <p class="iblock-text fr">Utilisez uniquement des casseroles à <strong>fond plat magnétique</strong>. Si une plaque ne s'allume pas, centrez mieux le récipient.</p>
+        <p class="iblock-text en">Use only pots with a <strong>flat magnetic base</strong>. If a burner won't turn on, re-centre the vessel.</p>
+      </div>
+      <div class="iblock">
+        <div class="iblock-head"><span class="iblock-icon">☕</span><span class="iblock-title fr">Cafetière Nespresso</span><span class="iblock-title en">Nespresso machine</span></div>
+        <p class="iblock-text fr">Capsules dans le tiroir de gauche, sous la machine. Comptoir de la cuisine.</p>
+        <p class="iblock-text en">Capsules in the left drawer under the machine, on the kitchen counter.</p>
+      </div>
+      <div class="iblock">
+        <div class="iblock-head"><span class="iblock-icon">🍽️</span><span class="iblock-title fr">Lave-vaisselle</span><span class="iblock-title en">Dishwasher</span></div>
+        <p class="iblock-text fr">Pastilles sous l'évier. Merci de le lancer <strong>avant votre départ</strong>.</p>
+        <p class="iblock-text en">Tablets under the sink. Please <strong>run it before leaving</strong>.</p>
+      </div>
+    </div>
+
+    <div class="sub">
+      <p class="sub-title fr">Astuces pratiques</p>
+      <p class="sub-title en">Helpful tips</p>
+      <div class="iblock">
+        <div class="iblock-head"><span class="iblock-icon">💡</span><span class="iblock-title fr">Bon à savoir</span><span class="iblock-title en">Good to know</span></div>
+        <p class="iblock-text fr">Le Wi-Fi est optimal au <strong>salon et dans la cuisine</strong>. Signal plus faible dans la chambre 3.</p>
+        <p class="iblock-text en">Wi-Fi works best in the <strong>living room and kitchen</strong>. Weaker signal in bedroom 3.</p>
+        <p class="iblock-text fr">Le volet roulant du salon peut se bloquer — utilisez le <strong>bouton mural</strong>, pas la télécommande.</p>
+        <p class="iblock-text en">The living room blind sometimes jams — use the <strong>wall button</strong>, not the remote.</p>
+        <p class="iblock-text fr">Le portail se ferme automatiquement après <strong>30 secondes</strong>.</p>
+        <p class="iblock-text en">The gate closes automatically after <strong>30 seconds</strong>.</p>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════
+     PAGE: WI-FI
+══════════════════════════════════════ -->
+<div id="pg-wifi" class="screen">
+  <div class="view-header">
+    <button class="back-btn" onclick="back('pg-wifi')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+      <span class="fr">Retour</span><span class="en">Back</span>
+    </button>
+    <div class="view-title">Villa Dubois</div>
+    <div class="view-lang">
+      <button class="active" onclick="setLang('fr')">FR</button>
+      <button onclick="setLang('en')">EN</button>
+    </div>
+  </div>
+  <div class="view-body">
+    <div class="page-title"><span class="page-title-icon">📶</span><span>Wi-Fi</span></div>
+    <div class="wifi-card">
+      <div class="wifi-network">Livebox-234</div>
+      <div class="wifi-pass">1234567</div>
+      <button class="wifi-copy" onclick="copyWifiPage(this)">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        <span class="fr">Copier le mot de passe</span>
+        <span class="en">Copy password</span>
+      </button>
+    </div>
+    <p class="wifi-note fr">Le Wi-Fi fonctionne mieux au salon et dans la cuisine.</p>
+    <p class="wifi-note en">Wi-Fi works best in the living room and kitchen.</p>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════
+     PAGE: ARRIVÉE & DÉPART
+══════════════════════════════════════ -->
+<div id="pg-checkin" class="screen">
+  <div class="view-header">
+    <button class="back-btn" onclick="back('pg-checkin')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+      <span class="fr">Retour</span><span class="en">Back</span>
+    </button>
+    <div class="view-title">Villa Dubois</div>
+    <div class="view-lang">
+      <button class="active" onclick="setLang('fr')">FR</button>
+      <button onclick="setLang('en')">EN</button>
+    </div>
+  </div>
+  <div class="view-body">
+    <div class="page-title"><span class="page-title-icon">🗝️</span><span class="fr">Arrivée & Départ</span><span class="en">Check-in & Check-out</span></div>
+
+    <div class="time-grid">
+      <div class="time-card">
+        <div class="time-lbl fr">Arrivée dès</div>
+        <div class="time-lbl en">Check-in from</div>
+        <div class="time-val">15h</div>
+      </div>
+      <div class="time-card">
+        <div class="time-lbl fr">Départ avant</div>
+        <div class="time-lbl en">Check-out by</div>
+        <div class="time-val">11h</div>
+      </div>
+    </div>
+
+    <div class="sub">
+      <p class="sub-title fr">Boite à clé</p>
+      <p class="sub-title en">Key box</p>
+      <div class="iblock">
+        <div class="iblock-head"><span class="iblock-icon">🔒</span><span class="iblock-title fr">Code d'accès</span><span class="iblock-title en">Access code</span></div>
+        <p class="iblock-text fr">Code : <strong>1234</strong></p>
+        <p class="iblock-text en">Code: <strong>1234</strong></p>
+        <p class="iblock-text fr">Boite fixée à gauche du portail d'entrée. En partant, <strong>remettez la clé dans la boite</strong> et composez un code aléatoire pour verrouiller.</p>
+        <p class="iblock-text en">Key box is fixed to the left of the front gate. When leaving, <strong>return the key to the box</strong> and enter a random code to lock it.</p>
+      </div>
+    </div>
+
+    <div class="sub">
+      <p class="sub-title fr">Checklist de départ</p>
+      <p class="sub-title en">Check-out checklist</p>
+      <div class="checklist">
+        <div class="check-item"><div class="chk" onclick="toggleChk(this)"></div><span class="fr">Clé remise dans la boite à clé</span><span class="en">Key returned to the key box</span></div>
+        <div class="check-item"><div class="chk" onclick="toggleChk(this)"></div><span class="fr">Fenêtres fermées</span><span class="en">Windows closed</span></div>
+        <div class="check-item"><div class="chk" onclick="toggleChk(this)"></div><span class="fr">Lumières éteintes</span><span class="en">Lights off</span></div>
+        <div class="check-item"><div class="chk" onclick="toggleChk(this)"></div><span class="fr">Poubelles sorties</span><span class="en">Bins put out</span></div>
+        <div class="check-item"><div class="chk" onclick="toggleChk(this)"></div><span class="fr">Lave-vaisselle lancé</span><span class="en">Dishwasher started</span></div>
+        <div class="check-item"><div class="chk" onclick="toggleChk(this)"></div><span class="fr">Chauffage / clim éteints</span><span class="en">Heating / A/C off</span></div>
+      </div>
+    </div>
+
+    <div class="sub">
+      <p class="sub-title fr">Linge supplémentaire</p>
+      <p class="sub-title en">Extra linen</p>
+      <div class="iblock">
+        <div class="iblock-head"><span class="iblock-icon">🧺</span><span class="iblock-title fr">Draps & serviettes</span><span class="iblock-title en">Sheets & towels</span></div>
+        <p class="iblock-text fr">Placard du couloir, étagère du bas.</p>
+        <p class="iblock-text en">Hallway cupboard, bottom shelf.</p>
+      </div>
+    </div>
+
+    <div class="sub">
+      <p class="sub-title fr">Poubelles & tri sélectif</p>
+      <p class="sub-title en">Bins & recycling</p>
+      <div class="iblock">
+        <div class="iblock-head"><span class="iblock-icon">🗑️</span><span class="iblock-title fr">Collecte</span><span class="iblock-title en">Collection days</span></div>
+        <p class="iblock-text fr"><strong>Bac vert</strong> — ordures ménagères (lundi & jeudi).</p>
+        <p class="iblock-text en"><strong>Green bin</strong> — general waste (Mon & Thu).</p>
+        <p class="iblock-text fr"><strong>Bac jaune</strong> — plastiques, cartons, papier.</p>
+        <p class="iblock-text en"><strong>Yellow bin</strong> — plastics, cardboard, paper.</p>
+        <p class="iblock-text fr"><strong>Verre</strong> — point de collecte à 200 m, direction boulangerie.</p>
+        <p class="iblock-text en"><strong>Glass</strong> — collection point 200m away, towards the bakery.</p>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════
+     PAGE: ÉQUIPEMENTS
+══════════════════════════════════════ -->
+<div id="pg-equip" class="screen">
+  <div class="view-header">
+    <button class="back-btn" onclick="back('pg-equip')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+      <span class="fr">Retour</span><span class="en">Back</span>
+    </button>
+    <div class="view-title">Villa Dubois</div>
+    <div class="view-lang">
+      <button class="active" onclick="setLang('fr')">FR</button>
+      <button onclick="setLang('en')">EN</button>
+    </div>
+  </div>
+  <div class="view-body">
+    <div class="page-title"><span class="page-title-icon">🛋️</span><span class="fr">Équipements</span><span class="en">Amenities</span></div>
+
+    <div class="sub">
+      <p class="sub-title fr">Cuisine</p><p class="sub-title en">Kitchen</p>
+      <div class="equip-grid">
+        <div class="equip-item"><span>🍽️</span><span class="fr">Lave-vaisselle</span><span class="en">Dishwasher</span></div>
+        <div class="equip-item"><span>🍳</span><span class="fr">Induction × 4</span><span class="en">Induction × 4</span></div>
+        <div class="equip-item"><span>☕</span><span>Nespresso</span></div>
+        <div class="equip-item"><span>🔥</span><span class="fr">Micro-ondes</span><span class="en">Microwave</span></div>
+        <div class="equip-item"><span>🍞</span><span class="fr">Grille-pain</span><span class="en">Toaster</span></div>
+        <div class="equip-item"><span>🫖</span><span class="fr">Bouilloire</span><span class="en">Kettle</span></div>
+        <div class="equip-item"><span>🥗</span><span class="fr">Réfrigérateur</span><span class="en">Fridge</span></div>
+        <div class="equip-item"><span>🧊</span><span class="fr">Congélateur</span><span class="en">Freezer</span></div>
+      </div>
+    </div>
+
+    <div class="sub">
+      <p class="sub-title fr">Salon & confort</p><p class="sub-title en">Living & comfort</p>
+      <div class="equip-grid">
+        <div class="equip-item"><span>📺</span><span class="fr">TV 55" Netflix</span><span class="en">55" TV Netflix</span></div>
+        <div class="equip-item"><span>❄️</span><span class="fr">Climatisation</span><span class="en">A/C</span></div>
+        <div class="equip-item"><span>🌡️</span><span class="fr">Chauffage central</span><span class="en">Central heating</span></div>
+        <div class="equip-item"><span>📶</span><span class="fr">Wi-Fi fibre</span><span class="en">Fibre Wi-Fi</span></div>
+      </div>
+    </div>
+
+    <div class="sub">
+      <p class="sub-title fr">Linge & salle de bain</p><p class="sub-title en">Linen & bathroom</p>
+      <div class="equip-grid">
+        <div class="equip-item"><span>🫧</span><span class="fr">Lave-linge</span><span class="en">Washing machine</span></div>
+        <div class="equip-item"><span>💨</span><span class="fr">Sèche-cheveux</span><span class="en">Hair dryer</span></div>
+        <div class="equip-item"><span>👔</span><span class="fr">Fer + planche</span><span class="en">Iron + board</span></div>
+        <div class="equip-item"><span>🧴</span><span class="fr">Produits accueil</span><span class="en">Toiletries</span></div>
+      </div>
+    </div>
+
+    <div class="sub">
+      <p class="sub-title fr">Extérieur</p><p class="sub-title en">Outdoor</p>
+      <div class="equip-grid">
+        <div class="equip-item"><span>🌿</span><span class="fr">Jardin privatif</span><span class="en">Private garden</span></div>
+        <div class="equip-item"><span>🔥</span><span class="fr">Barbecue</span><span class="en">Barbecue</span></div>
+        <div class="equip-item"><span>🪑</span><span class="fr">Salon de jardin</span><span class="en">Garden furniture</span></div>
+        <div class="equip-item"><span>🚗</span><span class="fr">Parking privatif</span><span class="en">Private parking</span></div>
+      </div>
+      <div class="iblock" style="margin-top:8px;">
+        <div class="iblock-head"><span class="iblock-icon">🔥</span><span class="iblock-title fr">Utiliser le barbecue</span><span class="iblock-title en">Using the barbecue</span></div>
+        <p class="iblock-text fr">Charbon et allume-feu dans le meuble sous le barbecue. Pensez à <strong>éteindre complètement</strong> avant de rentrer.</p>
+        <p class="iblock-text en">Charcoal and firelighters in the cabinet under the BBQ. Make sure it's <strong>fully extinguished</strong> before going inside.</p>
+      </div>
+      <div class="iblock">
+        <div class="iblock-head"><span class="iblock-icon">🫧</span><span class="iblock-title fr">Lave-linge</span><span class="iblock-title en">Washing machine</span></div>
+        <p class="iblock-text fr">Buanderie, programme <strong>30°C</strong> recommandé. Lessive sous l'évier de la buanderie.</p>
+        <p class="iblock-text en">Laundry room, <strong>30°C cycle</strong> recommended. Detergent under the laundry sink.</p>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════
+     PAGE: BONS PLANS
+══════════════════════════════════════ -->
+<div id="pg-tips" class="screen">
+  <div class="view-header">
+    <button class="back-btn" onclick="back('pg-tips')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+      <span class="fr">Retour</span><span class="en">Back</span>
+    </button>
+    <div class="view-title">Villa Dubois</div>
+    <div class="view-lang">
+      <button class="active" onclick="setLang('fr')">FR</button>
+      <button onclick="setLang('en')">EN</button>
+    </div>
+  </div>
+  <div class="view-body">
+    <div class="page-title"><span class="page-title-icon">📍</span><span class="fr">Nos bons plans</span><span class="en">Local tips</span></div>
+
+    <div class="sub">
+      <p class="sub-title fr">Alimentation</p>
+      <p class="sub-title en">Food & groceries</p>
+      <div class="reco">
+        <div class="reco-top">
+          <span class="reco-name">Intermarché</span>
+          <span class="reco-tag fr">Supermarché</span>
+          <span class="reco-tag en">Supermarket</span>
+        </div>
+        <p class="reco-note fr">Route de Lisieux — 3 min en voiture. Lun–Sam 8h–20h, Dim 9h–13h.</p>
+        <p class="reco-note en">Route de Lisieux — 3 min by car. Mon–Sat 8am–8pm, Sun 9am–1pm.</p>
+      </div>
+      <div class="reco">
+        <div class="reco-top">
+          <span class="reco-name">Boulangerie Lecomte</span>
+          <span class="reco-tag fr">Boulangerie</span>
+          <span class="reco-tag en">Bakery</span>
+        </div>
+        <p class="reco-note fr">12 Rue de la République — ouvert dès 7h, fermé le lundi. 5 min à pied.</p>
+        <p class="reco-note en">12 Rue de la République — open from 7am, closed Monday. 5 min walk.</p>
+      </div>
+      <div class="reco">
+        <div class="reco-top">
+          <span class="reco-name fr">Marché de Pont-Audemer</span>
+          <span class="reco-name en">Pont-Audemer market</span>
+          <span class="reco-tag fr">Marché</span>
+          <span class="reco-tag en">Market</span>
+        </div>
+        <p class="reco-note fr">Place Léon Lecanu — lundi et vendredi matin. Producteurs locaux, spécialités normandes.</p>
+        <p class="reco-note en">Place Léon Lecanu — Monday & Friday mornings. Local producers, Norman specialities.</p>
+      </div>
+    </div>
+
+    <div class="sub">
+      <p class="sub-title fr">Restaurants</p>
+      <p class="sub-title en">Restaurants</p>
+      <div class="reco">
+        <div class="reco-top">
+          <span class="reco-name">Les Deux Tonnelles</span>
+          <span class="reco-tag fr">Cuisine normande</span>
+          <span class="reco-tag en">Norman cuisine</span>
+        </div>
+        <p class="reco-note fr">À 8 min. Notre coup de cœur — réservation conseillée le week-end.</p>
+        <p class="reco-note en">8 min away. Our favourite — booking recommended on weekends.</p>
+      </div>
+      <div class="reco">
+        <div class="reco-top">
+          <span class="reco-name">La Bulle Gourmande</span>
+          <span class="reco-tag fr">Pizzeria & planches</span>
+          <span class="reco-tag en">Pizza & sharing plates</span>
+        </div>
+        <p class="reco-note fr">À 5 min. Ouvert 7j/7, 12h–22h. Ambiance décontractée.</p>
+        <p class="reco-note en">5 min away. Open daily 12pm–10pm. Relaxed atmosphere.</p>
+      </div>
+      <div class="reco">
+        <div class="reco-top">
+          <span class="reco-name">Le Risle et Rhumbs</span>
+          <span class="reco-tag fr">Crêperie</span>
+          <span class="reco-tag en">Crêperie</span>
+        </div>
+        <p class="reco-note fr">À 10 min. Ouvert du jeudi au dimanche soir. Excellentes galettes.</p>
+        <p class="reco-note en">10 min away. Open Thu–Sun evenings. Excellent buckwheat crêpes.</p>
+      </div>
+      <div class="reco">
+        <div class="reco-top">
+          <span class="reco-name">Café de la Risle</span>
+          <span class="reco-tag fr">Café & brunch</span>
+          <span class="reco-tag en">Café & brunch</span>
+        </div>
+        <p class="reco-note fr">Place du marché — ouvert dès 7h30. Idéal pour le petit-déjeuner.</p>
+        <p class="reco-note en">Market square — open from 7:30am. Great for breakfast.</p>
+      </div>
+    </div>
+
+    <div class="sub">
+      <p class="sub-title fr">Activités & visites</p>
+      <p class="sub-title en">Activities & sights</p>
+      <div class="reco">
+        <div class="reco-top">
+          <span class="reco-name fr">Forêt de Brotonne</span>
+          <span class="reco-name en">Brotonne Forest</span>
+          <span class="reco-tag fr">Randonnée & vélo</span>
+          <span class="reco-tag en">Hiking & cycling</span>
+        </div>
+        <p class="reco-note fr">À 15 min. Sentiers balisés, pique-nique, accès libre toute l'année.</p>
+        <p class="reco-note en">15 min away. Marked trails, picnic spots, free access all year.</p>
+      </div>
+      <div class="reco">
+        <div class="reco-top">
+          <span class="reco-name fr">Abbaye du Bec-Hellouin</span>
+          <span class="reco-name en">Bec-Hellouin Abbey</span>
+          <span class="reco-tag fr">Monument historique</span>
+          <span class="reco-tag en">Historic monument</span>
+        </div>
+        <p class="reco-note fr">À 25 min. Visites guidées disponibles. Incontournable en Normandie.</p>
+        <p class="reco-note en">25 min away. Guided tours available. A must-see in Normandy.</p>
+      </div>
+      <div class="reco">
+        <div class="reco-top">
+          <span class="reco-name fr">Base nautique de Bourneville</span>
+          <span class="reco-name en">Bourneville water sports</span>
+          <span class="reco-tag fr">Kayak & paddle</span>
+          <span class="reco-tag en">Kayak & paddleboard</span>
+        </div>
+        <p class="reco-note fr">À 20 min. Ouvert avril–octobre. Location de kayaks et paddles.</p>
+        <p class="reco-note en">20 min away. Open April–October. Kayak and paddleboard rental.</p>
+      </div>
+      <div class="reco">
+        <div class="reco-top">
+          <span class="reco-name fr">Pont-Audemer — centre historique</span>
+          <span class="reco-name en">Pont-Audemer old town</span>
+          <span class="reco-tag fr">Balade</span>
+          <span class="reco-tag en">Walk</span>
+        </div>
+        <p class="reco-note fr">Surnommée la "Venise normande". À faire à pied, canaux et maisons à colombages.</p>
+        <p class="reco-note en">Known as the "Norman Venice". Walk along the canals and half-timbered houses.</p>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════
+     PAGE: RÈGLES
+══════════════════════════════════════ -->
+<div id="pg-rules" class="screen">
+  <div class="view-header">
+    <button class="back-btn" onclick="back('pg-rules')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+      <span class="fr">Retour</span><span class="en">Back</span>
+    </button>
+    <div class="view-title">Villa Dubois</div>
+    <div class="view-lang">
+      <button class="active" onclick="setLang('fr')">FR</button>
+      <button onclick="setLang('en')">EN</button>
+    </div>
+  </div>
+  <div class="view-body">
+    <div class="page-title"><span class="page-title-icon">📋</span><span class="fr">Règles de la maison</span><span class="en">House rules</span></div>
+    <div class="rules-block">
+      <div class="rule"><span class="rule-emoji">🔇</span><span class="fr">Silence après 22h</span><span class="en">Quiet after 10pm</span></div>
+      <div class="rule"><span class="rule-emoji">🚭</span><span class="fr">Non-fumeur à l'intérieur — terrasse uniquement</span><span class="en">No smoking inside — terrace only</span></div>
+      <div class="rule"><span class="rule-emoji">🎉</span><span class="fr">Pas de fête ni de rassemblement</span><span class="en">No parties or gatherings</span></div>
+      <div class="rule"><span class="rule-emoji">👨‍👩‍👧‍👦</span><span class="fr">6 personnes maximum</span><span class="en">Maximum 6 guests</span></div>
+      <div class="rule"><span class="rule-emoji">🐾</span><span class="fr">Animaux non acceptés sans accord préalable</span><span class="en">No pets without prior agreement</span></div>
+      <div class="rule"><span class="rule-emoji">🧹</span><span class="fr">Laisser le logement propre au départ</span><span class="en">Leave the property clean on departure</span></div>
+      <div class="rule"><span class="rule-emoji">🔒</span><span class="fr">Fermer à clé et remettre la clé dans la boite</span><span class="en">Lock up and return the key to the box</span></div>
+      <div class="rule"><span class="rule-emoji">🌧️</span><span class="fr">Fermer les fenêtres en cas d'absence ou de pluie</span><span class="en">Close windows when out or if it rains</span></div>
+      <div class="rule"><span class="rule-emoji">📢</span><span class="fr">Signaler tout problème avant votre départ</span><span class="en">Report any issue before leaving</span></div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════
+     PAGE: CONTACT & URGENCES
+══════════════════════════════════════ -->
+<div id="pg-contact" class="screen">
+  <div class="view-header">
+    <button class="back-btn" onclick="back('pg-contact')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+      <span class="fr">Retour</span><span class="en">Back</span>
+    </button>
+    <div class="view-title">Villa Dubois</div>
+    <div class="view-lang">
+      <button class="active" onclick="setLang('fr')">FR</button>
+      <button onclick="setLang('en')">EN</button>
+    </div>
+  </div>
+  <div class="view-body">
+    <div class="page-title"><span class="page-title-icon">📞</span><span class="fr">Contact & Urgences</span><span class="en">Contact & Emergency</span></div>
+
+    <div class="host-row">
+      <div class="hr-avatar">T</div>
+      <div class="hr-info">
+        <div class="hr-name">Thomas</div>
+        <div class="hr-role fr">Hôte · Disponible 8h–21h</div>
+        <div class="hr-role en">Host · Available 8am–9pm</div>
+      </div>
+      <div class="hr-btns">
+        <a class="hr-call" href="tel:+33600000000"><span class="fr">Appeler</span><span class="en">Call</span></a>
+        <a class="hr-sms" href="sms:+33600000000"><span class="fr">Message</span><span class="en">Message</span></a>
+      </div>
+    </div>
+    <div class="host-row">
+      <div class="hr-avatar">M</div>
+      <div class="hr-info">
+        <div class="hr-name">Marie</div>
+        <div class="hr-role fr">Hôte · Disponible 8h–21h</div>
+        <div class="hr-role en">Host · Available 8am–9pm</div>
+      </div>
+      <div class="hr-btns">
+        <a class="hr-call" href="tel:+33600000001"><span class="fr">Appeler</span><span class="en">Call</span></a>
+        <a class="hr-sms" href="sms:+33600000001"><span class="fr">Message</span><span class="en">Message</span></a>
+      </div>
+    </div>
+    <div class="host-row">
+      <div class="hr-avatar">V</div>
+      <div class="hr-info">
+        <div class="hr-name fr">Voisin — Jean-Pierre</div>
+        <div class="hr-name en">Neighbour — Jean-Pierre</div>
+        <div class="hr-role fr">En cas d'urgence sur place</div>
+        <div class="hr-role en">On-site emergency contact</div>
+      </div>
+      <div class="hr-btns">
+        <a class="hr-call" href="tel:+33600000002"><span class="fr">Appeler</span><span class="en">Call</span></a>
+        <a class="hr-sms" href="sms:+33600000002"><span class="fr">Message</span><span class="en">Message</span></a>
+      </div>
+    </div>
+
+    <p class="sub-title fr">Urgences</p>
+    <p class="sub-title en">Emergency</p>
+    <div class="emg-grid">
+      <a class="emg-tile" href="tel:15">
+        <div class="emg-num">15</div>
+        <div class="emg-name fr">SAMU</div>
+        <div class="emg-name en">SAMU</div>
+      </a>
+      <a class="emg-tile" href="tel:17">
+        <div class="emg-num">17</div>
+        <div class="emg-name fr">Gendarmerie</div>
+        <div class="emg-name en">Police</div>
+      </a>
+      <a class="emg-tile" href="tel:18">
+        <div class="emg-num">18</div>
+        <div class="emg-name fr">Pompiers</div>
+        <div class="emg-name en">Fire dept.</div>
+      </a>
+      <a class="emg-tile" href="tel:112">
+        <div class="emg-num">112</div>
+        <div class="emg-name fr">Européen</div>
+        <div class="emg-name en">European</div>
+      </a>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════
+     PAGE: LAISSER UN AVIS
+══════════════════════════════════════ -->
+<div id="pg-reviews" class="screen">
+  <div class="view-header">
+    <button class="back-btn" onclick="back('pg-reviews')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+      <span class="fr">Retour</span><span class="en">Back</span>
+    </button>
+    <div class="view-title">Villa Dubois</div>
+    <div class="view-lang">
+      <button class="active" onclick="setLang('fr')">FR</button>
+      <button onclick="setLang('en')">EN</button>
+    </div>
+  </div>
+  <div class="view-body" style="padding-top:36px;">
+    <div class="stars">
+      <svg width="30" height="30" viewBox="0 0 24 24" fill="#F5B400" stroke="#F5B400" stroke-width="1"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+      <svg width="30" height="30" viewBox="0 0 24 24" fill="#F5B400" stroke="#F5B400" stroke-width="1"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+      <svg width="30" height="30" viewBox="0 0 24 24" fill="#F5B400" stroke="#F5B400" stroke-width="1"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+      <svg width="30" height="30" viewBox="0 0 24 24" fill="#F5B400" stroke="#F5B400" stroke-width="1"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+      <svg width="30" height="30" viewBox="0 0 24 24" fill="#F5B400" stroke="#F5B400" stroke-width="1"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+    </div>
+    <p class="rev-msg fr">Votre avis compte beaucoup pour nous.</p>
+    <p class="rev-msg en">Your review means a lot to us.</p>
+    <p class="rev-sub fr">Si votre séjour vous a plu, quelques secondes suffisent pour nous aider à accueillir de futurs voyageurs.</p>
+    <p class="rev-sub en">If you enjoyed your stay, a few seconds helps future guests find us.</p>
+    <a href="#" class="rev-btn airbnb">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg>
+      <span class="fr">Laisser un avis sur Airbnb</span>
+      <span class="en">Leave a review on Airbnb</span>
+    </a>
+    <a href="#" class="rev-btn google">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M21.35 11.1H12.18V13.83H18.69C18.36 17.64 15.19 19.27 12.19 19.27C8.36 19.27 5 16.25 5 12C5 7.9 8.2 4.73 12.2 4.73C15.29 4.73 17.1 6.7 17.1 6.7L19 4.72C19 4.72 16.56 2 12.1 2C6.42 2 2.03 6.8 2.03 12C2.03 17.05 6.16 22 12.25 22C17.6 22 21.5 18.33 21.5 12.91C21.5 11.76 21.35 11.1 21.35 11.1Z"/></svg>
+      <span class="fr">Laisser un avis sur Google</span>
+      <span class="en">Leave a review on Google</span>
+    </a>
+  </div>
+</div>
+
+</div><!-- /.app -->
+
+<script>
+function go(id) {
+  const home = document.getElementById('home');
+  home.classList.add('peek');
+  const view = document.getElementById(id);
+  view.classList.add('active');
+  view.scrollTop = 0;
+  syncLangBtns(view);
+}
+
+function back(id) {
+  document.getElementById(id).classList.remove('active');
+  const home = document.getElementById('home');
+  home.classList.remove('peek');
+}
+
+function setLang(lang) {
+  document.body.classList.toggle('en', lang === 'en');
+  document.querySelectorAll('.hero__lang, .view-lang').forEach(group => {
+    group.querySelectorAll('button').forEach((b, i) => {
+      b.classList.toggle('active', lang === 'fr' ? i === 0 : i === 1);
+    });
+  });
+}
+
+function syncLangBtns(el) {
+  const isEn = document.body.classList.contains('en');
+  el.querySelectorAll('.view-lang button').forEach((b, i) => {
+    b.classList.toggle('active', isEn ? i === 1 : i === 0);
+  });
+}
+
+async function quickCopy(btn) {
+  try { await navigator.clipboard.writeText('1234567'); }
+  catch { const t=document.createElement('textarea'); t.value='1234567'; document.body.appendChild(t); t.select(); document.execCommand('copy'); document.body.removeChild(t); }
+  const orig = btn.innerHTML;
+  btn.textContent = '✓';
+  setTimeout(() => { btn.innerHTML = orig; }, 2000);
+}
+
+async function copyWifiPage(btn) {
+  try { await navigator.clipboard.writeText('1234567'); }
+  catch { const t=document.createElement('textarea'); t.value='1234567'; document.body.appendChild(t); t.select(); document.execCommand('copy'); document.body.removeChild(t); }
+  const spans = btn.querySelectorAll('span');
+  const origTexts = [...spans].map(s => s.textContent);
+  spans.forEach(s => s.textContent = s.classList.contains('fr') ? 'Copié ✓' : 'Copied ✓');
+  setTimeout(() => spans.forEach((s, i) => s.textContent = origTexts[i]), 2000);
+}
+
+function toggleChk(el) { el.classList.toggle('done'); }
+
+if (navigator.language && !navigator.language.startsWith('fr')) setLang('en');
+</script>
+</body>
+</html>
